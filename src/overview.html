@@ -1,0 +1,18 @@
+<html>
+<head>
+<title>CSS4J Overview</title>
+</head>
+<body>
+This module implements the W3C's 
+<a href="http://www.w3.org/TR/DOM-Level-2-Style/css.html" target="_blank">CSS
+ Object Model API</a> for DOM4J.
+<p>Just use the <code>XHTMLDocumentFactory</code> as you would use <code>DOMDocumentFactory</code>,
+and the produced documents (and elements) will be style-aware.</p>
+<p>There is more information in the description of the <code>io.sf.carte.doc.dom4j</code> subpackage.</p>
+<h3>Media handling</h3>
+<p>By default, computed styles only take into account generic styles that are 
+common to all media. If you want to target a specific medium, you have to use 
+the <code>setTargetMedium()</code> method of the document, which in DOM4J can 
+be done with the <code>XHTMLDocument.setTargetMedium()</code> method.</p>
+</body>
+</html>

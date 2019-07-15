@@ -1,0 +1,43 @@
+/*
+
+ Copyright (c) 2005-2019, Carlos Amengual.
+
+ SPDX-License-Identifier: BSD-3-Clause
+
+ Licensed under a BSD-style License. You can find the license here:
+ https://carte.sourceforge.io/css4j/LICENSE.txt
+
+ */
+
+package io.sf.carte.doc.dom4j;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+
+import java.io.IOException;
+import java.io.Reader;
+
+import org.junit.Test;
+import org.w3c.css.sac.CSSException;
+import org.w3c.css.sac.InputSource;
+
+import io.sf.carte.doc.style.css.om.AbstractCSSStyleSheet;
+import io.sf.carte.doc.style.css.om.CSSRuleArrayList;
+import io.sf.carte.doc.style.css.om.DOMCSSStyleSheetFactoryTest;
+
+public class DOM4JCSSStyleSheetTest {
+
+	@Test
+	public void testParseCSSStyleSheet() throws CSSException, IOException {
+		AbstractCSSStyleSheet css = XHTMLDocumentFactory.getInstance().getStyleSheetFactory()
+				.createStyleSheet(null, null);
+		Reader re = DOMCSSStyleSheetFactoryTest.loadSampleCSSReader();
+		InputSource source = new InputSource(re);
+		css.parseCSSStyleSheet(source);
+		re.close();
+		CSSRuleArrayList rules = css.getCssRules();
+		assertEquals(DOMCSSStyleSheetFactoryTest.RULES_IN_SAMPLE_CSS, rules.getLength());
+		assertFalse(css.getErrorHandler().hasSacErrors());
+	}
+
+}
