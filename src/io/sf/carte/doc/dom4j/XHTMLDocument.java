@@ -804,7 +804,8 @@ public class XHTMLDocument extends DOMDocument implements CSSDocument, CSSRuleLi
 			while (it.hasNext()) {
 				AbstractCSSStyleSheet sheet = it.next();
 				SheetErrorHandler eh = sheet.getErrorHandler();
-				if (sheet.hasRuleErrorsOrWarnings() || eh.hasSacErrors() || eh.hasSacWarnings() || eh.hasOMErrors()) {
+				if (sheet.hasRuleErrorsOrWarnings() || eh.hasSacErrors() || eh.hasSacWarnings() || eh.hasOMErrors()
+						|| eh.hasOMWarnings()) {
 					hasRuleErrors = true;
 					break;
 				}
