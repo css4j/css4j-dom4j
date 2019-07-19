@@ -21,8 +21,8 @@ import org.w3c.dom.DOMException;
 
 import io.sf.carte.doc.style.css.MediaQueryList;
 import io.sf.carte.doc.style.css.om.AbstractCSSStyleSheet;
-import io.sf.carte.doc.style.css.om.MediaQueryFactory;
 import io.sf.carte.doc.style.css.om.MediaList;
+import io.sf.carte.doc.style.css.om.MediaQueryFactory;
 
 /**
  * <code>style</code> element.

@@ -41,7 +41,6 @@ import io.sf.carte.doc.style.css.CSSElement;
 import io.sf.carte.doc.style.css.CSSMediaException;
 import io.sf.carte.doc.style.css.om.BaseCSSStyleDeclaration;
 import io.sf.carte.doc.style.css.om.DOMCSSStyleSheetFactoryTest;
-import io.sf.carte.doc.style.css.property.CSSNumberValue;
 import io.sf.carte.doc.style.css.property.CSSPropertyValueException;
 
 public class DOM4JCSSStyleDeclarationTest {
@@ -110,7 +109,7 @@ public class DOM4JCSSStyleDeclarationTest {
 		assertNotNull(style);
 		CSSStyleRule rule = defaultStyleRule("h3", "font-size");
 		assertNotNull(rule);
-		CSSNumberValue val = (CSSNumberValue) rule.getStyle().getPropertyCSSValue("font-size");
+		CSSPrimitiveValue val = (CSSPrimitiveValue) rule.getStyle().getPropertyCSSValue("font-size");
 		assertNotNull(val);
 		assertEquals(Math.round(12 * val.getFloatValue(CSSPrimitiveValue.CSS_EMS)), 
 				style.getComputedFontSize());
