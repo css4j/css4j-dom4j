@@ -111,8 +111,7 @@ public class DOM4JCSSStyleDeclarationTest {
 		assertNotNull(rule);
 		CSSPrimitiveValue val = (CSSPrimitiveValue) rule.getStyle().getPropertyCSSValue("font-size");
 		assertNotNull(val);
-		assertEquals(Math.round(12 * val.getFloatValue(CSSPrimitiveValue.CSS_EMS)), 
-				style.getComputedFontSize());
+		assertEquals(12f * val.getFloatValue(CSSPrimitiveValue.CSS_EMS), style.getComputedFontSize(), 0.01f);
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -125,7 +124,7 @@ public class DOM4JCSSStyleDeclarationTest {
 		assertTrue(elm instanceof CSSStylableElement);
 		CSSComputedProperties style = ((CSSStylableElement)elm).getComputedStyle();
 		assertNotNull(style);
-		assertEquals(Math.round(1.5f * 12f), style.getComputedFontSize());
+		assertEquals(1.5f * 12f, style.getComputedFontSize(), 0.01f);
 		pList.clear();
 	}
 
@@ -135,19 +134,19 @@ public class DOM4JCSSStyleDeclarationTest {
 		assertTrue(elm instanceof CSSStylableElement);
 		CSSComputedProperties style = ((CSSStylableElement)elm).getComputedStyle();
 		assertNotNull(style);
-		assertEquals(12, style.getComputedFontSize());
+		assertEquals(12f, style.getComputedFontSize(), 0.01f);
 		Element para = xhtmlDoc.elementByID("para2");
 		assertTrue(para instanceof CSSStylableElement);
 		CSSComputedProperties stylePara = ((CSSStylableElement)para).getComputedStyle();
 		assertNotNull(stylePara);
-		assertEquals(12, stylePara.getComputedFontSize());
+		assertEquals(12f, stylePara.getComputedFontSize(), 0.01f);
 		xhtmlDoc.setTargetMedium("screen");
 		assertEquals("screen", xhtmlDoc.getStyleSheet().getTargetMedium());
 		style = ((CSSStylableElement)elm).getComputedStyle();
 		assertNotNull(style);
-		assertEquals(20, style.getComputedFontSize());
+		assertEquals(20f, style.getComputedFontSize(), 0.01f);
 		stylePara = ((CSSStylableElement)para).getComputedStyle();
-		assertEquals(16, stylePara.getComputedFontSize());
+		assertEquals(16f, stylePara.getComputedFontSize(), 0.01f);
 		xhtmlDoc.setTargetMedium("all");
 	}
 
@@ -183,7 +182,7 @@ public class DOM4JCSSStyleDeclarationTest {
 		assertTrue(elm instanceof CSSStylableElement);
 		CSSComputedProperties style = ((CSSStylableElement)elm).getComputedStyle();
 		assertNotNull(style);
-		assertEquals(12, style.getComputedFontSize());
+		assertEquals(12f, style.getComputedFontSize(), 0.01f);
 		pList.clear();
 	}
 
