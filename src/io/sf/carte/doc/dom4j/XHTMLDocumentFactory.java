@@ -438,16 +438,16 @@ public class XHTMLDocumentFactory extends DOMDocumentFactory {
 
 		}
 
-		DOM4JCSSStyleDeclaration createComputedStyle() {
-			return new MyDOM4JCSSStyleDeclaration();
+		DOM4JCSSStyleDeclaration createComputedStyle(Node ownerNode) {
+			return new MyDOM4JCSSStyleDeclaration(ownerNode);
 		}
 
 		class MyDOM4JCSSStyleDeclaration extends DOM4JCSSStyleDeclaration {
-			public MyDOM4JCSSStyleDeclaration() {
-				super();
+			MyDOM4JCSSStyleDeclaration(Node ownerNode) {
+				super(ownerNode);
 			}
 
-			MyDOM4JCSSStyleDeclaration(ComputedCSSStyle copiedObject) {
+			private MyDOM4JCSSStyleDeclaration(ComputedCSSStyle copiedObject) {
 				super(copiedObject);
 			}
 

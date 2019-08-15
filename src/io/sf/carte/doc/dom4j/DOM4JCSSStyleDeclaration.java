@@ -20,15 +20,18 @@ import io.sf.carte.doc.style.css.om.BoxModelHelper;
 import io.sf.carte.doc.style.css.om.ComputedCSSStyle;
 
 /**
- * Style declaration for DOM4J.
+ * Computed style for DOM4J.
  * 
  * @author Carlos Amengual
  * 
  */
-class DOM4JCSSStyleDeclaration extends ComputedCSSStyle {
+abstract class DOM4JCSSStyleDeclaration extends ComputedCSSStyle {
 
-	public DOM4JCSSStyleDeclaration() {
+	private transient ComputedCSSStyle parentStyle = null;
+
+	DOM4JCSSStyleDeclaration(Node ownerNode) {
 		super();
+		setOwnerNode(ownerNode);
 	}
 
 	DOM4JCSSStyleDeclaration(ComputedCSSStyle copiedObject) {
@@ -37,24 +40,20 @@ class DOM4JCSSStyleDeclaration extends ComputedCSSStyle {
 
 	@Override
 	public ComputedCSSStyle getParentComputedStyle() {
-		ComputedCSSStyle parentCss = null;
-		Node node = getOwnerNode();
-		while (node != null) {
-			node = node.getParentNode();
-			if(node == null) {
-				break;
-			}
-			if (node.getNodeType() == Node.ELEMENT_NODE) {
-				parentCss = ((CSSStylableElement)node).getComputedStyle();
-				break;
+		if (parentStyle == null) {
+			Node node = getOwnerNode();
+			while (node != null) {
+				node = node.getParentNode();
+				if (node == null) {
+					break;
+				}
+				if (node.getNodeType() == Node.ELEMENT_NODE) {
+					parentStyle = ((CSSStylableElement) node).getComputedStyle();
+					break;
+				}
 			}
 		}
-		return parentCss;
-	}
-
-	@Override
-	protected void setOwnerNode(Node node) {
-		super.setOwnerNode(node);
+		return parentStyle;
 	}
 
 	/**
@@ -93,9 +92,4 @@ class DOM4JCSSStyleDeclaration extends ComputedCSSStyle {
 		return null;
 	}
 
-	@Override
-	public ComputedCSSStyle clone() {
-		DOM4JCSSStyleDeclaration styleClone = new DOM4JCSSStyleDeclaration(this);
-		return styleClone;
-	}
 }

@@ -68,8 +68,7 @@ abstract class DOM4JDocumentCSSStyleSheet extends BaseDocumentCSSStyleSheet {
 		// Get the inline style
 		InlineStyle inline = (InlineStyle) elm.getStyle();
 		// Compute style
-		DOM4JCSSStyleDeclaration styledecl = getStyleSheetFactory().createComputedStyle();
-		styledecl.setOwnerNode(elm);
+		DOM4JCSSStyleDeclaration styledecl = getStyleSheetFactory().createComputedStyle(elm);
 		ComputedCSSStyle style = computeStyle(styledecl, elm.getSelectorMatcher(), pseudoElt, inline);
 		return style;
 	}
