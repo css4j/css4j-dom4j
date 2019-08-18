@@ -504,7 +504,7 @@ abstract public class CSSStylableElement extends DOMElement implements
 				return false;
 			}
 			while (parent != null) {
-				if ("form".equals(parent.getTagName())) {
+				if ("form".equalsIgnoreCase(parent.getTagName())) {
 					break;
 				}
 				parent = (CSSStylableElement) parent.getParent();
@@ -547,11 +547,11 @@ abstract public class CSSStylableElement extends DOMElement implements
 					String tagname = element.getTagName().toLowerCase(Locale.US);
 					if (tagname.equals("input")) {
 						String type = element.getAttribute("type");
-						if ("submit".equals(type) || "image".equals(type)) {
+						if ("submit".equalsIgnoreCase(type) || "image".equalsIgnoreCase(type)) {
 							return false;
 						}
 					} else if (tagname.equals("button")) {
-						if ("submit".equals(element.getAttribute("type"))) {
+						if ("submit".equalsIgnoreCase(element.getAttribute("type"))) {
 							return false;
 						}
 					}

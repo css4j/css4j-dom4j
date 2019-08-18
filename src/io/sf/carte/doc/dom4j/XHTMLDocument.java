@@ -273,7 +273,7 @@ public class XHTMLDocument extends DOMDocument implements CSSDocument, CSSRuleLi
 	 */
 	public boolean addStyleSheet(InputSource cssSrc) throws DOMException, IOException, CSSException {
 		String media = cssSrc.getMedia();
-		if (media != null && !"all".equals(media)) {
+		if (media != null && !"all".equalsIgnoreCase(media)) {
 			// handle as media rule
 			MediaQueryList mediaList = MediaQueryFactory.createMediaList(media);
 			if (mediaList.isNotAllMedia()) {
@@ -536,7 +536,7 @@ public class XHTMLDocument extends DOMDocument implements CSSDocument, CSSRuleLi
 	@Override
 	public void setTargetMedium(String medium) throws CSSMediaException {
 		medium = medium.intern();
-		if ("all".equals(medium)) {
+		if ("all".equalsIgnoreCase(medium)) {
 			targetMedium = null;
 		} else {
 			targetMedium = medium;
@@ -622,13 +622,13 @@ public class XHTMLDocument extends DOMDocument implements CSSDocument, CSSRuleLi
 	}
 
 	public void onMetaAdded(String name, String attribute) {
-		if ("Default-Style".equals(name)) {
+		if ("Default-Style".equalsIgnoreCase(name)) {
 			metaDefaultStyleSet = attribute;
 		}
 	}
 
 	public void onMetaRemoved(String name, String attribute) {
-		if ("Default-Style".equals(name)) {
+		if ("Default-Style".equalsIgnoreCase(name)) {
 			metaDefaultStyleSet = "";
 		}
 	}

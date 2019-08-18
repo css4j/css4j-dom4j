@@ -12,6 +12,7 @@
 package io.sf.carte.doc.dom4j;
 
 import java.util.EnumSet;
+import java.util.Locale;
 
 import org.dom4j.Attribute;
 import org.dom4j.Element;
@@ -161,7 +162,7 @@ public class XHTMLDocumentFactory extends DOMDocumentFactory {
 
 	@Override
 	public CSSStylableElement createElement(QName qname) {
-		String name = qname.getName();
+		String name = qname.getName().toLowerCase(Locale.US);
 		if ("base".equals(name)) {
 			return new BaseURLElement(qname);
 		} else if ("style".equals(name)) {
@@ -203,7 +204,7 @@ public class XHTMLDocumentFactory extends DOMDocumentFactory {
 
 	@Override
 	public CSSStylableElement createElement(QName qname, int attributeCount) {
-		String name = qname.getName();
+		String name = qname.getName().toLowerCase(Locale.US);
 		if ("base".equals(name)) {
 			return new BaseURLElement(qname, attributeCount);
 		} else if ("style".equals(name)) {

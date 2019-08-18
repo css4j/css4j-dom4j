@@ -61,7 +61,7 @@ class StyleElement extends StyleDefinerElement {
 				return null;
 			}
 			String type = attributeValue("type");
-			if (!"text/css".equals(type)) {
+			if (!"text/css".equalsIgnoreCase(type)) {
 				return null;
 			}
 			String media = attributeValue("media");

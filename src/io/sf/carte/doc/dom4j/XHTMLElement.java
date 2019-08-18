@@ -36,9 +36,9 @@ public class XHTMLElement extends CSSStylableElement {
 		super(qname);
 	}
 
-    public XHTMLElement(QName qname, int attributeCount) {
-        super(qname, attributeCount);
-    }
+	public XHTMLElement(QName qname, int attributeCount) {
+		super(qname, attributeCount);
+	}
 
 	/**
 	 * Gets the <code>id</code> attribute of this element.
@@ -46,27 +46,27 @@ public class XHTMLElement extends CSSStylableElement {
 	 * @return the <code>id</code> attribute, or the empty string if has no ID.
 	 */
 	@Override
-    public String getId() {
-    	String id = attributeValue("id");
-    	if(id == null) {
-    		id = attributeValue("ID");
-    	}
-    	return id != null ? id : "";
-    }
+	public String getId() {
+		String id = attributeValue("id");
+		if (id == null) {
+			id = attributeValue("ID");
+		}
+		return id != null ? id : "";
+	}
 
 	@Override
-    protected String elementID(Element element) {
+	protected String elementID(Element element) {
 		String idAttr = element.attributeValue("id");
-		if(idAttr == null) {
+		if (idAttr == null) {
 			idAttr = element.attributeValue("ID");
 		}
-        return idAttr;
-    }
+		return idAttr;
+	}
 
 	@Override
 	public void setAttribute(String name, String value) throws DOMException {
-		if("id".equals(name)) {
-			if(!hasAttribute("id") && hasAttribute("ID")) {
+		if ("id".equals(name)) {
+			if (!hasAttribute("id") && hasAttribute("ID")) {
 				name = "ID";
 			}
 		}
@@ -75,8 +75,8 @@ public class XHTMLElement extends CSSStylableElement {
 
 	@Override
 	public void setAttributeNS(String namespaceURI, String qualifiedName, String value) throws DOMException {
-		if("id".equals(qualifiedName)) {
-			if(!hasAttributeNS(namespaceURI, "id") && hasAttributeNS(namespaceURI, "ID")) {
+		if ("id".equals(qualifiedName)) {
+			if (!hasAttributeNS(namespaceURI, "id") && hasAttributeNS(namespaceURI, "ID")) {
 				qualifiedName = "ID";
 			}
 		}
@@ -86,14 +86,14 @@ public class XHTMLElement extends CSSStylableElement {
 	@Override
 	protected void childAdded(Node node) {
 		super.childAdded(node);
-		if(node instanceof LinkStyle) {
+		if (node instanceof LinkStyle) {
 			getOwnerDocument().onEmbeddedStyleAdd((LinkStyle) node);
 		}
 	}
 
 	@Override
 	protected void childRemoved(Node node) {
-		if(node instanceof LinkStyle) {
+		if (node instanceof LinkStyle) {
 			getOwnerDocument().onEmbeddedStyleRemove((LinkStyle) node);
 		}
 		super.childRemoved(node);

@@ -40,13 +40,13 @@ class HeadElement extends XHTMLElement {
 	@Override
 	protected void childAdded(Node node) {
 		super.childAdded(node);
-		if(node instanceof BaseURLElement) {
-			getOwnerDocument().setBaseURL(((BaseURLElement)node).base);
-			((BaseURLElement)node).base = null; // help GC
-		} else if("meta".equals(node.getName())) {
-			Element elt = (Element)node;
+		if (node instanceof BaseURLElement) {
+			getOwnerDocument().setBaseURL(((BaseURLElement) node).base);
+			((BaseURLElement) node).base = null; // help GC
+		} else if ("meta".equalsIgnoreCase(node.getName())) {
+			Element elt = (Element) node;
 			String name = elt.getAttribute("http-equiv");
-			if("".equals(name)) {
+			if (name.length() == 0) {
 				name = elt.getAttribute("name");
 			}
 			getOwnerDocument().onMetaAdded(name, elt.getAttribute("content"));
@@ -55,10 +55,10 @@ class HeadElement extends XHTMLElement {
 
 	@Override
 	protected void childRemoved(Node node) {
-		if("meta".equals(node.getName())) {
-			Element elt = (Element)node;
+		if ("meta".equalsIgnoreCase(node.getName())) {
+			Element elt = (Element) node;
 			String name = elt.getAttribute("http-equiv");
-			if("".equals(name)) {
+			if (name.length() == 0) {
 				name = elt.getAttribute("name");
 			}
 			getOwnerDocument().onMetaRemoved(name, elt.getAttribute("content"));
