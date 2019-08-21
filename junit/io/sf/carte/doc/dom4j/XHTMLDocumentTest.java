@@ -266,9 +266,9 @@ public class XHTMLDocumentTest {
 		assertEquals(
 				"display: table-row; vertical-align: middle; border-top-color: #808080; border-right-color: #808080; border-bottom-color: #808080; border-left-color: #808080; unicode-bidi: embed; margin-top: 10px; margin-right: 10px; margin-bottom: 10px; margin-left: 10px; ",
 				style.getCssText());
-		xhtmlDoc.getOverrideStyle(elm, null).setCssText("margin: 16pt; color: red");
-		assertEquals("red", xhtmlDoc.getOverrideStyle(elm, null).getPropertyValue("color"));
-		assertEquals("margin: 16pt; color: red; ", xhtmlDoc.getOverrideStyle(elm, null).getCssText());
+		el.getOverrideStyle(null).setCssText("margin: 16pt; color: red");
+		assertEquals("red", el.getOverrideStyle(null).getPropertyValue("color"));
+		assertEquals("margin: 16pt; color: red; ", el.getOverrideStyle(null).getCssText());
 		style = el.getComputedStyle();
 		assertNotNull(style);
 		assertEquals("16pt", style.getPropertyValue("margin-top"));
@@ -308,7 +308,7 @@ public class XHTMLDocumentTest {
 		CSSStyleDeclaration style = xhtmlDoc.getStyleSheet().getComputedStyle(elm, null);
 		assertEquals("#cd853f", style.getPropertyValue("background-color"));
 		assertEquals("#8a2be2", style.getPropertyValue("color"));
-		xhtmlDoc.getOverrideStyle(elm, null).setCssText("color: darkmagenta ! important;");
+		elm.getOverrideStyle(null).setCssText("color: darkmagenta ! important;");
 		style = xhtmlDoc.getStyleSheet().getComputedStyle(elm, null);
 		assertNotNull(style);
 		assertEquals("#8a2be2", style.getPropertyValue("color"));

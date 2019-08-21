@@ -263,7 +263,7 @@ public class DOM4JCSSStyleDeclarationTest {
 		assertNotNull(val);
 		assertEquals(CSSValue.CSS_PRIMITIVE_VALUE, val.getCssValueType());
 		assertEquals("url('http://www.example.com/headerbg.png')", val.getCssText());
-		xhtmlDoc.getOverrideStyle(elt, null).setCssText("background: url('override.png')");
+		elt.getOverrideStyle(null).setCssText("background: url('override.png')");
 		style = elt.getComputedStyle();
 		assertNotNull(style);
 		val = style.getPropertyCSSValue("background-image");
