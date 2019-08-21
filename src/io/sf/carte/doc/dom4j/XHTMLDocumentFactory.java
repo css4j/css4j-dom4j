@@ -111,25 +111,6 @@ public class XHTMLDocumentFactory extends DOMDocumentFactory {
 	}
 
 	/**
-	 * Sets the default User Agent CSS style sheet to be used in documents
-	 * created by this factory.
-	 * <p>
-	 * The sheet will be appropriately merged with the non-important part of the
-	 * user-preference style sheet to provide the document's default sheet.
-	 * </p>
-	 * 
-	 * @param styleSheet
-	 *            the user agent style sheet.
-	 */
-	@Deprecated
-	public void setUserAgentStyleSheet(BaseDocumentCSSStyleSheet styleSheet) {
-		cssFactory.uaStyleSheet = styleSheet;
-		cssFactory.uaQStyleSheet = styleSheet;
-		cssFactory.defStyleSheet = null;
-		cssFactory.defQStyleSheet = null;
-	}
-
-	/**
 	 * Indicates whether the stylable elements currently produced by this
 	 * factory are cache-enabled or not.
 	 * 
