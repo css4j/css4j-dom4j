@@ -40,6 +40,7 @@ import org.w3c.dom.css.CSSStyleSheet;
 import org.w3c.dom.stylesheets.LinkStyle;
 
 import io.sf.carte.doc.agent.CSSCanvas;
+import io.sf.carte.doc.agent.DeviceFactory;
 import io.sf.carte.doc.style.css.CSSDocument;
 import io.sf.carte.doc.style.css.CSSMediaException;
 import io.sf.carte.doc.style.css.CSSRuleListener;
@@ -510,7 +511,10 @@ public class XHTMLDocument extends DOMDocument implements CSSDocument, CSSRuleLi
 	public StyleDatabase getStyleDatabase() {
 		StyleDatabase sdb = null;
 		if (targetMedium != null) {
-			sdb = getDocumentFactory().getStyleSheetFactory().getDeviceFactory().getStyleDatabase(targetMedium);
+			DeviceFactory df = getDocumentFactory().getStyleSheetFactory().getDeviceFactory();
+			if (df != null) {
+				sdb = df.getStyleDatabase(targetMedium);
+			}
 		}
 		return sdb;
 	}
@@ -558,9 +562,14 @@ public class XHTMLDocument extends DOMDocument implements CSSDocument, CSSRuleLi
 		if (canvases.containsKey(targetMedium)) {
 			return canvases.get(targetMedium);
 		}
-		CSSCanvas canvas = getDocumentFactory().getStyleSheetFactory().getDeviceFactory().createCanvas(targetMedium,
-				this);
-		canvases.put(targetMedium, canvas);
+		CSSCanvas canvas;
+		DeviceFactory df = getDocumentFactory().getStyleSheetFactory().getDeviceFactory();
+		if (df != null) {
+			canvas = df.createCanvas(targetMedium, this);
+			canvases.put(targetMedium, canvas);
+		} else {
+			canvas = null;
+		}
 		return canvas;
 	}
 
