@@ -143,7 +143,7 @@ public class XHTMLDocumentFactory extends DOMDocumentFactory {
 
 	@Override
 	public CSSStylableElement createElement(QName qname) {
-		String name = qname.getName().toLowerCase(Locale.US);
+		String name = qname.getName().toLowerCase(Locale.ROOT);
 		if ("base".equals(name)) {
 			return new BaseURLElement(qname);
 		} else if ("style".equals(name)) {
@@ -185,7 +185,7 @@ public class XHTMLDocumentFactory extends DOMDocumentFactory {
 
 	@Override
 	public CSSStylableElement createElement(QName qname, int attributeCount) {
-		String name = qname.getName().toLowerCase(Locale.US);
+		String name = qname.getName().toLowerCase(Locale.ROOT);
 		if ("base".equals(name)) {
 			return new BaseURLElement(qname, attributeCount);
 		} else if ("style".equals(name)) {

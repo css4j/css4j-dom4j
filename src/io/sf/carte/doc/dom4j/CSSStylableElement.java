@@ -215,7 +215,7 @@ abstract public class CSSStylableElement extends DOMElement implements
 
 		DOM4JSelectorMatcher() {
 			super();
-			setLocalName(getName().toLowerCase(Locale.US).intern());
+			setLocalName(getName().toLowerCase(Locale.ROOT).intern());
 		}
 
 		@Override
@@ -544,7 +544,7 @@ abstract public class CSSStylableElement extends DOMElement implements
 			if (!element.hasAttribute("disabled")) {
 				String form = element.getAttribute("form");
 				if (form == null || form.equals(formid)) {
-					String tagname = element.getTagName().toLowerCase(Locale.US);
+					String tagname = element.getTagName().toLowerCase(Locale.ROOT);
 					if (tagname.equals("input")) {
 						String type = element.getAttribute("type");
 						if ("submit".equalsIgnoreCase(type) || "image".equalsIgnoreCase(type)) {
