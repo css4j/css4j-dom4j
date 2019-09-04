@@ -109,9 +109,8 @@ class LinkElement extends StyleDefinerElement {
 		if (media == null || media.trim().length() == 0) {
 			mediaList = MediaList.createMediaList();
 		} else {
-			mediaList = MediaQueryFactory.createMediaList(media);
+			mediaList = MediaQueryFactory.createMediaList(media, this);
 			if (mediaList.isNotAllMedia() && mediaList.hasErrors()) {
-				getErrorHandler().mediaQueryError(this, media);
 				linkedSheet = null;
 				return;
 			}
