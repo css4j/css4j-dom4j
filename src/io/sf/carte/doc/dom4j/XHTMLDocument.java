@@ -272,19 +272,16 @@ public class XHTMLDocument extends DOMDocument implements CSSDocument, CSSRuleLi
 	 * @throws IOException
 	 *             if a problem is found reading the sheet.
 	 */
-	public boolean addStyleSheet(InputSource cssSrc) throws DOMException, IOException, CSSException {
+	public boolean addStyleSheet(InputSource cssSrc) throws DOMException, IOException {
 		String media = cssSrc.getMedia();
 		if (media != null && !"all".equalsIgnoreCase(media)) {
 			// handle as media rule
-			MediaQueryList mediaList = MediaQueryFactory.createMediaList(media);
+			MediaQueryList mediaList = MediaQueryFactory.createMediaList(media, null);
 			if (mediaList.isNotAllMedia()) {
-				if (mediaList.hasErrors()) {
-					throw new CSSException("Bad media query: " + media);
-				}
 				return false;
 			}
 			AbstractCSSStyleSheet sheet = getDocumentFactory().getStyleSheetFactory()
-					.createStyleSheet(cssSrc.getTitle(), cssSrc.getMedia());
+					.createStyleSheet(cssSrc.getTitle(), mediaList);
 			((DOM4JDocumentCSSStyleSheet) sheet).setOwnerDocument(this);
 			boolean result = sheet.parseCSSStyleSheet(cssSrc);
 			if (result) {
