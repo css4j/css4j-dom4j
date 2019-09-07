@@ -25,6 +25,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.css.CSSRule;
 
 import io.sf.carte.doc.style.css.CSSDocument;
+import io.sf.carte.doc.style.css.CSSElement;
 import io.sf.carte.doc.style.css.CSSStyleSheetFactory;
 import io.sf.carte.doc.style.css.MediaQueryList;
 import io.sf.carte.doc.style.css.nsac.Parser2;
@@ -420,16 +421,16 @@ public class XHTMLDocumentFactory extends DOMDocumentFactory {
 
 		}
 
-		DOM4JCSSStyleDeclaration createComputedStyle(Node ownerNode) {
-			return new MyDOM4JCSSStyleDeclaration(ownerNode);
+		DOM4JComputedStyle createComputedStyle(CSSElement ownerNode) {
+			return new MyDOM4JComputedStyle(ownerNode);
 		}
 
-		class MyDOM4JCSSStyleDeclaration extends DOM4JCSSStyleDeclaration {
-			MyDOM4JCSSStyleDeclaration(Node ownerNode) {
+		class MyDOM4JComputedStyle extends DOM4JComputedStyle {
+			MyDOM4JComputedStyle(CSSElement ownerNode) {
 				super(ownerNode);
 			}
 
-			private MyDOM4JCSSStyleDeclaration(ComputedCSSStyle copiedObject) {
+			private MyDOM4JComputedStyle(ComputedCSSStyle copiedObject) {
 				super(copiedObject);
 			}
 
@@ -440,7 +441,7 @@ public class XHTMLDocumentFactory extends DOMDocumentFactory {
 
 			@Override
 			public ComputedCSSStyle clone() {
-				MyDOM4JCSSStyleDeclaration styleClone = new MyDOM4JCSSStyleDeclaration(this);
+				MyDOM4JComputedStyle styleClone = new MyDOM4JComputedStyle(this);
 				return styleClone;
 			}
 		}
