@@ -35,7 +35,6 @@ import org.w3c.dom.NodeList;
 import org.w3c.dom.UserDataHandler;
 import org.w3c.dom.css.CSSFontFaceRule;
 import org.w3c.dom.css.CSSPageRule;
-import org.w3c.dom.css.CSSRuleList;
 import org.w3c.dom.css.CSSStyleSheet;
 import org.w3c.dom.stylesheets.LinkStyle;
 
@@ -50,13 +49,11 @@ import io.sf.carte.doc.style.css.ExtendedCSSStyleDeclaration;
 import io.sf.carte.doc.style.css.MediaQueryList;
 import io.sf.carte.doc.style.css.SheetErrorHandler;
 import io.sf.carte.doc.style.css.StyleDatabase;
-import io.sf.carte.doc.style.css.om.AbstractCSSRule;
 import io.sf.carte.doc.style.css.om.AbstractCSSStyleSheet;
 import io.sf.carte.doc.style.css.om.AbstractCSSStyleSheetFactory;
 import io.sf.carte.doc.style.css.om.BaseDocumentCSSStyleSheet;
 import io.sf.carte.doc.style.css.om.DefaultErrorHandler;
 import io.sf.carte.doc.style.css.om.MediaQueryFactory;
-import io.sf.carte.doc.style.css.om.MediaRule;
 import io.sf.carte.doc.style.css.om.StyleSheetList;
 
 /**
@@ -282,20 +279,12 @@ public class XHTMLDocument extends DOMDocument implements CSSDocument, CSSRuleLi
 			}
 			AbstractCSSStyleSheet sheet = getDocumentFactory().getStyleSheetFactory()
 					.createStyleSheet(cssSrc.getTitle(), mediaList);
-			((DOM4JDocumentCSSStyleSheet) sheet).setOwnerDocument(this);
+			((BaseDocumentCSSStyleSheet) sheet).setOwnerDocument(this);
 			boolean result = sheet.parseCSSStyleSheet(cssSrc);
 			if (result) {
 				result = !mediaList.hasErrors();
 			}
-			MediaRule mrule = getStyleSheet().createCSSMediaRule(mediaList);
-			// Fill the media rule
-			CSSRuleList otherRules = sheet.getCssRules();
-			int orl = otherRules.getLength();
-			for (int i = 0; i < orl; i++) {
-				AbstractCSSRule orule = (AbstractCSSRule) otherRules.item(i);
-				mrule.addRule(orule);
-			}
-			getStyleSheet().addRule(mrule);
+			getStyleSheet().addStyleSheet(sheet);
 			return result;
 		} else {
 			return getStyleSheet().parseCSSStyleSheet(cssSrc);

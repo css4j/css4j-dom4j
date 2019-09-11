@@ -22,7 +22,6 @@ import org.dom4j.dom.DOMDocumentType;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.DocumentType;
 import org.w3c.dom.Node;
-import org.w3c.dom.css.CSSRule;
 
 import io.sf.carte.doc.style.css.CSSDocument;
 import io.sf.carte.doc.style.css.CSSElement;
@@ -332,7 +331,7 @@ public class XHTMLDocumentFactory extends DOMDocumentFactory {
 		}
 
 		DOM4JCSSStyleSheet createCSSStyleSheet(String title, Node ownerNode, MediaQueryList media,
-				CSSRule ownerRule, byte origin) {
+				AbstractCSSRule ownerRule, byte origin) {
 			return new MyDOM4JCSSStyleSheet(title, ownerNode, media, ownerRule, origin);
 		}
 
@@ -352,7 +351,7 @@ public class XHTMLDocumentFactory extends DOMDocumentFactory {
 		}
 
 		private class MyDOM4JCSSStyleSheet extends DOM4JCSSStyleSheet {
-			public MyDOM4JCSSStyleSheet(String title, Node ownerNode, MediaQueryList media, CSSRule ownerRule,
+			public MyDOM4JCSSStyleSheet(String title, Node ownerNode, MediaQueryList media, AbstractCSSRule ownerRule,
 					byte origin) {
 				super(title, ownerNode, media, ownerRule, origin);
 			}

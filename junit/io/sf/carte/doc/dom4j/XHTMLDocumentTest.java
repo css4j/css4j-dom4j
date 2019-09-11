@@ -19,6 +19,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 import java.io.Reader;
+import java.io.StringReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Iterator;
@@ -862,6 +863,22 @@ public class XHTMLDocumentTest {
 	public void testIsSafeOrigin() throws MalformedURLException {
 		URL url = new URL(xhtmlDoc.getBaseURI());
 		assertTrue(xhtmlDoc.isSafeOrigin(url));
+	}
+
+	/*
+	 * It is not encouraged to use the addStyleSheet old method, but there are
+	 * people using it.
+	 */
+	@Test
+	public void testAddStyleSheet() throws IOException {
+		DocumentCSSStyleSheet css = xhtmlDoc.getStyleSheet();
+		assertNotNull(css);
+		assertNotNull(css.getCssRules());
+		assertEquals(129, css.getCssRules().getLength());
+		StringReader re = new StringReader("p{color:#a1e3f0}#noid{margin:0.04em;}");
+		org.w3c.css.sac.InputSource cssSrc = new org.w3c.css.sac.InputSource(re);
+		xhtmlDoc.addStyleSheet(cssSrc);
+		assertEquals(131, css.getCssRules().getLength());
 	}
 
 }

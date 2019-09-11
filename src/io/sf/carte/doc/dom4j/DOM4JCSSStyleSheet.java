@@ -15,11 +15,11 @@ import java.net.URL;
 
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Node;
-import org.w3c.dom.css.CSSRule;
 
 import io.sf.carte.doc.dom4j.XHTMLDocumentFactory.DOM4JCSSStyleSheetFactory;
 import io.sf.carte.doc.style.css.CSSDocument;
 import io.sf.carte.doc.style.css.MediaQueryList;
+import io.sf.carte.doc.style.css.om.AbstractCSSRule;
 import io.sf.carte.doc.style.css.om.BaseCSSStyleSheet;
 
 /**
@@ -32,7 +32,8 @@ abstract class DOM4JCSSStyleSheet extends BaseCSSStyleSheet implements Cloneable
 
 	Node ownerNode;
 
-	public DOM4JCSSStyleSheet(String title, Node ownerNode, MediaQueryList media, CSSRule ownerRule, byte origin) {
+	public DOM4JCSSStyleSheet(String title, Node ownerNode, MediaQueryList media, AbstractCSSRule ownerRule,
+			byte origin) {
 		super(title, media, ownerRule, origin);
 		this.ownerNode = ownerNode;
 	}
