@@ -280,14 +280,14 @@ public class XHTMLDocument extends DOMDocument implements CSSDocument, CSSRuleLi
 			AbstractCSSStyleSheet sheet = getDocumentFactory().getStyleSheetFactory()
 					.createStyleSheet(cssSrc.getTitle(), mediaList);
 			((BaseDocumentCSSStyleSheet) sheet).setOwnerDocument(this);
-			boolean result = sheet.parseCSSStyleSheet(cssSrc);
+			boolean result = sheet.parseStyleSheet(cssSrc);
 			if (result) {
 				result = !mediaList.hasErrors();
 			}
 			getStyleSheet().addStyleSheet(sheet);
 			return result;
 		} else {
-			return getStyleSheet().parseCSSStyleSheet(cssSrc);
+			return getStyleSheet().parseStyleSheet(cssSrc);
 		}
 	}
 

@@ -93,7 +93,7 @@ class StyleElement extends StyleDefinerElement {
 				Reader re = new StringReader(styleText);
 				source.setCharacterStream(re);
 				try {
-					linkedSheet.parseCSSStyleSheet(source);
+					linkedSheet.parseStyleSheet(source);
 				} catch (DOMException e) {
 					getErrorHandler().linkedSheetError(e, linkedSheet);
 				} catch (IOException e) {

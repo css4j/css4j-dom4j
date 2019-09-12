@@ -33,7 +33,7 @@ public class DOM4JCSSStyleSheetTest {
 				.createStyleSheet(null, null);
 		Reader re = DOMCSSStyleSheetFactoryTest.loadSampleCSSReader();
 		InputSource source = new InputSource(re);
-		css.parseCSSStyleSheet(source);
+		css.parseStyleSheet(source);
 		re.close();
 		CSSRuleArrayList rules = css.getCssRules();
 		assertEquals(DOMCSSStyleSheetFactoryTest.RULES_IN_SAMPLE_CSS, rules.getLength());
