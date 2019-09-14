@@ -20,8 +20,8 @@ import org.dom4j.dom.DOMElement;
 
 import io.sf.carte.doc.agent.MockURLFactory;
 import io.sf.carte.doc.style.css.StyleDatabase;
-import io.sf.carte.doc.style.css.TestStyleDatabase;
 import io.sf.carte.doc.style.css.om.DummyDeviceFactory;
+import io.sf.carte.doc.style.css.om.TestStyleDatabase;
 
 /**
  * A document factory for test purposes.
@@ -42,7 +42,7 @@ public class TestDocumentFactory extends XHTMLDocumentFactory {
 		getStyleSheetFactory().setDeviceFactory(new TestDeviceFactory());
 	}
 
-	public MockURLFactory getMockURLFactory() {
+	public MockURLFactory getURLFactory() {
 		return urlFactory;
 	}
 
