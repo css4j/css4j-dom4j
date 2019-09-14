@@ -33,8 +33,6 @@ import org.w3c.dom.DocumentType;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.UserDataHandler;
-import org.w3c.dom.css.CSSFontFaceRule;
-import org.w3c.dom.css.CSSPageRule;
 import org.w3c.dom.css.CSSStyleSheet;
 import org.w3c.dom.stylesheets.LinkStyle;
 
@@ -42,7 +40,6 @@ import io.sf.carte.doc.agent.CSSCanvas;
 import io.sf.carte.doc.agent.DeviceFactory;
 import io.sf.carte.doc.style.css.CSSDocument;
 import io.sf.carte.doc.style.css.CSSMediaException;
-import io.sf.carte.doc.style.css.CSSRuleListener;
 import io.sf.carte.doc.style.css.DocumentCSSStyleSheet;
 import io.sf.carte.doc.style.css.ErrorHandler;
 import io.sf.carte.doc.style.css.ExtendedCSSStyleDeclaration;
@@ -62,7 +59,7 @@ import io.sf.carte.doc.style.css.om.StyleSheetList;
  * @author Carlos Amengual
  * 
  */
-public class XHTMLDocument extends DOMDocument implements CSSDocument, CSSRuleListener {
+public class XHTMLDocument extends DOMDocument implements CSSDocument {
 
 	public final static String XHTML_NAMESPACE_URI = "http://www.w3.org/1999/xhtml";
 
@@ -591,29 +588,6 @@ public class XHTMLDocument extends DOMDocument implements CSSDocument, CSSRuleLi
 	@Override
 	public boolean hasStyleIssues() {
 		return sheets.hasErrorsOrWarnings() || getErrorHandler().hasErrors() || getErrorHandler().hasWarnings();
-	}
-
-	/**
-	 * Try to load the font family according to the given font face rule, and
-	 * make it available to the canvas.
-	 * 
-	 * @param rule
-	 *            the font face rule.
-	 */
-	@Override
-	public void onFontFaceRule(CSSFontFaceRule rule) {
-		Iterator<CSSCanvas> it = canvases.values().iterator();
-		while (it.hasNext()) {
-			CSSCanvas canvas = it.next();
-			if (canvas != null) {
-				canvas.loadFontFace(rule);
-			}
-		}
-	}
-
-	@Override
-	public void onPageRule(CSSPageRule rule) {
-		// TODO
 	}
 
 	public void onMetaAdded(String name, String attribute) {
