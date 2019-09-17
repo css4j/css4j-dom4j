@@ -50,7 +50,6 @@ import io.sf.carte.doc.style.css.om.AbstractCSSStyleSheet;
 import io.sf.carte.doc.style.css.om.AbstractCSSStyleSheetFactory;
 import io.sf.carte.doc.style.css.om.BaseDocumentCSSStyleSheet;
 import io.sf.carte.doc.style.css.om.DefaultErrorHandler;
-import io.sf.carte.doc.style.css.om.MediaQueryFactory;
 import io.sf.carte.doc.style.css.om.StyleSheetList;
 
 /**
@@ -270,7 +269,7 @@ public class XHTMLDocument extends DOMDocument implements CSSDocument {
 		String media = cssSrc.getMedia();
 		if (media != null && !"all".equalsIgnoreCase(media)) {
 			// handle as media rule
-			MediaQueryList mediaList = MediaQueryFactory.createMediaList(media, null);
+			MediaQueryList mediaList = getDocumentFactory().getStyleSheetFactory().createMediaList(media, null);
 			if (mediaList.isNotAllMedia()) {
 				return false;
 			}

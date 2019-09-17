@@ -19,7 +19,6 @@ import org.w3c.css.sac.CSSException;
 import io.sf.carte.doc.style.css.MediaQueryList;
 import io.sf.carte.doc.style.css.om.AbstractCSSStyleSheet;
 import io.sf.carte.doc.style.css.om.MediaList;
-import io.sf.carte.doc.style.css.om.MediaQueryFactory;
 
 /**
  * LINK element.
@@ -109,7 +108,7 @@ class LinkElement extends StyleDefinerElement {
 		if (media == null || media.trim().length() == 0) {
 			mediaList = MediaList.createMediaList();
 		} else {
-			mediaList = MediaQueryFactory.createMediaList(media, this);
+			mediaList = getDocumentFactory().getStyleSheetFactory().createMediaList(media, this);
 			if (mediaList.isNotAllMedia() && mediaList.hasErrors()) {
 				linkedSheet = null;
 				return;
