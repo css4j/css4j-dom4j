@@ -94,6 +94,8 @@ class LinkElement extends StyleDefinerElement {
 						}
 					}
 					needsUpdate = false;
+				} else {
+					getErrorHandler().linkedStyleError(this, "Missing or void href attribute.");
 				}
 			} else {
 				linkedSheet = null;
