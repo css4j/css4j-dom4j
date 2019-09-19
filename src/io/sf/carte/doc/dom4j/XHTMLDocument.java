@@ -90,7 +90,7 @@ public class XHTMLDocument extends DOMDocument implements CSSDocument {
 
 	private String targetMedium = null;
 
-	private Map<String, CSSCanvas> canvases = new HashMap<String, CSSCanvas>(3);
+	private final Map<String, CSSCanvas> canvases = new HashMap<String, CSSCanvas>(3);
 
 	private final ErrorHandler errorHandler = createErrorHandler();
 

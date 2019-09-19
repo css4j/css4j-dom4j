@@ -49,9 +49,9 @@ public class DOM4JUserAgent extends AbstractUserAgent {
 
 	protected EntityResolver resolver = createEntityResolver();
 
-	private boolean useXPP3;
+	private final boolean useXPP3;
 
-	private XHTMLDocumentFactory factory;
+	private final XHTMLDocumentFactory factory;
 
 	protected DOM4JUserAgent(EnumSet<Parser2.Flag> parserFlags) {
 		this(parserFlags, false);
