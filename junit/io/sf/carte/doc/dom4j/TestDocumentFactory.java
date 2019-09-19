@@ -18,7 +18,7 @@ import java.net.URLConnection;
 import org.dom4j.dom.DOMDocumentType;
 import org.dom4j.dom.DOMElement;
 
-import io.sf.carte.doc.agent.MockURLFactory;
+import io.sf.carte.doc.agent.MockURLConnectionFactory;
 import io.sf.carte.doc.style.css.StyleDatabase;
 import io.sf.carte.doc.style.css.om.DummyDeviceFactory;
 import io.sf.carte.doc.style.css.om.TestStyleDatabase;
@@ -35,14 +35,14 @@ public class TestDocumentFactory extends XHTMLDocumentFactory {
 
 	private static final StyleDatabase styleDb = new TestStyleDatabase();
 
-	private MockURLFactory urlFactory = new MockURLFactory();
+	private final MockURLConnectionFactory urlFactory = new MockURLConnectionFactory();
 
 	public TestDocumentFactory() {
 		super();
 		getStyleSheetFactory().setDeviceFactory(new TestDeviceFactory());
 	}
 
-	public MockURLFactory getURLFactory() {
+	public MockURLConnectionFactory getConnectionFactory() {
 		return urlFactory;
 	}
 

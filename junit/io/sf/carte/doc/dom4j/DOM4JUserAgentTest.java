@@ -33,7 +33,7 @@ public class DOM4JUserAgentTest {
 	@Before
 	public void setUp() {
 		agent = new TestUserAgent();
-		agent.getTestDocumentFactory().getURLFactory()
+		agent.getTestDocumentFactory().getConnectionFactory()
 			.setHeader("html", "Default-Style", "Alter 2");
 	}
 
