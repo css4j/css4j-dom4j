@@ -110,7 +110,7 @@ class LinkElement extends StyleDefinerElement {
 		if (media == null || media.trim().length() == 0) {
 			mediaList = MediaList.createMediaList();
 		} else {
-			mediaList = getDocumentFactory().getStyleSheetFactory().createMediaList(media, this);
+			mediaList = getDocumentFactory().getStyleSheetFactory().createMediaQueryList(media, this);
 			if (mediaList.isNotAllMedia() && mediaList.hasErrors()) {
 				linkedSheet = null;
 				return;

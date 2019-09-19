@@ -269,7 +269,7 @@ public class XHTMLDocument extends DOMDocument implements CSSDocument {
 		String media = cssSrc.getMedia();
 		if (media != null && !"all".equalsIgnoreCase(media)) {
 			// handle as media rule
-			MediaQueryList mediaList = getDocumentFactory().getStyleSheetFactory().createMediaList(media, null);
+			MediaQueryList mediaList = getDocumentFactory().getStyleSheetFactory().createMediaQueryList(media, null);
 			if (mediaList.isNotAllMedia()) {
 				return false;
 			}
