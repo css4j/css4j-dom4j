@@ -46,21 +46,13 @@
  * <code>DeviceFactory</code> at the <code>XHTMLDocumentFactory</code> with the
  * <code>setDeviceFactory</code> method.
  * <p>
- * If you use the AWT, you may consider using the the java2d module. For example:
+ * If you use the AWT, you may consider using the the AWT module. For example:
  * 
  * <pre>
- * Color color = Java2DStyleDatabase.getAWTColor(style.getCSSColor());
+ * Color color = AWTHelper.getAWTColor(style.getCSSColor());
  * </pre>
  * 
  * Read the documentation of the individual classes for information on
  * additional capabilities, like caching or the use of customized style sheets.
- * <h3>Default style sheet and user preferences</h3>
- * <p>
- * CSS4J uses a default user-agent style sheet as the basis for style
- * computations, although you can set a different one with the
- * <code>setUserAgentStyleSheet</code> method in
- * <code>XHTMLDocumentFactory</code>. User preferences can be specified with the
- * <code>setUserStyleSheet</code> method.
- * </p>
  */
 package io.sf.carte.doc.dom4j;
