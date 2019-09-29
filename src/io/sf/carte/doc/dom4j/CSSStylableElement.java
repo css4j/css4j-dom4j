@@ -25,7 +25,6 @@ import org.dom4j.QName;
 import org.dom4j.dom.DOMElement;
 import org.w3c.css.sac.DescendantSelector;
 import org.w3c.css.sac.InputSource;
-import org.w3c.css.sac.Parser;
 import org.w3c.css.sac.SelectorList;
 import org.w3c.css.sac.SiblingSelector;
 import org.w3c.css.sac.SimpleSelector;
@@ -40,10 +39,11 @@ import io.sf.carte.doc.style.css.CSSDocument;
 import io.sf.carte.doc.style.css.CSSElement;
 import io.sf.carte.doc.style.css.DocumentCSSStyleSheet;
 import io.sf.carte.doc.style.css.ExtendedCSSStyleDeclaration;
-import io.sf.carte.doc.style.css.SACParserFactory;
 import io.sf.carte.doc.style.css.SelectorMatcher;
+import io.sf.carte.doc.style.css.nsac.Parser2;
 import io.sf.carte.doc.style.css.om.AbstractSelectorMatcher;
 import io.sf.carte.doc.style.css.om.ComputedCSSStyle;
+import io.sf.carte.doc.style.css.parser.CSSParser;
 
 /**
  * An element that is stylable with CSS.
@@ -664,7 +664,7 @@ abstract public class CSSStylableElement extends DOMElement implements
 
 	@Override
 	public boolean matches(String selectorString, String pseudoElement) throws DOMException {
-		Parser parser = SACParserFactory.createSACParser();
+		Parser2 parser = new CSSParser();
 		InputSource source = new InputSource(new StringReader(selectorString));
 		SelectorList list;
 		try {
