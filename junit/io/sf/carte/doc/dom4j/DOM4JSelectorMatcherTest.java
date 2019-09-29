@@ -15,55 +15,27 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 import java.io.StringReader;
-import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
 
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
 import org.w3c.css.sac.CSSException;
 import org.w3c.css.sac.InputSource;
-import org.w3c.css.sac.Parser;
 import org.w3c.css.sac.SelectorList;
 
 import io.sf.carte.doc.style.css.SelectorMatcher;
+import io.sf.carte.doc.style.css.nsac.Parser2;
 import io.sf.carte.doc.style.css.om.AbstractCSSStyleSheet;
 import io.sf.carte.doc.style.css.om.BaseCSSStyleSheet;
 import io.sf.carte.doc.style.css.om.CSSOMBridge;
 import io.sf.carte.doc.style.css.om.CSSStyleDeclarationRule;
+import io.sf.carte.doc.style.css.parser.CSSParser;
 
-@RunWith(Parameterized.class)
 public class DOM4JSelectorMatcherTest {
 
 	private static XHTMLDocumentFactory factory;
-	private Parser cssParser;
+	private Parser2 cssParser;
 	private XHTMLDocument document;
-
-	public DOM4JSelectorMatcherTest(Parser cssParser) {
-		super();
-		this.cssParser = cssParser;
-	}
-
-	@Parameters
-	public static Collection<Object[]> data() {
-		List<Object[]> parsers = new LinkedList<Object[]>();
-		parsers.add(new Object[] { new org.apache.batik.css.parser.Parser() });
-		try {
-			Parser p = (Parser) Class.forName("org.w3c.flute.parser.Parser").getConstructor().newInstance();
-			parsers.add(new Object[] { p });
-		} catch (Exception e) {
-		}
-		try {
-			Parser p = (Parser) Class.forName("com.steadystate.css.parser.SACParserCSS3").getConstructor().newInstance();
-			parsers.add(new Object[] { p });
-		} catch (Exception e) {
-		}
-		return parsers;
-	}
 
 	@BeforeClass
 	public static void setUpBeforeClass() {
@@ -72,6 +44,7 @@ public class DOM4JSelectorMatcherTest {
 
 	@Before
 	public void setUp() {
+		this.cssParser = new CSSParser();
 		CSSStylableElement root = factory.createElement("html");
 		document = factory.createDocument(root);
 	}
