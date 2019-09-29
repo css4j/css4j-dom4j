@@ -21,6 +21,7 @@ import java.io.Reader;
 import java.io.StringWriter;
 import java.net.URL;
 import java.net.URLConnection;
+import java.nio.charset.StandardCharsets;
 
 import org.dom4j.DocumentException;
 import org.dom4j.io.SAXReader;
@@ -77,7 +78,7 @@ public class XHTMLDocumentFactoryTest {
 		assertNotNull(ucon);
 		is = ucon.getInputStream();
 		assertNotNull(is);
-		InputStreamReader re = new InputStreamReader(is, "utf-8");
+		InputStreamReader re = new InputStreamReader(is, StandardCharsets.UTF_8);
 		StringWriter sw = new StringWriter(100);
 		char b[] = new char[3000];
 		int n;

@@ -18,6 +18,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.nio.charset.StandardCharsets;
 import java.util.EnumSet;
 
 import org.dom4j.DocumentException;
@@ -96,8 +97,7 @@ public class DOM4JUserAgent extends AbstractUserAgent {
 	 * @throws io.sf.carte.doc.DocumentException if there is a problem parsing the document.
 	 */
 	@Override
-	public XHTMLDocument readURL(URL url)
-	throws IOException, io.sf.carte.doc.DocumentException {
+	public XHTMLDocument readURL(URL url) throws IOException, io.sf.carte.doc.DocumentException {
 		long time = System.currentTimeMillis();
 		URLConnection con = openConnection(url, time);
 		con.connect();
@@ -107,7 +107,7 @@ public class DOM4JUserAgent extends AbstractUserAgent {
 		AgentXHTMLDocument xdoc = null;
 		try {
 			is = openInputStream(con);
-			xdoc = parseDocument(AgentUtil.inputStreamToReader(is, conType, contentEncoding, "utf-8"));
+			xdoc = parseDocument(AgentUtil.inputStreamToReader(is, conType, contentEncoding, StandardCharsets.UTF_8));
 			xdoc.setLoadingTime(time);
 			if (xdoc.getBaseURL() == null) {
 				xdoc.setBaseURL(url);
@@ -118,7 +118,7 @@ public class DOM4JUserAgent extends AbstractUserAgent {
 			throw new io.sf.carte.doc.DocumentException(
 					"Error parsing document " + url.toExternalForm(), e.getCause());
 		} finally {
-			if(is != null) {
+			if (is != null) {
 				is.close();
 			}
 		}
@@ -126,12 +126,10 @@ public class DOM4JUserAgent extends AbstractUserAgent {
 		String defStyle = con.getHeaderField("Default-Style");
 		NodeList list = xdoc.getElementsByTagName("meta");
 		int listL = list.getLength();
-		for(int i = listL - 1; i>=0; i--) {
-			if("Default-Style".equalsIgnoreCase(
-					((DOMElement)list.item(i)).attributeValue("http-equiv"))) {
-				String metaDefStyle = ((DOMElement)list.item(i))
-					.attributeValue("content");
-				if(metaDefStyle != null) {
+		for (int i = listL - 1; i >= 0; i--) {
+			if ("Default-Style".equalsIgnoreCase(((DOMElement) list.item(i)).attributeValue("http-equiv"))) {
+				String metaDefStyle = ((DOMElement) list.item(i)).attributeValue("content");
+				if (metaDefStyle != null) {
 					// Per HTML4 spec § 14.3.2:
 					// "If two or more META declarations or HTTP headers specify 
 					//  the preferred style sheet, the last one takes precedence."
@@ -139,7 +137,7 @@ public class DOM4JUserAgent extends AbstractUserAgent {
 				}
 			}
 		}
-		if(defStyle != null) {
+		if (defStyle != null) {
 			xdoc.setSelectedStyleSheetSet(defStyle);
 		}
 		// Referrer Policy
@@ -148,8 +146,8 @@ public class DOM4JUserAgent extends AbstractUserAgent {
 			xdoc.setReferrerPolicyHeader(referrerPolicy);
 		}
 		// Read cookies and close connection, if appropriate
-		if(con instanceof HttpURLConnection) {
-			HttpURLConnection hcon = (HttpURLConnection)con;
+		if (con instanceof HttpURLConnection) {
+			HttpURLConnection hcon = (HttpURLConnection) con;
 			readCookies(hcon, time);
 			hcon.disconnect();
 		}
