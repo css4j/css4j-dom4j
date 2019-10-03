@@ -25,7 +25,7 @@ import org.w3c.dom.DOMStringList;
 
 import io.sf.carte.doc.DocumentException;
 import io.sf.carte.doc.agent.net.DefaultOriginPolicy;
-import io.sf.carte.doc.style.css.nsac.Parser2;
+import io.sf.carte.doc.style.css.nsac.Parser;
 
 public class DOM4JUserAgentTest {
 	TestUserAgent agent;
@@ -64,7 +64,7 @@ public class DOM4JUserAgentTest {
 		TestDocumentFactory factory = new TestDocumentFactory();
 
 		protected TestUserAgent() {
-			super(EnumSet.noneOf(Parser2.Flag.class));
+			super(EnumSet.noneOf(Parser.Flag.class));
 			setOriginPolicy(DefaultOriginPolicy.getInstance());
 		}
 

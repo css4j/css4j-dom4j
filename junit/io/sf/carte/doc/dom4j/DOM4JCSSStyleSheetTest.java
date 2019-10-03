@@ -18,9 +18,8 @@ import java.io.IOException;
 import java.io.Reader;
 
 import org.junit.Test;
-import org.w3c.css.sac.CSSException;
-import org.w3c.css.sac.InputSource;
 
+import io.sf.carte.doc.style.css.nsac.CSSException;
 import io.sf.carte.doc.style.css.om.AbstractCSSStyleSheet;
 import io.sf.carte.doc.style.css.om.CSSRuleArrayList;
 import io.sf.carte.doc.style.css.om.DOMCSSStyleSheetFactoryTest;
@@ -32,8 +31,7 @@ public class DOM4JCSSStyleSheetTest {
 		AbstractCSSStyleSheet css = XHTMLDocumentFactory.getInstance().getStyleSheetFactory()
 				.createStyleSheet(null, null);
 		Reader re = DOMCSSStyleSheetFactoryTest.loadSampleCSSReader();
-		InputSource source = new InputSource(re);
-		css.parseStyleSheet(source);
+		css.parseStyleSheet(re);
 		re.close();
 		CSSRuleArrayList rules = css.getCssRules();
 		assertEquals(DOMCSSStyleSheetFactoryTest.RULES_IN_SAMPLE_CSS, rules.getLength());

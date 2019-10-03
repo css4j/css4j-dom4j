@@ -16,7 +16,6 @@ import java.io.Reader;
 import java.io.StringReader;
 
 import org.dom4j.QName;
-import org.w3c.css.sac.InputSource;
 import org.w3c.dom.DOMException;
 
 import io.sf.carte.doc.style.css.MediaQueryList;
@@ -88,11 +87,9 @@ class StyleElement extends StyleDefinerElement {
 			String styleText = getText();
 			if (styleText.length() != 0) {
 				linkedSheet.setHref(getBaseURI());
-				InputSource source = new InputSource();
 				Reader re = new StringReader(styleText);
-				source.setCharacterStream(re);
 				try {
-					linkedSheet.parseStyleSheet(source);
+					linkedSheet.parseStyleSheet(re);
 				} catch (DOMException e) {
 					getErrorHandler().linkedSheetError(e, linkedSheet);
 				} catch (IOException e) {

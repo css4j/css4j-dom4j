@@ -23,11 +23,6 @@ import org.dom4j.Attribute;
 import org.dom4j.Element;
 import org.dom4j.QName;
 import org.dom4j.dom.DOMElement;
-import org.w3c.css.sac.DescendantSelector;
-import org.w3c.css.sac.InputSource;
-import org.w3c.css.sac.SelectorList;
-import org.w3c.css.sac.SiblingSelector;
-import org.w3c.css.sac.SimpleSelector;
 import org.w3c.dom.Attr;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Node;
@@ -40,7 +35,10 @@ import io.sf.carte.doc.style.css.CSSElement;
 import io.sf.carte.doc.style.css.DocumentCSSStyleSheet;
 import io.sf.carte.doc.style.css.ExtendedCSSStyleDeclaration;
 import io.sf.carte.doc.style.css.SelectorMatcher;
-import io.sf.carte.doc.style.css.nsac.Parser2;
+import io.sf.carte.doc.style.css.nsac.CombinatorSelector;
+import io.sf.carte.doc.style.css.nsac.Parser;
+import io.sf.carte.doc.style.css.nsac.SelectorList;
+import io.sf.carte.doc.style.css.nsac.SimpleSelector;
 import io.sf.carte.doc.style.css.om.AbstractSelectorMatcher;
 import io.sf.carte.doc.style.css.om.ComputedCSSStyle;
 import io.sf.carte.doc.style.css.parser.CSSParser;
@@ -615,8 +613,8 @@ abstract public class CSSStylableElement extends DOMElement implements
 		}
 
 		@Override
-		protected boolean scopeMatchChild(DescendantSelector selector) {
-			SimpleSelector desc = selector.getSimpleSelector();
+		protected boolean scopeMatchChild(CombinatorSelector selector) {
+			SimpleSelector desc = selector.getSecondSelector();
 			NodeList list = getChildNodes();
 			int sz = list.getLength();
 			for (int i=0; i<sz; i++) {
@@ -632,7 +630,7 @@ abstract public class CSSStylableElement extends DOMElement implements
 		}
 
 		@Override
-		protected boolean scopeMatchDirectAdjacent(SiblingSelector selector) {
+		protected boolean scopeMatchDirectAdjacent(CombinatorSelector selector) {
 			SelectorMatcher siblingSM = null;
 			Node sibling = getNextSibling();
 			while (sibling != null) {
@@ -643,7 +641,7 @@ abstract public class CSSStylableElement extends DOMElement implements
 				sibling = sibling.getNextSibling();
 			}
 			if (siblingSM != null) {
-				return siblingSM.matches(selector.getSiblingSelector());
+				return siblingSM.matches(selector.getSecondSelector());
 			}
 			return false;
 		}
@@ -664,11 +662,10 @@ abstract public class CSSStylableElement extends DOMElement implements
 
 	@Override
 	public boolean matches(String selectorString, String pseudoElement) throws DOMException {
-		Parser2 parser = new CSSParser();
-		InputSource source = new InputSource(new StringReader(selectorString));
+		Parser parser = new CSSParser();
 		SelectorList list;
 		try {
-			list = parser.parseSelectors(source);
+			list = parser.parseSelectors(new StringReader(selectorString));
 		} catch (Exception e) {
 			throw new DOMException(DOMException.SYNTAX_ERR, "Unable to parse selector in: " + selectorString);
 		}

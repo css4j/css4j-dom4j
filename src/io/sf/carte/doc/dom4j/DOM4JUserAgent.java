@@ -36,8 +36,8 @@ import org.xmlpull.v1.XmlPullParserException;
 import io.sf.carte.doc.agent.AbstractUserAgent;
 import io.sf.carte.doc.agent.AgentUtil;
 import io.sf.carte.doc.dom4j.DOM4JUserAgent.AgentXHTMLDocumentFactory.AgentXHTMLDocument;
-import io.sf.carte.doc.style.css.nsac.Parser2;
-import io.sf.carte.doc.style.css.nsac.Parser2.Flag;
+import io.sf.carte.doc.style.css.nsac.Parser;
+import io.sf.carte.doc.style.css.nsac.Parser.Flag;
 import io.sf.carte.doc.xml.dtd.DefaultEntityResolver;
 
 /**
@@ -54,11 +54,11 @@ public class DOM4JUserAgent extends AbstractUserAgent {
 
 	private final XHTMLDocumentFactory factory;
 
-	protected DOM4JUserAgent(EnumSet<Parser2.Flag> parserFlags) {
+	protected DOM4JUserAgent(EnumSet<Parser.Flag> parserFlags) {
 		this(parserFlags, false);
 	}
 
-	protected DOM4JUserAgent(EnumSet<Parser2.Flag> parserFlags, boolean useXPP3) {
+	protected DOM4JUserAgent(EnumSet<Parser.Flag> parserFlags, boolean useXPP3) {
 		super(parserFlags);
 		this.useXPP3 = useXPP3;
 		factory = new AgentXHTMLDocumentFactory(getParserFlags());
@@ -70,7 +70,7 @@ public class DOM4JUserAgent extends AbstractUserAgent {
 	 * @param useXPP3 Sets the use of the XPP3 pull parser to parse the documents.
 	 * @return the user agent.
 	 */
-	public static AbstractUserAgent createUserAgent(EnumSet<Parser2.Flag> parserFlags, boolean useXPP3) {
+	public static AbstractUserAgent createUserAgent(EnumSet<Parser.Flag> parserFlags, boolean useXPP3) {
 		return new DOM4JUserAgent(parserFlags, useXPP3);
 	}
 

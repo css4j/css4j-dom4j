@@ -34,12 +34,12 @@ import org.w3c.dom.css.CSSRule;
 import org.w3c.dom.css.CSSStyleDeclaration;
 import org.w3c.dom.css.CSSStyleRule;
 import org.w3c.dom.css.CSSValue;
-import org.xml.sax.InputSource;
 
 import io.sf.carte.doc.style.css.CSSComputedProperties;
 import io.sf.carte.doc.style.css.CSSElement;
 import io.sf.carte.doc.style.css.DocumentCSSStyleSheet;
 import io.sf.carte.doc.style.css.StyleDeclarationErrorHandler;
+import io.sf.carte.doc.style.css.nsac.InputSource;
 import io.sf.carte.doc.style.css.om.AbstractCSSRule;
 import io.sf.carte.doc.style.css.om.AbstractCSSStyleDeclaration;
 import io.sf.carte.doc.style.css.om.AbstractCSSStyleSheet;
@@ -55,7 +55,7 @@ public class XHTMLDocumentTest {
 	@Before
 	public void setUp() throws Exception {
 		Reader re = DOMCSSStyleSheetFactoryTest.sampleHTMLReader();
-		InputSource isrc = new InputSource(re);
+		org.xml.sax.InputSource isrc = new org.xml.sax.InputSource(re);
 		xhtmlDoc = XHTMLDocumentFactoryTest.parseXML(isrc);
 		re.close();
 	}
@@ -878,7 +878,7 @@ public class XHTMLDocumentTest {
 		assertNotNull(css.getCssRules());
 		assertEquals(129, css.getCssRules().getLength());
 		StringReader re = new StringReader("p{color:#a1e3f0}#noid{margin:0.04em;}");
-		org.w3c.css.sac.InputSource cssSrc = new org.w3c.css.sac.InputSource(re);
+		InputSource cssSrc = new InputSource(re);
 		xhtmlDoc.addStyleSheet(cssSrc);
 		assertEquals(131, css.getCssRules().getLength());
 	}

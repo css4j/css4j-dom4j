@@ -27,8 +27,8 @@ import io.sf.carte.doc.style.css.CSSDocument;
 import io.sf.carte.doc.style.css.CSSElement;
 import io.sf.carte.doc.style.css.CSSStyleSheetFactory;
 import io.sf.carte.doc.style.css.MediaQueryList;
-import io.sf.carte.doc.style.css.nsac.Parser2;
-import io.sf.carte.doc.style.css.nsac.Parser2.Flag;
+import io.sf.carte.doc.style.css.nsac.Parser;
+import io.sf.carte.doc.style.css.nsac.Parser.Flag;
 import io.sf.carte.doc.style.css.om.AbstractCSSRule;
 import io.sf.carte.doc.style.css.om.AbstractCSSStyleDeclaration;
 import io.sf.carte.doc.style.css.om.AbstractCSSStyleSheet;
@@ -71,7 +71,7 @@ public class XHTMLDocumentFactory extends DOMDocumentFactory {
 	private static transient XHTMLDocumentFactory singleton = new XHTMLDocumentFactory();
 
 	protected XHTMLDocumentFactory() {
-		this(EnumSet.noneOf(Parser2.Flag.class));
+		this(EnumSet.noneOf(Parser.Flag.class));
 	}
 
 	public XHTMLDocumentFactory(EnumSet<Flag> enumSet) {

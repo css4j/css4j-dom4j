@@ -19,12 +19,11 @@ import java.io.StringReader;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.w3c.css.sac.CSSException;
-import org.w3c.css.sac.InputSource;
-import org.w3c.css.sac.SelectorList;
 
 import io.sf.carte.doc.style.css.SelectorMatcher;
-import io.sf.carte.doc.style.css.nsac.Parser2;
+import io.sf.carte.doc.style.css.nsac.CSSException;
+import io.sf.carte.doc.style.css.nsac.Parser;
+import io.sf.carte.doc.style.css.nsac.SelectorList;
 import io.sf.carte.doc.style.css.om.AbstractCSSStyleSheet;
 import io.sf.carte.doc.style.css.om.BaseCSSStyleSheet;
 import io.sf.carte.doc.style.css.om.CSSOMBridge;
@@ -34,7 +33,7 @@ import io.sf.carte.doc.style.css.parser.CSSParser;
 public class DOM4JSelectorMatcherTest {
 
 	private static XHTMLDocumentFactory factory;
-	private Parser2 cssParser;
+	private Parser cssParser;
 	private XHTMLDocument document;
 
 	@BeforeClass
@@ -533,9 +532,8 @@ public class DOM4JSelectorMatcherTest {
 		AbstractCSSStyleSheet css = factory.getStyleSheetFactory().createStyleSheet(null,
 				null);
 		StringReader re = new StringReader(style);
-		InputSource source = new InputSource(re);
 		cssParser.setDocumentHandler(CSSOMBridge.createDocumentHandler((BaseCSSStyleSheet) css, true));
-		cssParser.parseStyleSheet(source);
+		cssParser.parseStyleSheet(re);
 		return css;
 	}
 

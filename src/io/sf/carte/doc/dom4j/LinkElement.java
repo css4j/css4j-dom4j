@@ -14,9 +14,9 @@ package io.sf.carte.doc.dom4j;
 import java.net.URL;
 
 import org.dom4j.QName;
-import org.w3c.css.sac.CSSException;
 
 import io.sf.carte.doc.style.css.MediaQueryList;
+import io.sf.carte.doc.style.css.nsac.CSSException;
 import io.sf.carte.doc.style.css.om.AbstractCSSStyleSheet;
 import io.sf.carte.doc.style.css.om.MediaList;
 

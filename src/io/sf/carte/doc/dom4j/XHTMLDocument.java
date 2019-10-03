@@ -25,8 +25,6 @@ import java.util.Set;
 import org.dom4j.dom.DOMDocument;
 import org.dom4j.dom.DOMDocumentType;
 import org.dom4j.dom.DOMElement;
-import org.w3c.css.sac.CSSException;
-import org.w3c.css.sac.InputSource;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.DOMStringList;
 import org.w3c.dom.DocumentType;
@@ -46,6 +44,8 @@ import io.sf.carte.doc.style.css.ExtendedCSSStyleDeclaration;
 import io.sf.carte.doc.style.css.MediaQueryList;
 import io.sf.carte.doc.style.css.SheetErrorHandler;
 import io.sf.carte.doc.style.css.StyleDatabase;
+import io.sf.carte.doc.style.css.nsac.CSSException;
+import io.sf.carte.doc.style.css.nsac.InputSource;
 import io.sf.carte.doc.style.css.om.AbstractCSSStyleSheet;
 import io.sf.carte.doc.style.css.om.AbstractCSSStyleSheetFactory;
 import io.sf.carte.doc.style.css.om.BaseDocumentCSSStyleSheet;
@@ -276,14 +276,14 @@ public class XHTMLDocument extends DOMDocument implements CSSDocument {
 			AbstractCSSStyleSheet sheet = getDocumentFactory().getStyleSheetFactory()
 					.createStyleSheet(cssSrc.getTitle(), mediaList);
 			((BaseDocumentCSSStyleSheet) sheet).setOwnerDocument(this);
-			boolean result = sheet.parseStyleSheet(cssSrc);
+			boolean result = sheet.parseStyleSheet(cssSrc.getCharacterStream());
 			if (result) {
 				result = !mediaList.hasErrors();
 			}
 			getStyleSheet().addStyleSheet(sheet);
 			return result;
 		} else {
-			return getStyleSheet().parseStyleSheet(cssSrc);
+			return getStyleSheet().parseStyleSheet(cssSrc.getCharacterStream());
 		}
 	}
 
