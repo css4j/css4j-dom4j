@@ -18,7 +18,7 @@ import org.dom4j.QName;
 import io.sf.carte.doc.style.css.MediaQueryList;
 import io.sf.carte.doc.style.css.nsac.CSSException;
 import io.sf.carte.doc.style.css.om.AbstractCSSStyleSheet;
-import io.sf.carte.doc.style.css.om.MediaList;
+import io.sf.carte.doc.style.css.om.MediaFactory;
 
 /**
  * LINK element.
@@ -108,9 +108,9 @@ class LinkElement extends StyleDefinerElement {
 		String media = attributeValue("media");
 		MediaQueryList mediaList;
 		if (media == null || media.trim().length() == 0) {
-			mediaList = MediaList.createMediaList();
+			mediaList = MediaFactory.createAllMedia();
 		} else {
-			mediaList = getDocumentFactory().getStyleSheetFactory().createMediaQueryList(media, this);
+			mediaList = getDocumentFactory().getStyleSheetFactory().createImmutableMediaQueryList(media, this);
 			if (mediaList.isNotAllMedia() && mediaList.hasErrors()) {
 				linkedSheet = null;
 				return;
