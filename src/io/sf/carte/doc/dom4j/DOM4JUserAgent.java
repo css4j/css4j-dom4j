@@ -232,7 +232,7 @@ public class DOM4JUserAgent extends AbstractUserAgent {
 		public class AgentXHTMLDocument extends XHTMLDocument {
 
 			private static final long serialVersionUID = 3L;
-			
+
 			private long loadingTime;
 
 			AgentXHTMLDocument() {
@@ -263,7 +263,7 @@ public class DOM4JUserAgent extends AbstractUserAgent {
 			public URLConnection openConnection(URL url) throws IOException {
 				return DOM4JUserAgent.this.openConnection(url, loadingTime);
 			}
-		
+
 			@Override
 			public boolean isVisitedURI(String href) {
 				try {

@@ -56,7 +56,7 @@ public class TestDocumentFactory extends XHTMLDocumentFactory {
 	class MyXHTMLDocument extends XHTMLDocument {
 
 		private static final long serialVersionUID = 4L;
-		
+
 		MyXHTMLDocument() {
 			super();
 		}
