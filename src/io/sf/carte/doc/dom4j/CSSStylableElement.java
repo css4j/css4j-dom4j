@@ -27,7 +27,6 @@ import org.w3c.dom.Attr;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.w3c.dom.css.CSSStyleDeclaration;
 
 import io.sf.carte.doc.agent.CSSCanvas;
 import io.sf.carte.doc.style.css.CSSDocument;
@@ -142,7 +141,7 @@ abstract public class CSSStylableElement extends DOMElement implements
 	}
 
 	@Override
-	public void exportHintsToStyle(CSSStyleDeclaration style) {
+	public void exportHintsToStyle(ExtendedCSSStyleDeclaration style) {
 	}
 
 	@Override

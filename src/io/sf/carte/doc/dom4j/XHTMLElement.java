@@ -16,7 +16,8 @@ import org.dom4j.Node;
 import org.dom4j.QName;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.UserDataHandler;
-import org.w3c.dom.stylesheets.LinkStyle;
+
+import io.sf.carte.doc.style.css.LinkStyle;
 
 /**
  * An XHTML element.
@@ -87,14 +88,14 @@ public class XHTMLElement extends CSSStylableElement {
 	protected void childAdded(Node node) {
 		super.childAdded(node);
 		if (node instanceof LinkStyle) {
-			getOwnerDocument().onEmbeddedStyleAdd((LinkStyle) node);
+			getOwnerDocument().onEmbeddedStyleAdd((LinkStyle<?>) node);
 		}
 	}
 
 	@Override
 	protected void childRemoved(Node node) {
 		if (node instanceof LinkStyle) {
-			getOwnerDocument().onEmbeddedStyleRemove((LinkStyle) node);
+			getOwnerDocument().onEmbeddedStyleRemove((LinkStyle<?>) node);
 		}
 		super.childRemoved(node);
 	}

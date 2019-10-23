@@ -17,6 +17,7 @@ import org.w3c.dom.Node;
 import io.sf.carte.doc.style.css.CSSDocument;
 import io.sf.carte.doc.style.css.CSSElement;
 import io.sf.carte.doc.style.css.StyleDatabase;
+import io.sf.carte.doc.style.css.om.BaseDocumentCSSStyleSheet;
 import io.sf.carte.doc.style.css.om.BoxModelHelper;
 import io.sf.carte.doc.style.css.om.ComputedCSSStyle;
 
@@ -30,13 +31,17 @@ abstract class DOM4JComputedStyle extends ComputedCSSStyle {
 
 	private transient ComputedCSSStyle parentStyle = null;
 
-	DOM4JComputedStyle(CSSElement ownerNode) {
-		super();
-		setOwnerNode(ownerNode);
+	DOM4JComputedStyle(BaseDocumentCSSStyleSheet docSheet) {
+		super(docSheet);
 	}
 
 	DOM4JComputedStyle(ComputedCSSStyle copiedObject) {
 		super(copiedObject);
+	}
+
+	@Override
+	protected void setOwnerNode(CSSElement node) {
+		super.setOwnerNode(node);
 	}
 
 	@Override

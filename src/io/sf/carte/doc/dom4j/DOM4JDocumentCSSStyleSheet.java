@@ -52,6 +52,9 @@ abstract class DOM4JDocumentCSSStyleSheet extends BaseDocumentCSSStyleSheet {
 	}
 
 	@Override
+	abstract protected DOM4JComputedStyle createComputedCSSStyle();
+
+	@Override
 	abstract public DOM4JCSSStyleSheetFactory getStyleSheetFactory();
 
 	/**
@@ -68,7 +71,8 @@ abstract class DOM4JDocumentCSSStyleSheet extends BaseDocumentCSSStyleSheet {
 		// Get the inline style
 		InlineStyle inline = (InlineStyle) elm.getStyle();
 		// Compute style
-		DOM4JComputedStyle styledecl = getStyleSheetFactory().createComputedStyle(elm);
+		DOM4JComputedStyle styledecl = createComputedCSSStyle();
+		styledecl.setOwnerNode(elm);
 		ComputedCSSStyle style = computeStyle(styledecl, elm.getSelectorMatcher(), pseudoElt, inline);
 		return style;
 	}

@@ -12,8 +12,8 @@
 package io.sf.carte.doc.dom4j;
 
 import org.dom4j.QName;
-import org.w3c.dom.css.CSSStyleDeclaration;
 
+import io.sf.carte.doc.style.css.ExtendedCSSStyleDeclaration;
 import io.sf.carte.doc.style.css.property.AttributeToStyle;
 
 /**
@@ -45,7 +45,7 @@ class ImgElement extends XHTMLElement {
 	}
 
 	@Override
-	public void exportHintsToStyle(CSSStyleDeclaration style) {
+	public void exportHintsToStyle(ExtendedCSSStyleDeclaration style) {
 		AttributeToStyle.width(getAttribute("width"), style);
 		AttributeToStyle.height(getAttribute("height"), style);
 		AttributeToStyle.hspace(getAttribute("hspace"), style);

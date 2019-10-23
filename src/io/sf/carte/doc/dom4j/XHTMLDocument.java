@@ -32,7 +32,6 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.UserDataHandler;
 import org.w3c.dom.css.CSSStyleSheet;
-import org.w3c.dom.stylesheets.LinkStyle;
 
 import io.sf.carte.doc.agent.CSSCanvas;
 import io.sf.carte.doc.agent.DeviceFactory;
@@ -41,6 +40,7 @@ import io.sf.carte.doc.style.css.CSSMediaException;
 import io.sf.carte.doc.style.css.DocumentCSSStyleSheet;
 import io.sf.carte.doc.style.css.ErrorHandler;
 import io.sf.carte.doc.style.css.ExtendedCSSStyleDeclaration;
+import io.sf.carte.doc.style.css.LinkStyle;
 import io.sf.carte.doc.style.css.MediaQueryList;
 import io.sf.carte.doc.style.css.SheetErrorHandler;
 import io.sf.carte.doc.style.css.StyleDatabase;
@@ -399,7 +399,7 @@ public class XHTMLDocument extends DOMDocument implements CSSDocument {
 	/*
 	 * This method should only be called from HeadElement.
 	 */
-	void onEmbeddedStyleAdd(LinkStyle element) {
+	void onEmbeddedStyleAdd(LinkStyle<?> element) {
 		if (element instanceof LinkElement) {
 			linkedStyle.add((LinkElement) element);
 		} else if (element instanceof StyleElement) {
@@ -411,13 +411,13 @@ public class XHTMLDocument extends DOMDocument implements CSSDocument {
 	/*
 	 * This method should only be called from HeadElement.
 	 */
-	void onEmbeddedStyleRemove(LinkStyle element) {
+	void onEmbeddedStyleRemove(LinkStyle<?> element) {
 		if (element instanceof LinkElement) {
 			linkedStyle.remove(element);
 		} else if (element instanceof StyleElement) {
 			embeddedStyle.remove(element);
 		}
-		CSSStyleSheet sheet = (CSSStyleSheet) element.getSheet();
+		CSSStyleSheet sheet = element.getSheet();
 		if (sheet != null) {
 			String title = sheet.getTitle();
 			if (title != null) {

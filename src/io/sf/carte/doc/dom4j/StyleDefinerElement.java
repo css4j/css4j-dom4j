@@ -13,9 +13,10 @@ package io.sf.carte.doc.dom4j;
 
 import org.dom4j.Node;
 import org.dom4j.QName;
-import org.w3c.dom.stylesheets.LinkStyle;
 
 import io.sf.carte.doc.style.css.ErrorHandler;
+import io.sf.carte.doc.style.css.LinkStyle;
+import io.sf.carte.doc.style.css.om.AbstractCSSRule;
 import io.sf.carte.doc.style.css.om.AbstractCSSStyleSheet;
 
 /**
@@ -24,7 +25,7 @@ import io.sf.carte.doc.style.css.om.AbstractCSSStyleSheet;
  * @author Carlos Amengual
  * 
  */
-abstract class StyleDefinerElement extends XHTMLElement implements LinkStyle {
+abstract class StyleDefinerElement extends XHTMLElement implements LinkStyle<AbstractCSSRule> {
 
 	private static final long serialVersionUID = 2L;
 

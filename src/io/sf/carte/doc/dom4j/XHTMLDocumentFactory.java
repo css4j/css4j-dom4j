@@ -24,7 +24,6 @@ import org.w3c.dom.DocumentType;
 import org.w3c.dom.Node;
 
 import io.sf.carte.doc.style.css.CSSDocument;
-import io.sf.carte.doc.style.css.CSSElement;
 import io.sf.carte.doc.style.css.CSSStyleSheetFactory;
 import io.sf.carte.doc.style.css.MediaQueryList;
 import io.sf.carte.doc.style.css.nsac.Parser;
@@ -345,6 +344,11 @@ public class XHTMLDocumentFactory extends DOMDocumentFactory {
 			}
 
 			@Override
+			protected DOM4JComputedStyle createComputedCSSStyle() {
+				return new MyDOM4JComputedStyle(this);
+			}
+
+			@Override
 			public DOM4JCSSStyleSheetFactory getStyleSheetFactory() {
 				return DOM4JCSSStyleSheetFactory.this;
 			}
@@ -420,13 +424,9 @@ public class XHTMLDocumentFactory extends DOMDocumentFactory {
 
 		}
 
-		DOM4JComputedStyle createComputedStyle(CSSElement ownerNode) {
-			return new MyDOM4JComputedStyle(ownerNode);
-		}
-
 		class MyDOM4JComputedStyle extends DOM4JComputedStyle {
-			MyDOM4JComputedStyle(CSSElement ownerNode) {
-				super(ownerNode);
+			MyDOM4JComputedStyle(BaseDocumentCSSStyleSheet docSheet) {
+				super(docSheet);
 			}
 
 			private MyDOM4JComputedStyle(ComputedCSSStyle copiedObject) {
