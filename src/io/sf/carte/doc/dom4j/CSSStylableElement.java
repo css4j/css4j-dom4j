@@ -35,7 +35,7 @@ import io.sf.carte.doc.style.css.DocumentCSSStyleSheet;
 import io.sf.carte.doc.style.css.ExtendedCSSStyleDeclaration;
 import io.sf.carte.doc.style.css.SelectorMatcher;
 import io.sf.carte.doc.style.css.nsac.CombinatorSelector;
-import io.sf.carte.doc.style.css.nsac.Parser;
+import io.sf.carte.doc.style.css.nsac.Condition;
 import io.sf.carte.doc.style.css.nsac.SelectorList;
 import io.sf.carte.doc.style.css.nsac.SimpleSelector;
 import io.sf.carte.doc.style.css.om.AbstractSelectorMatcher;
@@ -55,7 +55,7 @@ abstract public class CSSStylableElement extends DOMElement implements
 
 	private SelectorMatcher selectorMatcher = null;
 
-	private Map<String, ExtendedCSSStyleDeclaration> overrideStyleSet = null;
+	private Map<Condition, ExtendedCSSStyleDeclaration> overrideStyleSet = null;
 
 	protected CSSStylableElement(String name) {
 		super(name);
@@ -145,7 +145,7 @@ abstract public class CSSStylableElement extends DOMElement implements
 	}
 
 	@Override
-	public boolean hasOverrideStyle(String pseudoElt) {
+	public boolean hasOverrideStyle(Condition pseudoElt) {
 		if(overrideStyleSet == null) {
 			return false;
 		}
@@ -153,10 +153,10 @@ abstract public class CSSStylableElement extends DOMElement implements
 	}
 
 	@Override
-	public ExtendedCSSStyleDeclaration getOverrideStyle(String pseudoElt) {
+	public ExtendedCSSStyleDeclaration getOverrideStyle(Condition pseudoElt) {
 		ExtendedCSSStyleDeclaration overrideStyle = null;
 		if(overrideStyleSet == null) {
-			overrideStyleSet = new HashMap<String, ExtendedCSSStyleDeclaration>(1);
+			overrideStyleSet = new HashMap<Condition, ExtendedCSSStyleDeclaration>(1);
 		} else {
 			overrideStyle = overrideStyleSet.get(pseudoElt);
 		}
@@ -178,8 +178,15 @@ abstract public class CSSStylableElement extends DOMElement implements
 	public ComputedCSSStyle getComputedStyle(String pseudoElt) {
 		XHTMLDocument doc = getOwnerDocument();
 		if (doc != null) {
+			Condition peCond;
+			if (pseudoElt != null) {
+				CSSParser parser = new CSSParser();
+				peCond = parser.parsePseudoElement(pseudoElt);
+			} else {
+				peCond = null;
+			}
 			// Get the style declaration
-			ComputedCSSStyle styledecl = (ComputedCSSStyle) doc.getStyleSheet().getComputedStyle(this, pseudoElt);
+			ComputedCSSStyle styledecl = (ComputedCSSStyle) doc.getStyleSheet().getComputedStyle(this, peCond);
 			return styledecl;
 		} else {
 			return null;
@@ -661,18 +668,29 @@ abstract public class CSSStylableElement extends DOMElement implements
 
 	@Override
 	public boolean matches(String selectorString, String pseudoElement) throws DOMException {
-		Parser parser = new CSSParser();
+		CSSParser parser = new CSSParser();
 		SelectorList list;
 		try {
 			list = parser.parseSelectors(new StringReader(selectorString));
 		} catch (Exception e) {
 			throw new DOMException(DOMException.SYNTAX_ERR, "Unable to parse selector in: " + selectorString);
 		}
-		return matches(list, pseudoElement);
+		Condition peCond;
+		if (pseudoElement != null) {
+			try {
+				peCond = parser.parsePseudoElement(pseudoElement);
+			} catch (Exception e) {
+				throw new DOMException(DOMException.SYNTAX_ERR,
+						"Unable to parse pseudo-element in: " + pseudoElement);
+			}
+		} else {
+			peCond = null;
+		}
+		return matches(list, peCond);
 	}
 
 	@Override
-	public boolean matches(SelectorList selist, String pseudoElement) {
+	public boolean matches(SelectorList selist, Condition pseudoElement) {
 		SelectorMatcher matcher = getSelectorMatcher();
 		matcher.setPseudoElement(pseudoElement);
 		return matcher.matches(selist) != -1;

@@ -14,6 +14,7 @@ package io.sf.carte.doc.dom4j;
 import io.sf.carte.doc.dom4j.XHTMLDocumentFactory.DOM4JCSSStyleSheetFactory;
 import io.sf.carte.doc.style.css.CSSDocument;
 import io.sf.carte.doc.style.css.CSSElement;
+import io.sf.carte.doc.style.css.nsac.Condition;
 import io.sf.carte.doc.style.css.om.BaseDocumentCSSStyleSheet;
 import io.sf.carte.doc.style.css.om.ComputedCSSStyle;
 import io.sf.carte.doc.style.css.om.InlineStyle;
@@ -67,7 +68,7 @@ abstract class DOM4JDocumentCSSStyleSheet extends BaseDocumentCSSStyleSheet {
 	 * @return the computed style declaration.
 	 */
 	@Override
-	public ComputedCSSStyle getComputedStyle(CSSElement elm, String pseudoElt) {
+	public ComputedCSSStyle getComputedStyle(CSSElement elm, Condition pseudoElt) {
 		// Get the inline style
 		InlineStyle inline = (InlineStyle) elm.getStyle();
 		// Compute style
