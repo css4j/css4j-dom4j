@@ -40,12 +40,16 @@ class CachedTableRowElement extends CachedXHTMLElement {
 
 	@Override
 	public boolean hasPresentationalHints() {
-		return hasAttribute("bgcolor");
+		return hasAttribute("bgcolor") || hasAttribute("height") || hasAttribute("background")
+				|| hasAttribute("align");
 	}
 
 	@Override
 	public void exportHintsToStyle(CSSStyleDeclaration style) {
 		AttributeToStyle.bgcolor(getAttribute("bgcolor"), style);
+		AttributeToStyle.height(getAttribute("height"), style);
+		AttributeToStyle.background(getAttribute("background"), style);
+		AttributeToStyle.align(getAttribute("align"), style);
 	}
 
 }
