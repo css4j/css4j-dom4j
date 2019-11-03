@@ -40,7 +40,8 @@ class CachedTableCellElement extends CachedXHTMLElement {
 
 	@Override
 	public boolean hasPresentationalHints() {
-		return hasAttribute("bgcolor") || hasAttribute("width") || hasAttribute("height");
+		return hasAttribute("bgcolor") || hasAttribute("width") || hasAttribute("height")
+				|| hasAttribute("background") || hasAttribute("align");
 	}
 
 	@Override
@@ -48,6 +49,8 @@ class CachedTableCellElement extends CachedXHTMLElement {
 		AttributeToStyle.bgcolor(getAttribute("bgcolor"), style);
 		AttributeToStyle.width(getAttribute("width"), style);
 		AttributeToStyle.height(getAttribute("height"), style);
+		AttributeToStyle.background(getAttribute("background"), style);
+		AttributeToStyle.align(getAttribute("align"), style);
 	}
 
 }
