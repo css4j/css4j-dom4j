@@ -3,16 +3,82 @@
 <title>CSS4J-DOM4J Overview</title>
 </head>
 <body>
-This module implements the W3C's 
-<a href="http://www.w3.org/TR/DOM-Level-2-Style/css.html" target="_blank">CSS
- Object Model API</a> for DOM4J.
-<p>Just use the <code>XHTMLDocumentFactory</code> as you would use <code>DOMDocumentFactory</code>,
-and the produced documents (and elements) will be style-aware.</p>
-<p>There is more information in the description of the <code>io.sf.carte.doc.dom4j</code> subpackage.</p>
-<h3>Media handling</h3>
-<p>By default, computed styles only take into account generic styles that are 
-common to all media. If you want to target a specific medium, you have to use 
-the <code>setTargetMedium()</code> method of the document, which in DOM4J can 
-be done with the <code>XHTMLDocument.setTargetMedium()</code> method.</p>
+<p>Built on top of the DOM4J package, gives DOM4J built-in support for CSS style
+sheets. You can use the <code>XHTMLDocumentFactory</code> as you would use a
+<code>DOMDocumentFactory</code>, and the produced documents (and elements) will
+be style-aware. Note: one important difference between the style sheet factory in css4j-dom4j's
+<code>XHTMLDocumentFactory</code> and the other <code>CSSStyleSheetFactory</code>
+implementations is that a user agent style sheet is loaded by default. To empty it,
+see <a href="#clearuasheet">clearing the user agent sheet</a>.</p>
+<p>To use the library with dom4j (using dom4j-like documents, elements and factory) you need the <code>css4j-dom4j</code> module in addition to the core
+module. Although the -dom4j module formally depends on the -agent module, you do not really need it unless you plan to use the DOM4J agent.</p>
+<div style="margin: 2em 0 2.7em 0">
+<h3>Example with DOM4J</h3>
+<p>This is the easiest way to use this package with DOM4J, using that library's <code>SAXReader</code>:</p>
+<pre style="padding: 0.8em;background-color: #f8f5e1">
+Reader re = ... [reader for XHTML document]
+InputSource source = new InputSource(re);
+SAXReader reader = new SAXReader(XHTMLDocumentFactory.getInstance());
+reader.setEntityResolver(new DefaultEntityResolver());
+XHTMLDocument document = (XHTMLDocument) reader.read(source);
+</pre>
+<p>And once you got the element you want the computed style for (see, for example,
+the <a href="https://github.com/dom4j/dom4j/wiki/Quick-Start-Guide" target="_blank">DOM4J Quick Start Guide</a>),
+just get it with a procedure analogous to the
+<a href="https://www.w3.org/TR/2000/REC-DOM-Level-2-Style-20001113/css.html#CSS-ViewCSS" target="_blank"><code>ViewCSS</code></a>
+interface:</p>
+<pre style="padding: 0.8em;background-color: #f8f5e1">
+CSSComputedProperties style = ((CSSStylableElement) element).getComputedStyle(null);
+String display = style.getPropertyValue("display");
+</pre>
+<p>It is also possible to parse an HTML5 document into a css4j-dom4j tree with the <a href="https://about.validator.nu/htmlparser/" target="_blank">validator.nu HTML5 parser</a>:</p>
+<pre style="padding: 0.8em;background-color: #f8f5e1">
+XHTMLDocumentFactory factory = XHTMLDocumentFactory.getInstance();
+// Next line is optional: default is TRUE, and is probably what you want
+// factory.setLenientSystemValues(false);
+HtmlDocumentBuilder builder = new HtmlDocumentBuilder(factory);
+// We do not set the EntityResolver, the HtmlDocumentBuilder does not need it
+Reader re = ... [reader for HTML document]
+InputSource source = new InputSource(re);
+XHTMLDocument document = (XHTMLDocument) builder.parse(source);
+</pre>
+<p>Or use a SAX parser to parse an XML document into a css4j-dom4j tree, with
+<a href="https://css4j.github.io/api/2.0/io/sf/carte/doc/dom/XMLDocumentBuilder.html"><code>XMLDocumentBuilder</code></a>
+instead of dom4j's <a href="https://dom4j.github.io/javadoc/2.1.1/org/dom4j/io/SAXReader.html"><code>SAXReader</code></a>:</p>
+<pre style="padding: 0.8em;background-color: #f8f5e1">
+XHTMLDocumentFactory factory = XHTMLDocumentFactory.getInstance();
+// Next line is optional: default is TRUE, and is probably what you want
+// factory.setLenientSystemValues(false);
+XMLDocumentBuilder builder = new XMLDocumentBuilder(factory);
+builder.setEntityResolver(new DefaultEntityResolver());
+Reader re = ... [reader for XML document]
+InputSource source = new InputSource(re);
+XHTMLDocument document = (XHTMLDocument) builder.parse(source);
+re.close();
+</pre>
+<p>The code above uses the default JAXP SAX parser. You could use a different <code>SAXParserFactory</code>:</p>
+<pre style="padding: 0.8em;background-color: #f8f5e1">
+SAXParserFactory parserFactory = ...
+XMLDocumentBuilder builder = new XMLDocumentBuilder(factory, parserFactory);
+</pre>
+</div>
+<div id="clearuasheet" style="margin: 2em 0 2.7em 0">
+<h3>Clearing the User Agent sheet</h3>
+<p>As mentioned, a default user agent sheet is loaded by the style sheet factory in
+css4j-dom4j, something that does not happen with the other back-ends (the behaviour is
+kept for backwards compatibility). To clear that sheet, first obtain an instance of
+the factory that you are using:
+</p>
+<pre>
+XHTMLDocumentFactory docFactory = XHTMLDocumentFactory.getInstance();
+</pre>
+<p>and then, get the user agent sheet and clear the rule list:</p>
+<pre>
+docFactory.getStyleSheetFactory().getUserAgentStyleSheet(CSSDocument.ComplianceMode.STRICT).getCssRules().clear();
+</pre>
+<p>This is assuming the <code>STRICT</code> mode, <i>i.e.</i> that you use a <code>DOCTYPE</code>,
+otherwise use <code>QUIRKS</code>.
+</p>
+</div>
 </body>
 </html>
