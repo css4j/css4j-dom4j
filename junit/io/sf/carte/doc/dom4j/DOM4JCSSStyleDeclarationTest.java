@@ -163,11 +163,11 @@ public class DOM4JCSSStyleDeclarationTest {
 		assertNotNull(style);
 		CSSTypedValue color = (CSSTypedValue) style.getPropertyCSSValue("color");
 		assertEquals("navy", color.getStringValue());
-		assertEquals("#000080", color.getRGBColorValue().toString());
-		assertEquals(128, ((CSSTypedValue) color.getRGBColorValue().getBlue()).getFloatValue(CSSUnit.CSS_NUMBER),
+		assertEquals("#000080", color.toRGBColorValue().toString());
+		assertEquals(128, ((CSSTypedValue) color.toRGBColorValue().getBlue()).getFloatValue(CSSUnit.CSS_NUMBER),
 				0.001f);
-		assertEquals(0, ((CSSTypedValue) color.getRGBColorValue().getRed()).getFloatValue(CSSUnit.CSS_NUMBER), 0.001f);
-		assertEquals(0, ((CSSTypedValue) color.getRGBColorValue().getGreen()).getFloatValue(CSSUnit.CSS_NUMBER),
+		assertEquals(0, ((CSSTypedValue) color.toRGBColorValue().getRed()).getFloatValue(CSSUnit.CSS_NUMBER), 0.001f);
+		assertEquals(0, ((CSSTypedValue) color.toRGBColorValue().getGreen()).getFloatValue(CSSUnit.CSS_NUMBER),
 				0.001f);
 		pList.clear();
 	}
