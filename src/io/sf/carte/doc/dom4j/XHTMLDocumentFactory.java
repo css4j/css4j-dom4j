@@ -68,7 +68,7 @@ public class XHTMLDocumentFactory extends DOMDocumentFactory {
 
 	private boolean styleCacheOn = false;
 
-	private static transient XHTMLDocumentFactory singleton = new XHTMLDocumentFactory();
+	private static final XHTMLDocumentFactory singleton = new XHTMLDocumentFactory();
 
 	protected XHTMLDocumentFactory() {
 		this(EnumSet.noneOf(Parser2.Flag.class));
