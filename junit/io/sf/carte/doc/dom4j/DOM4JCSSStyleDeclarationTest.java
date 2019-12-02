@@ -35,10 +35,10 @@ import io.sf.carte.doc.style.css.CSSComputedProperties;
 import io.sf.carte.doc.style.css.CSSElement;
 import io.sf.carte.doc.style.css.CSSMediaException;
 import io.sf.carte.doc.style.css.CSSStyleDeclaration;
+import io.sf.carte.doc.style.css.CSSStyleRule;
 import io.sf.carte.doc.style.css.CSSTypedValue;
 import io.sf.carte.doc.style.css.CSSUnit;
 import io.sf.carte.doc.style.css.CSSValue;
-import io.sf.carte.doc.style.css.ExtendedCSSStyleRule;
 import io.sf.carte.doc.style.css.om.BaseCSSStyleDeclaration;
 import io.sf.carte.doc.style.css.om.DOMCSSStyleSheetFactoryTest;
 import io.sf.carte.doc.style.css.property.CSSPropertyValueException;
@@ -108,7 +108,7 @@ public class DOM4JCSSStyleDeclarationTest {
 		elm.appendChild(h3);
 		CSSComputedProperties style = newdoc.getStyleSheet().getComputedStyle(h3, null);
 		assertNotNull(style);
-		ExtendedCSSStyleRule rule = defaultStyleRule("h3", "font-size");
+		CSSStyleRule rule = defaultStyleRule("h3", "font-size");
 		assertNotNull(rule);
 		CSSTypedValue val = (CSSTypedValue) rule.getStyle().getPropertyCSSValue("font-size");
 		assertNotNull(val);
@@ -267,19 +267,19 @@ public class DOM4JCSSStyleDeclarationTest {
 		assertEquals("url('http://www.example.com/override.png')", val.getCssText());
 	}
 
-	ExtendedCSSStyleRule defaultStyleRule(String selectorText, String propertyName) {
+	CSSStyleRule defaultStyleRule(String selectorText, String propertyName) {
 		CSSRuleList rules = sheet.getCssRules();
 		for (int i = 0; i < rules.getLength(); i++) {
 			CSSRule rule = rules.item(i);
-			if (rule instanceof ExtendedCSSStyleRule) {
-				String selText = ((ExtendedCSSStyleRule) rule).getSelectorText();
+			if (rule instanceof CSSStyleRule) {
+				String selText = ((CSSStyleRule) rule).getSelectorText();
 				// Small hack
 				StringTokenizer st = new StringTokenizer(selText, ",");
 				while (st.hasMoreElements()) {
 					String selector = st.nextToken();
 					if (selector.equals(selectorText)) {
-						if (((ExtendedCSSStyleRule) rule).getStyle().getPropertyCSSValue(propertyName) != null) {
-							return ((ExtendedCSSStyleRule) rule);
+						if (((CSSStyleRule) rule).getStyle().getPropertyCSSValue(propertyName) != null) {
+							return ((CSSStyleRule) rule);
 						}
 						break;
 					}

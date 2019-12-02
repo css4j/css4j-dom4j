@@ -20,7 +20,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import io.sf.carte.doc.style.css.ExtendedCSSStyleSheet;
+import io.sf.carte.doc.style.css.CSSStyleSheet;
 import io.sf.carte.doc.style.css.SelectorMatcher;
 import io.sf.carte.doc.style.css.nsac.CSSException;
 import io.sf.carte.doc.style.css.nsac.Parser;
@@ -533,7 +533,7 @@ public class DOM4JSelectorMatcherTest {
 		AbstractCSSStyleSheet css = factory.getStyleSheetFactory().createStyleSheet(null, null);
 		StringReader re = new StringReader(style);
 		cssParser.setDocumentHandler(
-				CSSOMBridge.createDocumentHandler((BaseCSSStyleSheet) css, ExtendedCSSStyleSheet.COMMENTS_IGNORE));
+				CSSOMBridge.createDocumentHandler((BaseCSSStyleSheet) css, CSSStyleSheet.COMMENTS_IGNORE));
 		cssParser.parseStyleSheet(re);
 		return css;
 	}
