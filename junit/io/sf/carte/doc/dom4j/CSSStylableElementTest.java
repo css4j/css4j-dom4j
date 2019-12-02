@@ -31,7 +31,7 @@ import org.w3c.dom.Element;
 import org.xml.sax.InputSource;
 
 import io.sf.carte.doc.style.css.CSSMediaException;
-import io.sf.carte.doc.style.css.ExtendedCSSStyleDeclaration;
+import io.sf.carte.doc.style.css.CSSStyleDeclaration;
 import io.sf.carte.doc.style.css.om.DOMCSSStyleSheetFactoryTest;
 
 public class CSSStylableElementTest {
@@ -55,7 +55,7 @@ public class CSSStylableElementTest {
 		assertTrue(it.hasNext());
 		Object elm = it.next();
 		assertTrue(elm instanceof CSSStylableElement);
-		ExtendedCSSStyleDeclaration style = ((CSSStylableElement)elm).getStyle();
+		CSSStyleDeclaration style = ((CSSStylableElement)elm).getStyle();
 		assertNotNull(style);
 		assertEquals("font-family: 'Does Not Exist', Neither; color: navy; ", style.getCssText());
 		pList.clear();
@@ -71,7 +71,7 @@ public class CSSStylableElementTest {
 		assertTrue(body.hasAttributes());
 		assertTrue(body.hasAttribute("style"));
 		assertEquals("font-family: Arial; ", body.getAttribute("style"));
-		ExtendedCSSStyleDeclaration style = body.getStyle();
+		CSSStyleDeclaration style = body.getStyle();
 		assertNotNull(style);
 		assertEquals(1, style.getLength());
 		assertEquals("font-family: Arial; ", style.getCssText());
@@ -84,7 +84,7 @@ public class CSSStylableElementTest {
 	public void getStyleUppercase() {
 		Element elm = xhtmlDoc.getElementById("ul1li1");
 		assertTrue(elm instanceof CSSStylableElement);
-		ExtendedCSSStyleDeclaration style = ((CSSStylableElement)elm).getStyle();
+		CSSStyleDeclaration style = ((CSSStylableElement)elm).getStyle();
 		assertNotNull(style);
 		assertEquals("color: blue; ", style.getCssText());
 	}
@@ -98,7 +98,7 @@ public class CSSStylableElementTest {
 		assertTrue(it.hasNext());
 		Object elm = it.next();
 		assertTrue(elm instanceof CSSStylableElement);
-		ExtendedCSSStyleDeclaration style = ((CSSStylableElement)elm).getComputedStyle();
+		CSSStyleDeclaration style = ((CSSStylableElement)elm).getComputedStyle();
 		assertNotNull(style);
 		assertEquals("bold", style.getPropertyValue("font-weight"));
 		pList.clear();

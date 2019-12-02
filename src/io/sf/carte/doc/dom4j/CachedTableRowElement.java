@@ -13,7 +13,7 @@ package io.sf.carte.doc.dom4j;
 
 import org.dom4j.QName;
 
-import io.sf.carte.doc.style.css.ExtendedCSSStyleDeclaration;
+import io.sf.carte.doc.style.css.CSSStyleDeclaration;
 import io.sf.carte.doc.style.css.property.AttributeToStyle;
 
 /**
@@ -45,7 +45,7 @@ class CachedTableRowElement extends CachedXHTMLElement {
 	}
 
 	@Override
-	public void exportHintsToStyle(ExtendedCSSStyleDeclaration style) {
+	public void exportHintsToStyle(CSSStyleDeclaration style) {
 		AttributeToStyle.bgcolor(getAttribute("bgcolor"), style);
 		AttributeToStyle.height(getAttribute("height"), style);
 		AttributeToStyle.background(getAttribute("background"), style);

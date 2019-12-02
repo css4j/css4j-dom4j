@@ -31,8 +31,8 @@ import org.w3c.dom.NodeList;
 import io.sf.carte.doc.agent.CSSCanvas;
 import io.sf.carte.doc.style.css.CSSDocument;
 import io.sf.carte.doc.style.css.CSSElement;
+import io.sf.carte.doc.style.css.CSSStyleDeclaration;
 import io.sf.carte.doc.style.css.DocumentCSSStyleSheet;
-import io.sf.carte.doc.style.css.ExtendedCSSStyleDeclaration;
 import io.sf.carte.doc.style.css.SelectorMatcher;
 import io.sf.carte.doc.style.css.nsac.CombinatorSelector;
 import io.sf.carte.doc.style.css.nsac.Condition;
@@ -55,7 +55,7 @@ abstract public class CSSStylableElement extends DOMElement implements
 
 	private SelectorMatcher selectorMatcher = null;
 
-	private Map<Condition, ExtendedCSSStyleDeclaration> overrideStyleSet = null;
+	private Map<Condition, CSSStyleDeclaration> overrideStyleSet = null;
 
 	protected CSSStylableElement(String name) {
 		super(name);
@@ -117,7 +117,7 @@ abstract public class CSSStylableElement extends DOMElement implements
 	 *         <code>style</code> attribute.
 	 */
 	@Override
-	public ExtendedCSSStyleDeclaration getStyle() {
+	public CSSStyleDeclaration getStyle() {
 		StyleAttribute styleAttr = (StyleAttribute) getAttributeNode("style");
 		if (styleAttr == null) {
 			Iterator<Attribute> it = attributeIterator();
@@ -141,7 +141,7 @@ abstract public class CSSStylableElement extends DOMElement implements
 	}
 
 	@Override
-	public void exportHintsToStyle(ExtendedCSSStyleDeclaration style) {
+	public void exportHintsToStyle(CSSStyleDeclaration style) {
 	}
 
 	@Override
@@ -153,10 +153,10 @@ abstract public class CSSStylableElement extends DOMElement implements
 	}
 
 	@Override
-	public ExtendedCSSStyleDeclaration getOverrideStyle(Condition pseudoElt) {
-		ExtendedCSSStyleDeclaration overrideStyle = null;
+	public CSSStyleDeclaration getOverrideStyle(Condition pseudoElt) {
+		CSSStyleDeclaration overrideStyle = null;
 		if(overrideStyleSet == null) {
-			overrideStyleSet = new HashMap<Condition, ExtendedCSSStyleDeclaration>(1);
+			overrideStyleSet = new HashMap<Condition, CSSStyleDeclaration>(1);
 		} else {
 			overrideStyle = overrideStyleSet.get(pseudoElt);
 		}

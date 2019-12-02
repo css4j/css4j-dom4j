@@ -13,7 +13,7 @@ package io.sf.carte.doc.dom4j;
 
 import org.dom4j.QName;
 
-import io.sf.carte.doc.style.css.ExtendedCSSStyleDeclaration;
+import io.sf.carte.doc.style.css.CSSStyleDeclaration;
 import io.sf.carte.doc.style.css.property.AttributeToStyle;
 
 /**
@@ -46,7 +46,7 @@ class TableElement extends XHTMLElement {
 	}
 
 	@Override
-	public void exportHintsToStyle(ExtendedCSSStyleDeclaration style) {
+	public void exportHintsToStyle(CSSStyleDeclaration style) {
 		AttributeToStyle.bgcolor(getAttribute("bgcolor"), style);
 		AttributeToStyle.cellSpacing(getAttribute("cellspacing"), style);
 		AttributeToStyle.width(getAttribute("width"), style);
