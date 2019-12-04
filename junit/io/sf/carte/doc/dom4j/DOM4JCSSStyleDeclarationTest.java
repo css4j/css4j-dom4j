@@ -98,7 +98,7 @@ public class DOM4JCSSStyleDeclarationTest {
 
 	@Test
 	public void getFontSize1() {
-		XHTMLDocument newdoc = XHTMLDocumentFactory.getInstance().createDocument();
+		XHTMLDocument newdoc = xhtmlDoc.getDocumentFactory().createDocument();
 		CSSElement root = newdoc.createElement("html");
 		newdoc.appendChild(root);
 		CSSElement elm = newdoc.createElement("body");

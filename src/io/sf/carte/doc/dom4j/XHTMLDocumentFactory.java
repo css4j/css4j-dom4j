@@ -76,7 +76,6 @@ public class XHTMLDocumentFactory extends DOMDocumentFactory {
 	public XHTMLDocumentFactory(EnumSet<Flag> enumSet) {
 		super();
 		cssFactory = new DOM4JCSSStyleSheetFactory(enumSet);
-		cssFactory.setDefaultHTMLUserAgentSheet();
 	}
 
 	/**

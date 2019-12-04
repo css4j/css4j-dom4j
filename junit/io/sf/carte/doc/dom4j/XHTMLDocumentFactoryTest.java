@@ -156,6 +156,7 @@ public class XHTMLDocumentFactoryTest {
 	public static XHTMLDocument parseXML(InputSource is)
 	throws DocumentException, SAXException {
 		TestDocumentFactory factory = new TestDocumentFactory();
+		factory.getStyleSheetFactory().setDefaultHTMLUserAgentSheet();
 		SAXReader reader = new SAXReader(factory);
 		reader.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", true);
 		reader.setEntityResolver(new DefaultEntityResolver());
