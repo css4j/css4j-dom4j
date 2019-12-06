@@ -43,10 +43,7 @@ import io.sf.carte.doc.style.css.om.InlineStyle;
  * DocumentFactory for CSS-styled XHTML documents.
  * <p>
  * This factory creates XHTMLDocuments and other objects with support for CSS
- * style sheets. A default style sheet can be set with the
- * {@link CSSStyleSheetFactory#getUserAgentStyleSheet(CSSDocument.ComplianceMode)}
- * method (use {@link #getStyleSheetFactory()} to get the factory). If no
- * default sheet is specified, an internal default sheet will be used.
+ * style sheets.
  * <p>
  * It is possible to produce elements with the ability to cache its own computed
  * style, if you call <code>setStyleCache(true)</code>. Although the performance
@@ -448,7 +445,7 @@ public class XHTMLDocumentFactory extends DOMDocumentFactory {
 		 * Gets the User Agent default CSS style sheet to be used by this factory in the
 		 * given mode.
 		 * <p>
-		 * By default, it contains a default XHTML5 sheet.
+		 * By default, it contains an empty sheet.
 		 * </p>
 		 * <p>
 		 * This implementation does not support <code>!important</code> rules in the
@@ -500,9 +497,6 @@ public class XHTMLDocumentFactory extends DOMDocumentFactory {
 		/**
 		 * Sets a default HTML default style sheet as the user agent style
 		 * sheet.
-		 * <p>
-		 * This is not necessary in the DOM4J backend, as that style sheet is
-		 * loaded by default.
 		 */
 		@Override
 		public void setDefaultHTMLUserAgentSheet() {
