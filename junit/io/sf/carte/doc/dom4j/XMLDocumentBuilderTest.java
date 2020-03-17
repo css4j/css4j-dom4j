@@ -25,6 +25,7 @@ import org.dom4j.io.SAXReader;
 import org.dom4j.io.XPP3Reader;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.w3c.dom.Comment;
 import org.w3c.dom.Document;
 import org.w3c.dom.DocumentType;
 import org.w3c.dom.Element;
@@ -159,6 +160,23 @@ public class XMLDocumentBuilderTest {
 		assertNotNull(parent);
 		assertEquals("body", parent.getNodeName());
 		assertTrue(docElement == parent);
+	}
+
+	@Test
+	public void testParseInputSourceEmptyComment() throws SAXException, IOException {
+		Document document = parseDocument(new StringReader(
+				"<?xml version=\"1.0\" encoding=\"UTF-8\"?><!----><html><!----></html>"));
+		assertNotNull(document);
+		Node dfc = document.getFirstChild();
+		assertNotNull(dfc);
+		assertEquals(Node.COMMENT_NODE, dfc.getNodeType());
+		assertEquals("", dfc.getNodeValue());
+		Element docElement = document.getDocumentElement();
+		assertNotNull(docElement);
+		assertTrue(docElement.hasChildNodes());
+		Comment comment2 = (Comment) docElement.getFirstChild();
+		assertNotNull(comment2);
+		assertEquals("", comment2.getNodeValue());
 	}
 
 	private Document parseDocument(Reader re) throws SAXException, IOException {
