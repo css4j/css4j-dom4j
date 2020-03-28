@@ -11,6 +11,7 @@
 
 package io.sf.carte.doc.dom4j;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
@@ -29,6 +30,7 @@ import io.sf.carte.doc.style.css.om.AbstractCSSStyleSheet;
 import io.sf.carte.doc.style.css.om.BaseCSSStyleSheet;
 import io.sf.carte.doc.style.css.om.CSSOMBridge;
 import io.sf.carte.doc.style.css.om.CSSStyleDeclarationRule;
+import io.sf.carte.doc.style.css.om.StyleRule;
 import io.sf.carte.doc.style.css.parser.CSSParser;
 
 public class DOM4JSelectorMatcherTest {
@@ -509,24 +511,89 @@ public class DOM4JSelectorMatcherTest {
 	}
 
 	@Test
+	public void testMatchSelectorPseudoHas1() throws Exception {
+		AbstractCSSStyleSheet css = parseStyle("p.exampleclass:has(> img) {color: blue;}");
+		StyleRule rule = (StyleRule) css.getCssRules().item(0);
+		SelectorList selist = rule.getSelectorList();
+		//
+		CSSStylableElement parent = createElement("p");
+		parent.setAttribute("id", "p1");
+		document.getDocumentElement().add(parent);
+		CSSStylableElement elm = createElement("span");
+		elm.setAttribute("id", "childid1");
+		parent.appendChild(elm);
+		CSSStylableElement elm2 = createElement("img");
+		elm2.setAttribute("id", "childid2");
+		parent.appendChild(elm2);
+		SelectorMatcher matcher = parent.getSelectorMatcher();
+		assertEquals(-1, matcher.matches(selist));
+		parent.setAttribute("class", "exampleclass");
+		assertTrue(matcher.matches(selist) >= 0);
+		//
+		parent.removeChild(elm2);
+		assertEquals(-1, matcher.matches(selist));
+	}
+
+	@Test
 	public void testMatchSelectorPseudoHas2() throws Exception {
 		AbstractCSSStyleSheet css = parseStyle("p.exampleclass:has(+ p) {color: blue;}");
 		CSSStyleDeclarationRule rule = (CSSStyleDeclarationRule) css.getCssRules().item(0);
-		if (rule != null) {
-			SelectorList selist = CSSOMBridge.getSelectorList(rule);
-			CSSStylableElement parent = createElement("div");
-			parent.setAttribute("id", "div1");
-			document.getDocumentElement().add(parent);
-			CSSStylableElement elm = createElement("p");
-			elm.setAttribute("id", "childid1");
-			parent.appendChild(elm);
-			CSSStylableElement elm2 = createElement("p");
-			elm2.setAttribute("id", "childid2");
-			parent.appendChild(elm2);
-			assertTrue(elm.getSelectorMatcher().matches(selist) < 0);
-			elm.setAttribute("class", "exampleclass");
-			assertTrue(elm.getSelectorMatcher().matches(selist) >= 0);
-		}
+		SelectorList selist = CSSOMBridge.getSelectorList(rule);
+		CSSStylableElement parent = createElement("div");
+		parent.setAttribute("id", "div1");
+		document.getDocumentElement().add(parent);
+		CSSStylableElement elm = createElement("p");
+		elm.setAttribute("id", "childid1");
+		parent.appendChild(elm);
+		CSSStylableElement elm2 = createElement("p");
+		elm2.setAttribute("id", "childid2");
+		parent.appendChild(elm2);
+		assertTrue(elm.getSelectorMatcher().matches(selist) < 0);
+		elm.setAttribute("class", "exampleclass");
+		assertTrue(elm.getSelectorMatcher().matches(selist) >= 0);
+	}
+
+	@Test
+	public void testMatchSelectorPseudoHas3() throws Exception {
+		AbstractCSSStyleSheet css = parseStyle("div.exampleclass:has(p>span) {color: blue;}");
+		StyleRule rule = (StyleRule) css.getCssRules().item(0);
+		SelectorList selist = rule.getSelectorList();
+		//
+		CSSStylableElement parent = createElement("div");
+		document.getDocumentElement().add(parent);
+		CSSStylableElement elm = createElement("p");
+		parent.appendChild(elm);
+		CSSStylableElement span = createElement("span");
+		elm.appendChild(span);
+		SelectorMatcher matcher = parent.getSelectorMatcher();
+		assertEquals(-1, matcher.matches(selist));
+		parent.setAttribute("class", "exampleclass");
+		assertTrue(matcher.matches(selist) >= 0);
+		//
+		elm.removeChild(span);
+		assertEquals(-1, matcher.matches(selist));
+	}
+
+	@Test
+	public void testMatchSelectorPseudoHas4() throws Exception {
+		AbstractCSSStyleSheet css = parseStyle("div.exampleclass:has(span + p) {color: blue;}");
+		StyleRule rule = (StyleRule) css.getCssRules().item(0);
+		SelectorList selist = rule.getSelectorList();
+		//
+		CSSStylableElement parent = createElement("div");
+		document.getDocumentElement().add(parent);
+		CSSStylableElement elm = createElement("span");
+		parent.appendChild(elm);
+		CSSStylableElement elm2 = createElement("p");
+		parent.appendChild(elm2);
+		SelectorMatcher matcher = parent.getSelectorMatcher();
+		assertEquals(-1, matcher.matches(selist));
+		parent.setAttribute("class", "exampleclass");
+		assertTrue(matcher.matches(selist) >= 0);
+		//
+		parent.removeChild(elm);
+		parent.removeChild(elm2);
+		assertEquals(-1, matcher.matches(selist));
 	}
 
 	AbstractCSSStyleSheet parseStyle(String style) throws CSSException, IOException {
