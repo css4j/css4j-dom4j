@@ -636,6 +636,27 @@ abstract public class CSSStylableElement extends DOMElement implements
 		}
 
 		@Override
+		protected boolean scopeMatchDescendant(CombinatorSelector selector) {
+			SimpleSelector desc = selector.getSecondSelector();
+			NodeList list = getChildNodes();
+			return scopeMatchRecursive(list, desc);
+		}
+
+		private boolean scopeMatchRecursive(NodeList list, SimpleSelector desc) {
+			int sz = list.getLength();
+			for (int i = 0; i < sz; i++) {
+				Node node = list.item(i);
+				if (node.getNodeType() == Node.ELEMENT_NODE) {
+					SelectorMatcher childSM = ((CSSStylableElement) node).getSelectorMatcher();
+					if (childSM.matches(desc) || scopeMatchRecursive(node.getChildNodes(), desc)) {
+						return true;
+					}
+				}
+			}
+			return false;
+		}
+
+		@Override
 		protected boolean scopeMatchDirectAdjacent(CombinatorSelector selector) {
 			SelectorMatcher siblingSM = null;
 			Node sibling = getNextSibling();
