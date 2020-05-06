@@ -13,14 +13,14 @@
   <artifactId>css4j-dom4j</artifactId>
   <packaging>jar</packaging>
   <dependencies>
-    <dependency>
+	<dependency>
 		<groupId>io.sf.carte</groupId>
 		<artifactId>css4j</artifactId>
 		<version>${project.parent.version}</version>
 		<type>jar</type>
 		<scope>compile</scope>
 		<optional>false</optional>
-    </dependency>
+	</dependency>
 	<dependency>
 		<groupId>io.sf.carte</groupId>
 		<artifactId>css4j</artifactId>
@@ -28,14 +28,14 @@
 		<type>test-jar</type>
 		<scope>test</scope>
 	</dependency>
-    <dependency>
+	<dependency>
 		<groupId>io.sf.carte</groupId>
 		<artifactId>css4j-agent</artifactId>
 		<version>${project.parent.version}</version>
 		<type>jar</type>
 		<scope>compile</scope>
 		<optional>false</optional>
-    </dependency>
+	</dependency>
 	<dependency>
 		<groupId>org.dom4j</groupId>
 		<artifactId>dom4j</artifactId>
@@ -81,7 +81,7 @@
 				</execution>
 			</executions>
 		</plugin>
-	    <plugin>
+		<plugin>
 			<groupId>org.apache.maven.plugins</groupId>
 			<artifactId>maven-compiler-plugin</artifactId>
 			<version>3.8.1</version>
