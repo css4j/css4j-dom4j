@@ -36,6 +36,7 @@
 		<scope>compile</scope>
 		<optional>false</optional>
 	</dependency>
+	<!-- Any dom4j version can be used -->
 	<dependency>
 		<groupId>org.dom4j</groupId>
 		<artifactId>dom4j</artifactId>
