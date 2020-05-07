@@ -36,7 +36,8 @@
 		<scope>compile</scope>
 		<optional>false</optional>
 	</dependency>
-	<!-- Any dom4j version can be used -->
+	<!-- Any dom4j version can be used, but tests may not pass with versions
+		prior to 2.1.1, due to changes in dom4j's defaults -->
 	<dependency>
 		<groupId>org.dom4j</groupId>
 		<artifactId>dom4j</artifactId>
