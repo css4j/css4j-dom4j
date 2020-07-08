@@ -43,6 +43,7 @@ public class StyleElementTest {
 		assertEquals(0, xDoc.embeddedStyle.size());
 		styleElement = (StyleElement) headElement.addElement(style_qname);
 		assertEquals(1, xDoc.embeddedStyle.size());
+		styleElement.setAttribute("type", "foo/bar");
 		assertEquals(0, xDoc.getStyleSheets().getLength());
 		styleElement.setAttribute("type", "text/css");
 		assertEquals(1, xDoc.getStyleSheets().getLength());
