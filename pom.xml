@@ -34,7 +34,7 @@
 		<version>${project.parent.version}</version>
 		<type>jar</type>
 		<scope>compile</scope>
-		<optional>false</optional>
+		<optional>true</optional>
 	</dependency>
 	<!-- Any dom4j version can be used, but tests may not pass with versions
 		prior to 2.1.1, due to changes in dom4j's defaults -->
