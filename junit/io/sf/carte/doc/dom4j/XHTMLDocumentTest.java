@@ -80,7 +80,7 @@ public class XHTMLDocumentTest {
 	public void getStyleSheet() throws Exception {
 		int defSz = xhtmlDoc.getDocumentFactory()
 				.getDefaultStyleSheet(xhtmlDoc.getComplianceMode()).getCssRules().getLength();
-		assertEquals(109, defSz);
+		assertEquals(113, defSz);
 		DocumentCSSStyleSheet css = xhtmlDoc.getStyleSheet();
 		assertNotNull(css);
 		assertNotNull(css.getCssRules());
@@ -878,11 +878,11 @@ public class XHTMLDocumentTest {
 		DocumentCSSStyleSheet css = xhtmlDoc.getStyleSheet();
 		assertNotNull(css);
 		assertNotNull(css.getCssRules());
-		assertEquals(129, css.getCssRules().getLength());
+		assertEquals(133, css.getCssRules().getLength());
 		StringReader re = new StringReader("p{color:#a1e3f0}#noid{margin:0.04em;}");
 		InputSource cssSrc = new InputSource(re);
 		xhtmlDoc.addStyleSheet(cssSrc);
-		assertEquals(131, css.getCssRules().getLength());
+		assertEquals(135, css.getCssRules().getLength());
 	}
 
 }
