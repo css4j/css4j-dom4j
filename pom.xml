@@ -72,21 +72,7 @@
 	<plugins>
 		<plugin>
 			<groupId>org.apache.maven.plugins</groupId>
-			<artifactId>maven-source-plugin</artifactId>
-			<version>3.2.0</version>
-			<executions>
-				<execution>
-					<id>attach-sources</id>
-					<goals>
-						<goal>jar-no-fork</goal>
-					</goals>
-				</execution>
-			</executions>
-		</plugin>
-		<plugin>
-			<groupId>org.apache.maven.plugins</groupId>
 			<artifactId>maven-compiler-plugin</artifactId>
-			<version>3.8.1</version>
 			<executions>
 				<execution>
 					<id>default-compile</id>
@@ -102,25 +88,18 @@
 		<plugin>
 			<groupId>org.apache.maven.plugins</groupId>
 			<artifactId>maven-javadoc-plugin</artifactId>
-			<version>3.1.0</version>
 			<configuration>
-				<source>8</source>
-				<quiet>true</quiet>
-				<doclint>none</doclint>
+				<overview>${project.basedir}/src/overview.html</overview>
+				<links>
+					<link>https://docs.oracle.com/javase/8/docs/api/</link>
+					<link>https://css4j.github.io/api/2.0/</link>
+					<link>https://dom4j.github.io/javadoc/2.1.1/</link>
+				</links>
 			</configuration>
-			<executions>
-				<execution>
-					<id>attach-javadocs</id>
-					<goals>
-						<goal>jar</goal>
-					</goals>
-				</execution>
-			</executions>
 		</plugin>
 		<plugin>
 			<groupId>org.apache.maven.plugins</groupId>
 			<artifactId>maven-jar-plugin</artifactId>
-			<version>3.2.0</version>
 			<configuration>
 			<archive>
 				<manifestEntries>
@@ -162,27 +141,6 @@
 		</testResource>
 	</testResources>
   </build>
-  <reporting>
-	<plugins>
-		<plugin>
-			<groupId>org.apache.maven.plugins</groupId>
-			<artifactId>maven-javadoc-plugin</artifactId>
-			<version>3.1.0</version>
-			<configuration>
-			  <reportOutputDirectory>${project.build.directory}/doc</reportOutputDirectory>
-			  <destDir>api</destDir>
-			</configuration>
-			<reportSets>
-				<reportSet>
-					<id>default</id>
-					<reports>
-					  <report>javadoc</report>
-					</reports>
-				</reportSet>
-			</reportSets>
-		</plugin>
-	</plugins>
-  </reporting>
   <scm>
 	<connection>scm:git:https://github.com/css4j/css4j-dom4j.git</connection>
 	<url>https://github.com/css4j/css4j-dom4j</url>
