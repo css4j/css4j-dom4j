@@ -70,30 +70,16 @@
   </dependencies>
   <!-- Build Settings -->
   <build>
-    <directory>${project.basedir}/build</directory>
-    <outputDirectory>${project.build.directory}/bin</outputDirectory>
-    <finalName>${project.artifactId}-${project.version}</finalName>
-    <testOutputDirectory>${project.build.directory}/testbin</testOutputDirectory>
-    <sourceDirectory>${project.basedir}/src</sourceDirectory>
-    <testSourceDirectory>${project.basedir}/junit</testSourceDirectory>
+	<directory>${project.basedir}/build</directory>
+	<outputDirectory>${project.build.directory}/bin</outputDirectory>
+	<finalName>${project.artifactId}-${project.version}</finalName>
+	<testOutputDirectory>${project.build.directory}/testbin</testOutputDirectory>
+	<sourceDirectory>${project.basedir}/src</sourceDirectory>
+	<testSourceDirectory>${project.basedir}/junit</testSourceDirectory>
 	<plugins>
 		<plugin>
 			<groupId>org.apache.maven.plugins</groupId>
-			<artifactId>maven-source-plugin</artifactId>
-			<version>3.2.1</version>
-			<executions>
-				<execution>
-					<id>attach-sources</id>
-					<goals>
-						<goal>jar-no-fork</goal>
-					</goals>
-				</execution>
-			</executions>
-		</plugin>
-		<plugin>
-			<groupId>org.apache.maven.plugins</groupId>
 			<artifactId>maven-compiler-plugin</artifactId>
-			<version>3.8.1</version>
 			<executions>
 				<execution>
 					<id>default-compile</id>
@@ -121,7 +107,6 @@
 		<plugin>
 			<groupId>org.apache.maven.plugins</groupId>
 			<artifactId>maven-jar-plugin</artifactId>
-			<version>3.2.0</version>
 			<configuration>
 			<archive>
 				<manifestEntries>
