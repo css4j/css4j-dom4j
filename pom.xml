@@ -99,7 +99,7 @@
 				<overview>${project.basedir}/src/overview.html</overview>
 				<links>
 					<link>https://docs.oracle.com/javase/8/docs/api/</link>
-					<link>https://css4j.github.io/api/2.0/</link>
+					<link>https://css4j.github.io/api/2.1/</link>
 					<link>https://dom4j.github.io/javadoc/2.1.1/</link>
 				</links>
 			</configuration>
