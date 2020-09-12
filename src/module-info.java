@@ -14,4 +14,5 @@ module io.sf.carte.css4j.dom4j {
 
 	requires static io.sf.carte.css4j.agent.net;
 	requires transitive dom4j;
+	requires static xpp3;
 }
