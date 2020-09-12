@@ -12,6 +12,7 @@
 module io.sf.carte.css4j.dom4j {
 	exports io.sf.carte.doc.dom4j;
 
+	requires transitive io.sf.carte.css4j;
 	requires static io.sf.carte.css4j.agent.net;
 	requires transitive dom4j;
 	requires static xpp3;
