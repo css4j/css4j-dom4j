@@ -34,11 +34,11 @@ import org.xml.sax.InputSource;
 import org.xmlpull.v1.XmlPullParserException;
 
 import io.sf.carte.doc.agent.AbstractUserAgent;
-import io.sf.carte.doc.agent.AgentUtil;
 import io.sf.carte.doc.dom4j.DOM4JUserAgent.AgentXHTMLDocumentFactory.AgentXHTMLDocument;
 import io.sf.carte.doc.style.css.nsac.Parser;
 import io.sf.carte.doc.style.css.nsac.Parser.Flag;
 import io.sf.carte.doc.xml.dtd.DefaultEntityResolver;
+import io.sf.carte.util.agent.AgentUtil;
 
 /**
  * User Agent based on DOM4J document trees.
