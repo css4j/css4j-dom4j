@@ -3,7 +3,6 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
                       http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <!-- The Basics -->
   <parent>
 	<groupId>io.sf.carte</groupId>
 	<artifactId>css4j-dist</artifactId>
@@ -68,7 +67,6 @@
 		<optional>false</optional>
 	</dependency>
   </dependencies>
-  <!-- Build Settings -->
   <build>
 	<directory>${project.basedir}/build</directory>
 	<outputDirectory>${project.build.directory}/bin</outputDirectory>
@@ -159,4 +157,7 @@
 		<url>https://maven.pkg.github.com/css4j/css4j-dom4j</url>
 	</repository>
   </distributionManagement>
+  <issueManagement>
+	<url>https://github.com/css4j/css4j-dom4j/issues</url>
+  </issueManagement>
 </project>
