@@ -96,10 +96,14 @@
 			<configuration>
 				<overview>${project.basedir}/src/overview.html</overview>
 				<links>
-					<link>https://docs.oracle.com/javase/8/docs/api/</link>
+					<link>https://docs.oracle.com/en/java/javase/11/docs/api/</link>
 					<link>https://css4j.github.io/api/3/</link>
 					<link>https://dom4j.github.io/javadoc/2.1.1/</link>
 				</links>
+				<additionalOptions>
+					<option>--add-reads</option>
+					<option>io.sf.carte.css4j.dom4j=ALL-UNNAMED</option>
+				</additionalOptions>
 			</configuration>
 		</plugin>
 		<plugin>
