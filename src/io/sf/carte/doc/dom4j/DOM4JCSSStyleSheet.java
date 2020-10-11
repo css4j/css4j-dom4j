@@ -30,6 +30,8 @@ import io.sf.carte.doc.style.css.om.BaseCSSStyleSheet;
  */
 abstract class DOM4JCSSStyleSheet extends BaseCSSStyleSheet implements Cloneable {
 
+	private static final long serialVersionUID = 1L;
+
 	Node ownerNode;
 
 	public DOM4JCSSStyleSheet(String title, Node ownerNode, MediaQueryList media, AbstractCSSRule ownerRule,

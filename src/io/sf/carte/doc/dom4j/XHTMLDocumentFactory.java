@@ -276,6 +276,8 @@ public class XHTMLDocumentFactory extends DOMDocumentFactory {
 	 */
 	class DOM4JCSSStyleSheetFactory extends BaseCSSStyleSheetFactory {
 
+		private static final long serialVersionUID = 1L;
+
 		private BaseDocumentCSSStyleSheet defStyleSheet = null;
 		private BaseDocumentCSSStyleSheet defQStyleSheet = null;
 
@@ -335,6 +337,9 @@ public class XHTMLDocumentFactory extends DOMDocumentFactory {
 		}
 
 		private class MyDOM4JDocumentCSSStyleSheet extends DOM4JDocumentCSSStyleSheet {
+
+			private static final long serialVersionUID = 1L;
+
 			public MyDOM4JDocumentCSSStyleSheet(String targetMedium, byte origin) {
 				super(targetMedium, origin);
 			}
@@ -351,6 +356,9 @@ public class XHTMLDocumentFactory extends DOMDocumentFactory {
 		}
 
 		private class MyDOM4JCSSStyleSheet extends DOM4JCSSStyleSheet {
+
+			private static final long serialVersionUID = 1L;
+
 			public MyDOM4JCSSStyleSheet(String title, Node ownerNode, MediaQueryList media, AbstractCSSRule ownerRule,
 					byte origin) {
 				super(title, ownerNode, media, ownerRule, origin);
@@ -376,6 +384,8 @@ public class XHTMLDocumentFactory extends DOMDocumentFactory {
 
 		class MyInlineStyle extends InlineStyle {
 
+			private static final long serialVersionUID = 1L;
+
 			MyInlineStyle(Node owner) {
 				super();
 				setOwnerNode(owner);
@@ -399,6 +409,8 @@ public class XHTMLDocumentFactory extends DOMDocumentFactory {
 
 		class MyCompatInlineStyle extends CompatInlineStyle {
 
+			private static final long serialVersionUID = 1L;
+
 			MyCompatInlineStyle(Node owner) {
 				super();
 				setOwnerNode(owner);
@@ -421,6 +433,9 @@ public class XHTMLDocumentFactory extends DOMDocumentFactory {
 		}
 
 		class MyDOM4JComputedStyle extends DOM4JComputedStyle {
+
+			private static final long serialVersionUID = 1L;
+
 			MyDOM4JComputedStyle(BaseDocumentCSSStyleSheet docSheet) {
 				super(docSheet);
 			}

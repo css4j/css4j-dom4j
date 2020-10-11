@@ -61,6 +61,8 @@ public class DOM4JUserAgentTest {
 	 */
 	public class TestUserAgent extends DOM4JUserAgent {
 
+		private static final long serialVersionUID = 1L;
+
 		TestDocumentFactory factory = new TestDocumentFactory();
 
 		protected TestUserAgent() {

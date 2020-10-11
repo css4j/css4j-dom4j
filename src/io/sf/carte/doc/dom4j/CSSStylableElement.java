@@ -217,6 +217,8 @@ abstract public class CSSStylableElement extends DOMElement implements
 	 */
 	class DOM4JSelectorMatcher extends AbstractSelectorMatcher {
 
+		private static final long serialVersionUID = 1L;
+
 		DOM4JSelectorMatcher() {
 			super();
 			setLocalName(getName().toLowerCase(Locale.ROOT).intern());

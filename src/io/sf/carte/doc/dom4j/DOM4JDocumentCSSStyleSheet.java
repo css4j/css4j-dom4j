@@ -27,6 +27,8 @@ import io.sf.carte.doc.style.css.om.InlineStyle;
  */
 abstract class DOM4JDocumentCSSStyleSheet extends BaseDocumentCSSStyleSheet {
 
+	private static final long serialVersionUID = 1L;
+
 	private XHTMLDocument ownerElement = null;
 
 	DOM4JDocumentCSSStyleSheet(byte origin) {

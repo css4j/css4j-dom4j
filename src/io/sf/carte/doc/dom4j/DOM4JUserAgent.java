@@ -48,6 +48,8 @@ import io.sf.carte.util.agent.AgentUtil;
  */
 public class DOM4JUserAgent extends AbstractUserAgent {
 
+	private static final long serialVersionUID = 1L;
+
 	protected EntityResolver resolver = createEntityResolver();
 
 	private final boolean useXPP3;

@@ -29,6 +29,8 @@ import io.sf.carte.doc.style.css.om.ComputedCSSStyle;
  */
 abstract class DOM4JComputedStyle extends ComputedCSSStyle {
 
+	private static final long serialVersionUID = 1L;
+
 	private transient ComputedCSSStyle parentStyle = null;
 
 	DOM4JComputedStyle(BaseDocumentCSSStyleSheet docSheet) {
