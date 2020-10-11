@@ -590,13 +590,14 @@ public class XHTMLDocument extends DOMDocument implements CSSDocument {
 	}
 
 	public void onMetaAdded(String name, String attribute) {
-		if ("Default-Style".equalsIgnoreCase(name)) {
+		if ("default-style".equalsIgnoreCase(name)) {
 			metaDefaultStyleSet = attribute;
+			onStyleModify();
 		}
 	}
 
 	public void onMetaRemoved(String name, String attribute) {
-		if ("Default-Style".equalsIgnoreCase(name)) {
+		if ("default-style".equalsIgnoreCase(name)) {
 			metaDefaultStyleSet = "";
 		}
 	}
