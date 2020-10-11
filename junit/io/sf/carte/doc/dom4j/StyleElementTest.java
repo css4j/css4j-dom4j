@@ -18,6 +18,9 @@ import org.dom4j.QName;
 import org.junit.Before;
 import org.junit.Test;
 
+import io.sf.carte.doc.style.css.StyleFormattingFactory;
+import io.sf.carte.doc.style.css.om.TestStyleFormattingFactory;
+
 public class StyleElementTest {
 
 	XHTMLDocument xDoc = null;
@@ -62,6 +65,23 @@ public class StyleElementTest {
 		styleElement.setText("p {font-size: large; font-style: italic; }");
 		iniSerial++;
 		assertEquals(iniSerial, xDoc.getStyleCacheSerial());
+	}
+
+	@Test
+	public void getText() {
+		styleElement = (StyleElement) headElement.addElement(style_qname);
+		styleElement.setAttribute("type", "text/css");
+		styleElement.setText("p {font-size: large; font-style: italic;}");
+		assertEquals("p {font-size: large; font-style: italic;}", styleElement.getText());
+		//
+		styleElement.normalize();
+		assertEquals("p {font-size: large; font-style: italic;}", styleElement.getText());
+		//
+		xDoc.getStyleSheet();
+		StyleFormattingFactory formattingf = new TestStyleFormattingFactory();
+		xDoc.getDocumentFactory().getStyleSheetFactory().setStyleFormattingFactory(formattingf);
+		styleElement.normalize();
+		assertEquals("p {font-size: large; font-style: italic; }", styleElement.getText());
 	}
 
 	@Test

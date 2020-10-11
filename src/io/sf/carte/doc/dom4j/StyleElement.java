@@ -44,6 +44,20 @@ class StyleElement extends StyleDefinerElement {
 		super(qname, attributeCount);
 	}
 
+	@Override
+	public void normalize() {
+		if (linkedSheet == null) {
+			super.normalize();
+		} else {
+			getSheet();
+			if (linkedSheet == null) {
+				super.normalize();
+			} else {
+				super.setText(linkedSheet.toString());
+			}
+		}
+	}
+
 	/**
 	 * Gets the associated style sheet for the node.
 	 * 
