@@ -24,6 +24,7 @@ import org.junit.Test;
 import org.w3c.dom.DOMStringList;
 
 import io.sf.carte.doc.DocumentException;
+import io.sf.carte.doc.agent.MockURLConnectionFactory;
 import io.sf.carte.doc.agent.net.DefaultOriginPolicy;
 import io.sf.carte.doc.style.css.nsac.Parser;
 
@@ -33,13 +34,12 @@ public class DOM4JUserAgentTest {
 	@Before
 	public void setUp() {
 		agent = new TestUserAgent();
-		agent.getTestDocumentFactory().getConnectionFactory()
-			.setHeader("html", "Default-Style", "Alter 2");
 	}
 
 	@Test
 	public void getSelectedStyleSheetSet() throws IOException, DocumentException {
 		URL url = new URL("http://www.example.com/xhtml/htmlsample.html");
+		agent.getTestDocumentFactory().getConnectionFactory().setHeader("html", "Default-Style", "Alter 2");
 		XHTMLDocument xhtmlDoc = agent.readURL(url);
 		DOMStringList list = xhtmlDoc.getStyleSheetSets();
 		assertEquals(3, list.getLength());
@@ -51,6 +51,49 @@ public class DOM4JUserAgentTest {
 		assertEquals("Alter 2", xhtmlDoc.getSelectedStyleSheetSet());
 		xhtmlDoc.setSelectedStyleSheetSet("Alter 1");
 		assertEquals("Alter 1", xhtmlDoc.getSelectedStyleSheetSet());
+	}
+
+	@Test
+	public void getSelectedStyleSheetSetMeta() throws IOException, DocumentException {
+		URL url = new URL("http://www.example.com/xhtml/meta-default-style.html");
+		agent.getTestDocumentFactory().getConnectionFactory().registerURL(url.toExternalForm(),
+				"meta-default-style.html");
+		XHTMLDocument xhtmlDoc = agent.readURL(url);
+		DOMStringList list = xhtmlDoc.getStyleSheetSets();
+		assertEquals(3, list.getLength());
+		assertTrue(list.contains("Default"));
+		assertTrue(list.contains("Alter 1"));
+		assertTrue(list.contains("Alter 2"));
+		assertEquals("Alter 1", xhtmlDoc.getSelectedStyleSheetSet());
+		xhtmlDoc.setSelectedStyleSheetSet("foo");
+		assertEquals("Alter 1", xhtmlDoc.getSelectedStyleSheetSet());
+		xhtmlDoc.setSelectedStyleSheetSet("Alter 2");
+		assertEquals("Alter 2", xhtmlDoc.getSelectedStyleSheetSet());
+	}
+
+	/*
+	 * HTML 4.01, § 14.3.2:
+	 * "If two or more META declarations or HTTP headers specify the preferred style
+	 * sheet, the last one takes precedence. HTTP headers are considered to occur
+	 * earlier than the document HEAD for this purpose."
+	 */
+	@Test
+	public void getSelectedStyleSheetSetMetaOverride() throws IOException, DocumentException {
+		URL url = new URL("http://www.example.com/xhtml/meta-default-style.html");
+		MockURLConnectionFactory connFactory = agent.getTestDocumentFactory().getConnectionFactory();
+		connFactory.registerURL(url.toExternalForm(), "meta-default-style.html");
+		connFactory.setHeader("html", "Default-Style", "Alter 2");
+		XHTMLDocument xhtmlDoc = agent.readURL(url);
+		DOMStringList list = xhtmlDoc.getStyleSheetSets();
+		assertEquals(3, list.getLength());
+		assertTrue(list.contains("Default"));
+		assertTrue(list.contains("Alter 1"));
+		assertTrue(list.contains("Alter 2"));
+		assertEquals("Alter 1", xhtmlDoc.getSelectedStyleSheetSet());
+		xhtmlDoc.setSelectedStyleSheetSet("foo");
+		assertEquals("Alter 1", xhtmlDoc.getSelectedStyleSheetSet());
+		xhtmlDoc.setSelectedStyleSheetSet("Alter 2");
+		assertEquals("Alter 2", xhtmlDoc.getSelectedStyleSheetSet());
 	}
 
 	/**

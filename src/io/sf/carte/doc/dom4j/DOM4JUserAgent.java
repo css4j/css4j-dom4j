@@ -129,9 +129,10 @@ public class DOM4JUserAgent extends AbstractUserAgent {
 		NodeList list = xdoc.getElementsByTagName("meta");
 		int listL = list.getLength();
 		for (int i = listL - 1; i >= 0; i--) {
-			if ("Default-Style".equalsIgnoreCase(((DOMElement) list.item(i)).attributeValue("http-equiv"))) {
-				String metaDefStyle = ((DOMElement) list.item(i)).attributeValue("content");
-				if (metaDefStyle != null) {
+			CSSStylableElement element = (CSSStylableElement) list.item(i);
+			if ("default-style".equalsIgnoreCase(element.getAttributeValue("http-equiv"))) {
+				String metaDefStyle = element.getAttributeValue("content");
+				if (metaDefStyle.length() != 0) {
 					// Per HTML4 spec § 14.3.2:
 					// "If two or more META declarations or HTTP headers specify 
 					//  the preferred style sheet, the last one takes precedence."
