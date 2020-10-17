@@ -209,6 +209,25 @@ abstract public class CSSStylableElement extends DOMElement implements
 		}
 	}
 
+	String getAttributeValue(String attrName) {
+		String value = null;
+		Attribute attr = attribute(attrName);
+		if (attr == null) {
+			List<Attribute> list = attributeList();
+			for (Attribute item : list) {
+				String nsuri; // In some configurations, nsuri could be null
+				if (attrName.equalsIgnoreCase(item.getName()) && ((nsuri = item.getNamespaceURI()) == null
+						|| nsuri.length() == 0 || XHTMLDocument.XHTML_NAMESPACE_URI.equals(nsuri))) {
+					value = item.getValue();
+					break;
+				}
+			}
+		} else {
+			value = attr.getValue();
+		}
+		return value != null ? value : "";
+	}
+
 	/**
 	 * DOM4J CSS Selector matcher.
 	 * 
@@ -573,13 +592,24 @@ abstract public class CSSStylableElement extends DOMElement implements
 
 		@Override
 		protected String getAttributeValue(String attrName) {
-			String value = attributeValue(attrName);
-			return value != null? value : "";
+			return CSSStylableElement.this.getAttributeValue(attrName);
 		}
 
 		@Override
 		protected boolean hasAttribute(String attrName) {
-			return attribute(attrName) != null;
+			Attribute attr = attribute(attrName);
+			if (attr == null) {
+				List<Attribute> list = attributeList();
+				for (Attribute item : list) {
+					String nsuri; // In some configurations, nsuri could be null
+					if (attrName.equalsIgnoreCase(item.getName()) && ((nsuri = item.getNamespaceURI()) == null
+							|| nsuri.length() == 0 || XHTMLDocument.XHTML_NAMESPACE_URI.equals(nsuri))) {
+						return true;
+					}
+				}
+				return false;
+			}
+			return attr != null;
 		}
 
 		@Override
