@@ -54,7 +54,7 @@ class BaseURLElement extends XHTMLElement {
 					} catch (MalformedURLException e) {
 						XHTMLDocument doc = getOwnerDocument();
 						if(doc != null) {
-							doc.setBaseURL(null);
+							doc.getErrorHandler().ioError(href, e);
 						}
 						return;
 					}

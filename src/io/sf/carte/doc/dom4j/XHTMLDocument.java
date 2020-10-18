@@ -642,7 +642,10 @@ public class XHTMLDocument extends DOMDocument implements CSSDocument {
 	 *            the base URL.
 	 */
 	public void setBaseURL(URL baseURL) {
-		this.baseURL = baseURL;
+		if (baseURL == null || !"jar".equalsIgnoreCase(baseURL.getProtocol())
+				|| getDocumentFactory().isAllowedJarUris()) {
+			this.baseURL = baseURL;
+		}
 	}
 
 	/**
@@ -691,6 +694,41 @@ public class XHTMLDocument extends DOMDocument implements CSSDocument {
 			linkedPort = linkedURL.getDefaultPort();
 		}
 		return (docHost.equalsIgnoreCase(linkedHost) || linkedHost.endsWith(docHost)) && docPort == linkedPort;
+	}
+
+	/**
+	 * Determine whether the retrieval of the given URL is authorized.
+	 * <p>
+	 * If the URL's protocol is not {@code http} nor {@code https} and document's
+	 * {@code BASE} URL's scheme is neither {@code file} nor {@code jar}, it is
+	 * denied.
+	 * </p>
+	 * <p>
+	 * If no {@code BASE} URL is set,
+	 * {@link XHTMLDocumentFactory#setAllowJarUris(boolean)} is checked if the URL
+	 * protocol is {@code jar}.
+	 * </p>
+	 * 
+	 * @param url the URL to check.
+	 * @return {@code true} if allowed.
+	 */
+	@Override
+	public boolean isAuthorizedOrigin(URL url) {
+		String scheme = url.getProtocol();
+		URL base = getBaseURL();
+		if (base != null) {
+			String baseScheme = base.getProtocol();
+			// To try to speed things up, only the parameter's scheme is compared
+			// case-insensitively
+			if (!scheme.equalsIgnoreCase("https") && !scheme.equalsIgnoreCase("http") && !baseScheme.equals("file")
+					&& !baseScheme.equals("jar")) {
+				return false;
+			}
+		} else if ("file".equalsIgnoreCase(scheme)
+				|| ("jar".equalsIgnoreCase(scheme) && !getDocumentFactory().isAllowedJarUris())) {
+			return false;
+		}
+		return true;
 	}
 
 	/**
