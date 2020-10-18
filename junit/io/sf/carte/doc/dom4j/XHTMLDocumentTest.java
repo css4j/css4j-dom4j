@@ -51,6 +51,7 @@ import io.sf.carte.doc.style.css.om.DOMCSSStyleSheetFactoryTest;
 import io.sf.carte.doc.style.css.om.MediaRule;
 
 public class XHTMLDocumentTest {
+
 	XHTMLDocument xhtmlDoc;
 
 	@Before
@@ -839,6 +840,12 @@ public class XHTMLDocumentTest {
 		assertEquals("http://www.example.com/", xhtmlDoc.getBaseURI());
 		CSSElement base = (CSSElement) xhtmlDoc.getElementsByTagName("base").item(0);
 		base.setAttribute("href", "http://www.example.com/newbase/");
+		assertEquals("http://www.example.com/newbase/", xhtmlDoc.getBaseURI());
+		// Wrong URL
+		base.setAttribute("href", "http^::\\");
+		assertEquals("http://www.example.com/newbase/", xhtmlDoc.getBaseURI());
+		// Unsafe base assignment
+		base.setAttribute("href", "jar:http://www.example.com/evil.jar!/file");
 		assertEquals("http://www.example.com/newbase/", xhtmlDoc.getBaseURI());
 	}
 

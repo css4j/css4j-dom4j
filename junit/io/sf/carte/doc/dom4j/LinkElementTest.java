@@ -17,10 +17,15 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import org.dom4j.Namespace;
 import org.dom4j.QName;
 import org.junit.Before;
 import org.junit.Test;
+
+import io.sf.carte.doc.style.css.om.AbstractCSSStyleSheet;
 
 public class LinkElementTest {
 
@@ -29,8 +34,6 @@ public class LinkElementTest {
 	HeadElement headElement = null;
 
 	QName link_qname = null;
-
-	LinkElement linkElement = null;
 
 	@Before
 	public void setUp() {
@@ -44,7 +47,7 @@ public class LinkElementTest {
 	@Test
 	public void addRemove() {
 		assertEquals(0, xDoc.linkedStyle.size());
-		linkElement = (LinkElement) headElement.addElement(link_qname);
+		LinkElement linkElement = (LinkElement) headElement.addElement(link_qname);
 		assertEquals(1, xDoc.linkedStyle.size());
 		headElement.remove(linkElement);
 		assertEquals(0, xDoc.linkedStyle.size());
@@ -52,7 +55,7 @@ public class LinkElementTest {
 
 	@Test
 	public void addRemoveAttribute() {
-		linkElement = (LinkElement) headElement.addElement(link_qname);
+		LinkElement linkElement = (LinkElement) headElement.addElement(link_qname);
 		xDoc.getStyleSheet();
 		int iniSerial = xDoc.getStyleCacheSerial();
 		linkElement.addAttribute("href", "http://www.example.com/css/example.css");
@@ -74,7 +77,7 @@ public class LinkElementTest {
 
 	@Test
 	public void attributeSetValue() {
-		linkElement = (LinkElement) headElement.addElement(link_qname);
+		LinkElement linkElement = (LinkElement) headElement.addElement(link_qname);
 		linkElement.addAttribute("rel", "stylesheet");
 		linkElement.addAttribute("href", "http://www.example.com/css/example.css");
 		xDoc.getStyleSheet();
@@ -82,6 +85,39 @@ public class LinkElementTest {
 		int iniSerial = xDoc.getStyleCacheSerial();
 		linkElement.attribute("href").setValue("http://www.example.com/example2.css");
 		iniSerial++;
+		assertEquals(iniSerial, xDoc.getStyleCacheSerial());
+	}
+
+	@Test
+	public void getSheet() throws MalformedURLException {
+		LinkElement linkElement = (LinkElement) headElement.addElement(link_qname);
+		linkElement.addAttribute("rel", "stylesheet");
+		linkElement.addAttribute("href", "http://www.example.com/css/common.css");
+		xDoc.getStyleSheet();
+		assertFalse(xDoc.getErrorHandler().hasErrors());
+		AbstractCSSStyleSheet sheet = linkElement.getSheet();
+		assertNotNull(sheet);
+		assertEquals(3, sheet.getCssRules().getLength());
+		//
+		int iniSerial = xDoc.getStyleCacheSerial();
+		linkElement.attribute("href").setValue("jar:http://www.example.com/evil.jar!/file");
+		sheet = linkElement.getSheet();
+		assertNotNull(sheet);
+		assertEquals(0, sheet.getCssRules().getLength());
+		assertTrue(xDoc.getErrorHandler().hasErrors());
+		assertTrue(xDoc.getErrorHandler().hasPolicyErrors());
+		iniSerial++;
+		assertEquals(iniSerial, xDoc.getStyleCacheSerial());
+		//
+		xDoc.getErrorHandler().reset();
+		// Set BASE URL to allow policy enforcement
+		xDoc.setBaseURL(new URL("http://www.example.com/example.html"));
+		linkElement.attribute("href").setValue("file:/dev/zero");
+		sheet = linkElement.getSheet();
+		assertNotNull(sheet);
+		assertEquals(0, sheet.getCssRules().getLength());
+		assertTrue(xDoc.getErrorHandler().hasErrors());
+		assertTrue(xDoc.getErrorHandler().hasPolicyErrors());
 		assertEquals(iniSerial, xDoc.getStyleCacheSerial());
 	}
 
