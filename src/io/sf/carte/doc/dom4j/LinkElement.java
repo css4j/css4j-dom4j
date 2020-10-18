@@ -130,8 +130,12 @@ class LinkElement extends StyleDefinerElement {
 		}
 		try {
 			URL url = getOwnerDocument().getURL(href);
-			linkedSheet.setHref(url.toExternalForm());
-			linkedSheet.loadStyleSheet(url, referrerPolicy);
+			if (getOwnerDocument().isAuthorizedOrigin(url)) {
+				linkedSheet.setHref(url.toExternalForm());
+				linkedSheet.loadStyleSheet(url, referrerPolicy);
+			} else {
+				getErrorHandler().policyError(this, "Unauthorized URL: " + url.toExternalForm());
+			}
 		} catch (CSSException e) {
 			getErrorHandler().linkedSheetError(e, linkedSheet);
 		} catch (Exception e) {

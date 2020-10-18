@@ -42,7 +42,6 @@ class BaseHrefAttribute extends DOMAttribute {
 
 	@Override
 	public void setValue(String value) {
-		super.setValue(value);
 		if (value != null) {
 			URL base;
 			try {
@@ -50,15 +49,17 @@ class BaseHrefAttribute extends DOMAttribute {
 			} catch (MalformedURLException e) {
 				XHTMLDocument doc = (XHTMLDocument) getDocument();
 				if(doc != null) {
-					doc.setBaseURL(null);
+					doc.getErrorHandler().ioError(value, e);
 				}
 				return;
 			}
+			super.setValue(value);
 			XHTMLDocument doc = (XHTMLDocument) getDocument();
 			if(doc != null) {
 				doc.setBaseURL(base);
 			}
 		} else {
+			super.setValue(value);
 			XHTMLDocument doc = (XHTMLDocument) getDocument();
 			if(doc != null) {
 				doc.setBaseURL(null);
