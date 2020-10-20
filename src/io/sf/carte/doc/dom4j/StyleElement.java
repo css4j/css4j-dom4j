@@ -16,6 +16,7 @@ import java.io.Reader;
 import java.io.StringReader;
 
 import org.dom4j.QName;
+import org.w3c.css.sac.CSSException;
 import org.w3c.css.sac.InputSource;
 import org.w3c.dom.DOMException;
 
@@ -82,7 +83,12 @@ class StyleElement extends StyleDefinerElement {
 			if (media == null || media.trim().length() == 0) {
 				mediaList = MediaList.createMediaList();
 			} else {
-				mediaList = getDocumentFactory().getStyleSheetFactory().createMediaQueryList(media, this);
+				try {
+					mediaList = getDocumentFactory().getStyleSheetFactory().createMediaQueryList(media, this);
+				} catch (CSSException e) {
+					getErrorHandler().linkedStyleError(this, e.getMessage());
+					return null;
+				}
 				if (mediaList.isNotAllMedia() && mediaList.hasErrors()) {
 					return null;
 				}

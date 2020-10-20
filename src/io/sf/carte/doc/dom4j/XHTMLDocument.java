@@ -265,7 +265,7 @@ public class XHTMLDocument extends DOMDocument implements CSSDocument {
 	 * @throws IOException
 	 *             if a problem is found reading the sheet.
 	 */
-	public boolean addStyleSheet(InputSource cssSrc) throws DOMException, IOException {
+	public boolean addStyleSheet(InputSource cssSrc) throws DOMException, CSSException, IOException {
 		String media = cssSrc.getMedia();
 		if (media != null && !"all".equalsIgnoreCase(media)) {
 			// handle as media rule
