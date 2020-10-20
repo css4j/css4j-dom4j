@@ -43,7 +43,7 @@ import io.sf.carte.doc.style.css.LinkStyle;
 import io.sf.carte.doc.style.css.MediaQueryList;
 import io.sf.carte.doc.style.css.SheetErrorHandler;
 import io.sf.carte.doc.style.css.StyleDatabase;
-import io.sf.carte.doc.style.css.nsac.CSSException;
+import io.sf.carte.doc.style.css.nsac.CSSBudgetException;
 import io.sf.carte.doc.style.css.nsac.InputSource;
 import io.sf.carte.doc.style.css.om.AbstractCSSStyleSheet;
 import io.sf.carte.doc.style.css.om.AbstractCSSStyleSheetFactory;
@@ -259,8 +259,6 @@ public class XHTMLDocument extends DOMDocument implements CSSDocument {
 	 *         otherwise.
 	 * @throws DOMException
 	 *             if a DOM problem is found parsing the sheet.
-	 * @throws CSSException
-	 *             if a non-DOM problem is found parsing the sheet.
 	 * @throws IOException
 	 *             if a problem is found reading the sheet.
 	 */
@@ -268,7 +266,14 @@ public class XHTMLDocument extends DOMDocument implements CSSDocument {
 		String media = cssSrc.getMedia();
 		if (media != null && !"all".equalsIgnoreCase(media)) {
 			// handle as media rule
-			MediaQueryList mediaList = getDocumentFactory().getStyleSheetFactory().createMediaQueryList(media, null);
+			MediaQueryList mediaList;
+			try {
+				mediaList = getDocumentFactory().getStyleSheetFactory().createMediaQueryList(media, null);
+			} catch (CSSBudgetException e) {
+				DOMException ex = new DOMException(DOMException.NOT_SUPPORTED_ERR, e.getMessage());
+				ex.initCause(e);
+				throw ex;
+			}
 			if (mediaList.isNotAllMedia()) {
 				return false;
 			}
