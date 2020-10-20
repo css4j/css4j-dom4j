@@ -113,7 +113,7 @@ class LinkElement extends StyleDefinerElement {
 			mediaList = MediaList.createMediaList();
 		} else {
 			try {
-				mediaList = getDocumentFactory().getStyleSheetFactory().createMediaQueryList(media, this);
+				mediaList = getDocumentFactory().getStyleSheetFactory().createImmutableMediaQueryList(media, this);
 			} catch (CSSException e) {
 				getErrorHandler().linkedStyleError(this, e.getMessage());
 				linkedSheet = null;
