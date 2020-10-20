@@ -18,6 +18,7 @@ import org.dom4j.QName;
 import org.w3c.dom.DOMException;
 
 import io.sf.carte.doc.style.css.MediaQueryList;
+import io.sf.carte.doc.style.css.nsac.CSSBudgetException;
 import io.sf.carte.doc.style.css.om.AbstractCSSStyleSheet;
 import io.sf.carte.doc.style.css.om.MediaFactory;
 
@@ -111,7 +112,13 @@ class LinkElement extends StyleDefinerElement {
 		if (media == null || media.trim().length() == 0) {
 			mediaList = MediaFactory.createAllMedia();
 		} else {
-			mediaList = getDocumentFactory().getStyleSheetFactory().createImmutableMediaQueryList(media, this);
+			try {
+				mediaList = getDocumentFactory().getStyleSheetFactory().createImmutableMediaQueryList(media, this);
+			} catch (CSSBudgetException e) {
+				getErrorHandler().linkedStyleError(this, e.getMessage());
+				linkedSheet = null;
+				return;
+			}
 			if (mediaList.isNotAllMedia() && mediaList.hasErrors()) {
 				linkedSheet = null;
 				return;
