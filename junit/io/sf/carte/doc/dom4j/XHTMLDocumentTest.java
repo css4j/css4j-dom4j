@@ -98,7 +98,7 @@ public class XHTMLDocumentTest {
 		assertEquals(3, sheet.getCssRules().getLength());
 		assertEquals("background-color: red;\n", ((CSSStyleRule) sheet.getCssRules().item(0)).getStyle().getCssText());
 		AbstractCSSStyleDeclaration fontface = ((BaseCSSDeclarationRule) sheet.getCssRules().item(1)).getStyle();
-		assertEquals("url('http://www.example.com/css/font/MechanicalBd.otf')", fontface.getPropertyValue("src"));
+		assertEquals("url('http://www.example.com/fonts/OpenSans-Regular.ttf')", fontface.getPropertyValue("src"));
 		CSSValue ffval = fontface.getPropertyCSSValue("src");
 		assertEquals(CSSValue.CssType.TYPED, ffval.getCssValueType());
 		assertEquals(CSSValue.Type.URI, ((CSSTypedValue) ffval).getPrimitiveType());
@@ -208,7 +208,7 @@ public class XHTMLDocumentTest {
 		assertFalse(xhtmlDoc.getErrorHandler().hasComputedStyleErrors(elm));
 		assertFalse(xhtmlDoc.getErrorHandler().hasComputedStyleErrors());
 		assertFalse(xhtmlDoc.getErrorHandler().hasErrors());
-		assertTrue(xhtmlDoc.getErrorHandler().hasIOErrors());
+		assertFalse(xhtmlDoc.getErrorHandler().hasIOErrors());
 		xhtmlDoc.getErrorHandler().reset();
 		// Check for non-existing property
 		assertNull(styledecl.getPropertyCSSValue("does-not-exist"));
