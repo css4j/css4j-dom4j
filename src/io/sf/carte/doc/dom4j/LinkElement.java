@@ -11,9 +11,11 @@
 
 package io.sf.carte.doc.dom4j;
 
+import java.io.IOException;
 import java.net.URL;
 
 import org.dom4j.QName;
+import org.w3c.dom.DOMException;
 import org.w3c.css.sac.CSSException;
 
 import io.sf.carte.doc.style.css.MediaQueryList;
@@ -138,6 +140,10 @@ class LinkElement extends StyleDefinerElement {
 			}
 		} catch (CSSException e) {
 			getErrorHandler().linkedSheetError(e, linkedSheet);
+		} catch (IOException e) {
+			getErrorHandler().ioError(href, e);
+		} catch (DOMException e) {
+			// Already logged
 		} catch (Exception e) {
 			getErrorHandler().linkedSheetError(e, linkedSheet);
 		}
