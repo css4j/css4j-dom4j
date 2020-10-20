@@ -11,12 +11,13 @@
 
 package io.sf.carte.doc.dom4j;
 
+import java.io.IOException;
 import java.net.URL;
 
 import org.dom4j.QName;
+import org.w3c.dom.DOMException;
 
 import io.sf.carte.doc.style.css.MediaQueryList;
-import io.sf.carte.doc.style.css.nsac.CSSException;
 import io.sf.carte.doc.style.css.om.AbstractCSSStyleSheet;
 import io.sf.carte.doc.style.css.om.MediaFactory;
 
@@ -136,8 +137,10 @@ class LinkElement extends StyleDefinerElement {
 			} else {
 				getErrorHandler().policyError(this, "Unauthorized URL: " + url.toExternalForm());
 			}
-		} catch (CSSException e) {
-			getErrorHandler().linkedSheetError(e, linkedSheet);
+		} catch (IOException e) {
+			getErrorHandler().ioError(href, e);
+		} catch (DOMException e) {
+			// Already logged
 		} catch (Exception e) {
 			getErrorHandler().linkedSheetError(e, linkedSheet);
 		}
