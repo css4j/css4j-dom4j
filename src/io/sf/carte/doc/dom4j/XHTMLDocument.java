@@ -61,11 +61,13 @@ public class XHTMLDocument extends DOMDocument implements CSSDocument {
 
 	public final static String XHTML_NAMESPACE_URI = "http://www.w3.org/1999/xhtml";
 
-	private static final long serialVersionUID = 6L;
+	private static final long serialVersionUID = 7L;
 
 	private DocumentCSSStyleSheet mergedStyleSheet = null;
 
 	private int styleCacheSerial = Integer.MIN_VALUE;
+
+	private String documentURI = null;
 
 	private URL baseURL = null;
 
@@ -584,14 +586,41 @@ public class XHTMLDocument extends DOMDocument implements CSSDocument {
 	 * element, the base URI is computed using the value of the href attribute
 	 * of the <code>base</code> element. It can also be set with the
 	 * <code>setBaseURL</code> method.
-	 * <p>
-	 * In dom4j, the <code>getDocumentURI</code> method cannot be trusted to
-	 * find the base URL.
+	 * </p>
 	 * 
 	 * @return the base URL, or null if no base URL could be found.
 	 */
 	@Override
 	public URL getBaseURL() {
+		if (baseURL == null) {
+			String buri = documentURI;
+			XHTMLElement elm = getDocumentElement();
+			if (elm != null) {
+				String attr = elm.getAttribute("xml:base");
+				if (attr.length() != 0) {
+					if (setBaseURL(elm, attr)) {
+						return baseURL;
+					}
+				} else {
+					// BASE element
+					NodeList headnl = getElementsByTagName("head");
+					if (headnl.getLength() != 0) {
+						NodeList nl = ((DOMElement) headnl.item(0)).getElementsByTagName("base");
+						if (nl.getLength() != 0) {
+							CSSStylableElement base = (CSSStylableElement) nl.item(0);
+							String href = base.getAttribute("href");
+							if (href.length() != 0 && setBaseURL(base, href)) {
+								return baseURL;
+							}
+						}
+					}
+				}
+			}
+			try {
+				baseURL = new URL(buri);
+			} catch (MalformedURLException e) {
+			}
+		}
 		return baseURL;
 	}
 
@@ -617,10 +646,66 @@ public class XHTMLDocument extends DOMDocument implements CSSDocument {
 	 *            the base URL.
 	 */
 	public void setBaseURL(URL baseURL) {
-		if (baseURL == null || !"jar".equalsIgnoreCase(baseURL.getProtocol())
-				|| getDocumentFactory().isAllowedJarUris()) {
-			this.baseURL = baseURL;
+		this.baseURL = baseURL;
+	}
+
+	/**
+	 * Set the {@code BASE} URL obtained from the {@code href} attribute of the
+	 * given &lt;base&gt; element.
+	 * 
+	 * @param element the &lt;base&gt; element.
+	 * @param base     the value of the {@code href} attribute.
+	 * @return {@code true} if the {@code BASE} URL was set.
+	 */
+	boolean setBaseURL(Element element, String base) {
+		String docUri = getDocumentURI();
+		if (docUri != null) {
+			URL docUrl;
+			try {
+				docUrl = new URL(docUri);
+			} catch (MalformedURLException e) {
+				docUrl = null;
+			}
+			URL urlBase;
+			try {
+				if (docUrl != null) {
+					urlBase = new URL(docUrl, base);
+				} else {
+					urlBase = new URL(base);
+				}
+			} catch (MalformedURLException e) {
+				getErrorHandler().ioError(base, e);
+				return false;
+			}
+			String docscheme = docUrl.getProtocol();
+			String bscheme = urlBase.getProtocol();
+			if (!docscheme.equals(bscheme)) {
+				if (!bscheme.equals("https") && !bscheme.equals("http") && !docscheme.equals("file")
+						&& !docscheme.equals("jar")) {
+					// Remote document wants to set a non-http base URI
+					getErrorHandler().policyError(element,
+							"Remote document wants to set a non-http base URL: " + urlBase.toExternalForm());
+					return false;
+				}
+			}
+			baseURL = urlBase;
+			return true;
+		} else {
+			try {
+				URL urlBase = new URL(base);
+				String scheme = urlBase.getProtocol();
+				if (scheme.equals("https") || scheme.equals("http")) {
+					baseURL = urlBase;
+					return true;
+				}
+				// Remote document wants to set a non-http base URL
+				getErrorHandler().policyError(element,
+						"Remote document wants to set a non-http base URL: " + base);
+			} catch (MalformedURLException e) {
+				getErrorHandler().ioError(base, e);
+			}
 		}
+		return false;
 	}
 
 	/**
@@ -675,13 +760,7 @@ public class XHTMLDocument extends DOMDocument implements CSSDocument {
 	 * Determine whether the retrieval of the given URL is authorized.
 	 * <p>
 	 * If the URL's protocol is not {@code http} nor {@code https} and document's
-	 * {@code BASE} URL's scheme is neither {@code file} nor {@code jar}, it is
-	 * denied.
-	 * </p>
-	 * <p>
-	 * If no {@code BASE} URL is set,
-	 * {@link XHTMLDocumentFactory#setAllowJarUris(boolean)} is checked if the URL
-	 * protocol is {@code jar}.
+	 * base URL's scheme is neither {@code file} nor {@code jar}, it is denied.
 	 * </p>
 	 * 
 	 * @param url the URL to check.
@@ -699,8 +778,7 @@ public class XHTMLDocument extends DOMDocument implements CSSDocument {
 					&& !baseScheme.equals("jar")) {
 				return false;
 			}
-		} else if ("file".equalsIgnoreCase(scheme)
-				|| ("jar".equalsIgnoreCase(scheme) && !getDocumentFactory().isAllowedJarUris())) {
+		} else if (!scheme.equalsIgnoreCase("https") && !scheme.equalsIgnoreCase("http")) {
 			return false;
 		}
 		return true;
@@ -736,8 +814,13 @@ public class XHTMLDocument extends DOMDocument implements CSSDocument {
 	}
 
 	@Override
+	public void setDocumentURI(String documentURI) {
+		this.documentURI = documentURI;
+	}
+
+	@Override
 	public String getDocumentURI() {
-		return null;
+		return documentURI;
 	}
 
 	/**

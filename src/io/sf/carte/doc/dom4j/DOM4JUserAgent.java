@@ -108,10 +108,6 @@ public class DOM4JUserAgent extends AbstractUserAgent {
 		try {
 			is = openInputStream(con);
 			xdoc = parseDocument(AgentUtil.inputStreamToReader(is, conType, contentEncoding, StandardCharsets.UTF_8));
-			xdoc.setLoadingTime(time);
-			if (xdoc.getBaseURL() == null) {
-				xdoc.setBaseURL(url);
-			}
 		} catch (IOException e) {
 			throw e;
 		} catch (io.sf.carte.doc.DocumentException e) {
@@ -122,6 +118,8 @@ public class DOM4JUserAgent extends AbstractUserAgent {
 				is.close();
 			}
 		}
+		xdoc.setLoadingTime(time);
+		xdoc.setDocumentURI(url.toExternalForm());
 		// Check for preferred style
 		String defStyle = con.getHeaderField("Default-Style");
 		NodeList list = xdoc.getElementsByTagName("meta");

@@ -75,10 +75,10 @@ public class BaseURLElementTest {
 		Reader re = DOMCSSStyleSheetFactoryTest.sampleHTMLReader();
 		InputSource isrc = new InputSource(re);
 		CSSDocument xhtmlDoc = XHTMLDocumentFactoryTest.parseXML(isrc);
+		re.close();
 		assertNotNull(xhtmlDoc.getBaseURL());
 		assertEquals("http://www.example.com/", 
 				xhtmlDoc.getBaseURL().toExternalForm());
-		re.close();
 	}
 
 	@Test

@@ -11,9 +11,6 @@
 
 package io.sf.carte.doc.dom4j;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-
 import org.dom4j.Element;
 import org.dom4j.QName;
 import org.dom4j.dom.DOMAttribute;
@@ -42,25 +39,16 @@ class BaseHrefAttribute extends DOMAttribute {
 
 	@Override
 	public void setValue(String value) {
-		if (value != null) {
-			URL base;
-			try {
-				base = new URL(value);
-			} catch (MalformedURLException e) {
-				XHTMLDocument doc = (XHTMLDocument) getDocument();
-				if(doc != null) {
-					doc.getErrorHandler().ioError(value, e);
-				}
-				return;
-			}
-			super.setValue(value);
-			XHTMLDocument doc = (XHTMLDocument) getDocument();
+		super.setValue(value);
+		XHTMLDocument doc = (XHTMLDocument) getDocument();
+		if (value != null && value.length() != 0) {
+			org.w3c.dom.Element owner = getOwnerElement();
 			if(doc != null) {
-				doc.setBaseURL(base);
+				// We set base to null first, in case setBaseURL(owner, base) fails
+				doc.setBaseURL(null);
+				doc.setBaseURL(owner, value);
 			}
 		} else {
-			super.setValue(value);
-			XHTMLDocument doc = (XHTMLDocument) getDocument();
 			if(doc != null) {
 				doc.setBaseURL(null);
 			}
