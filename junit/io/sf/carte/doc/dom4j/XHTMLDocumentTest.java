@@ -836,16 +836,59 @@ public class XHTMLDocumentTest {
 	}
 
 	@Test
-	public void testBaseElement() {
+	public void testBaseElement() throws MalformedURLException {
 		assertEquals("http://www.example.com/", xhtmlDoc.getBaseURI());
 		CSSElement base = (CSSElement) xhtmlDoc.getElementsByTagName("base").item(0);
 		base.setAttribute("href", "http://www.example.com/newbase/");
 		assertEquals("http://www.example.com/newbase/", xhtmlDoc.getBaseURI());
 		// Wrong URL
-		base.setAttribute("href", "http^::\\");
-		assertEquals("http://www.example.com/newbase/", xhtmlDoc.getBaseURI());
+		base.setAttribute("href", "http//");
+		assertNull(xhtmlDoc.getBaseURI());
+		assertEquals("http//", base.getAttribute("href"));
+		assertTrue(xhtmlDoc.getErrorHandler().hasIOErrors());
+		// Relative URL
+		base.setAttribute("href", "foo");
+		assertEquals("foo", base.getAttribute("href"));
+		assertNull(xhtmlDoc.getBaseURI());
+		// Remove attribute
+		base.removeAttribute("href");
+		assertNull(xhtmlDoc.getBaseURI());
 		// Unsafe base assignment
 		base.setAttribute("href", "jar:http://www.example.com/evil.jar!/file");
+		assertTrue(xhtmlDoc.getErrorHandler().hasPolicyErrors());
+		assertNull(xhtmlDoc.getBaseURI());
+		assertEquals("jar:http://www.example.com/evil.jar!/file", base.getAttribute("href"));
+	}
+
+	@Test
+	public void testBaseElement2() throws MalformedURLException {
+		assertEquals("http://www.example.com/", xhtmlDoc.getBaseURI());
+		// Set documentURI and then unsafe attribute
+		xhtmlDoc.setDocumentURI("http://www.example.com/doc-uri");
+		CSSElement base = (CSSElement) xhtmlDoc.getElementsByTagName("base").item(0);
+		// Relative URL
+		base.setAttribute("href", "foo");
+		assertEquals("foo", base.getAttribute("href"));
+		assertEquals("http://www.example.com/foo", xhtmlDoc.getBaseURI());
+		// Wrong URL
+		base.setAttribute("href", "foo://");
+		assertEquals("foo://", base.getAttribute("href"));
+		assertEquals("http://www.example.com/doc-uri", xhtmlDoc.getBaseURI());
+		assertTrue(xhtmlDoc.getErrorHandler().hasIOErrors());
+		// Remove attribute
+		base.removeAttribute("href");
+		assertEquals("http://www.example.com/doc-uri", xhtmlDoc.getBaseURI());
+		// Unsafe base assignment
+		base.setAttribute("href", "jar:http://www.example.com/evil.jar!/file");
+		assertEquals("http://www.example.com/doc-uri", xhtmlDoc.getBaseURI());
+		assertEquals("jar:http://www.example.com/evil.jar!/file", base.getAttribute("href"));
+		assertTrue(xhtmlDoc.getErrorHandler().hasPolicyErrors());
+	}
+
+	@Test
+	public void testSetBaseURL() throws MalformedURLException {
+		assertEquals("http://www.example.com/", xhtmlDoc.getBaseURI());
+		xhtmlDoc.setBaseURL(new URL("http://www.example.com/newbase/"));
 		assertEquals("http://www.example.com/newbase/", xhtmlDoc.getBaseURI());
 	}
 

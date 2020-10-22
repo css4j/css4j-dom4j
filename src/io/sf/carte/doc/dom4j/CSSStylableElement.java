@@ -449,6 +449,13 @@ abstract public class CSSStylableElement extends DOMElement implements
 
 		@Override
 		protected boolean isTarget() {
+			String uri = getOwnerDocument().getDocumentURI();
+			int idx;
+			if (uri != null && (idx = uri.lastIndexOf('#')) != -1) {
+				idx++;
+				int len = uri.length();
+				return idx < len && getId().equals(uri.subSequence(idx, len));
+			}
 			return false;
 		}
 
