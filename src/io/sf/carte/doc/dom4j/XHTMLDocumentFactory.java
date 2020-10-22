@@ -68,8 +68,6 @@ public class XHTMLDocumentFactory extends DOMDocumentFactory {
 
 	private boolean styleCacheOn = false;
 
-	private boolean allowJarUris = false;
-
 	private static final XHTMLDocumentFactory singleton = new XHTMLDocumentFactory();
 
 	protected XHTMLDocumentFactory() {
@@ -110,23 +108,6 @@ public class XHTMLDocumentFactory extends DOMDocumentFactory {
 
 	BaseDocumentCSSStyleSheet getDefaultStyleSheet(CSSDocument.ComplianceMode mode) {
 		return cssFactory.getDefaultStyleSheet(mode);
-	}
-
-	boolean isAllowedJarUris() {
-		return allowJarUris;
-	}
-
-	/**
-	 * Allow or disallow {@code jar:} URIs in {@code base href} attributes, and in
-	 * the retrieval of sheets from {@code LINK} elements.
-	 * <p>
-	 * Default is <code>false</code>.
-	 * </p>
-	 * 
-	 * @param enableJarUris <code>true</code> if {@code jar:} URIs are allowed.
-	 */
-	public void setAllowJarUris(boolean enableJarUris) {
-		this.allowJarUris = enableJarUris;
 	}
 
 	/**

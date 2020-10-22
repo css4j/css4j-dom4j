@@ -41,15 +41,23 @@ class HeadElement extends XHTMLElement {
 	protected void childAdded(Node node) {
 		super.childAdded(node);
 		if (node instanceof BaseURLElement) {
-			getOwnerDocument().setBaseURL(((BaseURLElement) node).base);
-			((BaseURLElement) node).base = null; // help GC
-		} else if ("meta".equalsIgnoreCase(node.getName())) {
-			Element elt = (Element) node;
-			String name = elt.getAttribute("http-equiv");
-			if (name.length() == 0) {
-				name = elt.getAttribute("name");
+			XHTMLDocument doc = getOwnerDocument();
+			if (doc != null) {
+				String href = ((BaseURLElement) node).getAttribute("href").trim();
+				if (href.length() != 0) {
+					doc.setBaseURL(this, href);
+				}
 			}
-			getOwnerDocument().onMetaAdded(name, elt.getAttribute("content"));
+		} else if ("meta".equalsIgnoreCase(node.getName())) {
+			XHTMLDocument doc = getOwnerDocument();
+			if (doc != null) {
+				Element elt = (Element) node;
+				String name = elt.getAttribute("http-equiv");
+				if (name.length() == 0) {
+					name = elt.getAttribute("name");
+				}
+				doc.onMetaAdded(name, elt.getAttribute("content"));
+			}
 		}
 	}
 

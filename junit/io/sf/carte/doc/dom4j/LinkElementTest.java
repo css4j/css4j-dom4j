@@ -17,9 +17,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-
 import org.dom4j.Namespace;
 import org.dom4j.QName;
 import org.junit.Before;
@@ -89,7 +86,7 @@ public class LinkElementTest {
 	}
 
 	@Test
-	public void getSheet() throws MalformedURLException {
+	public void getSheet() {
 		LinkElement linkElement = (LinkElement) headElement.addElement(link_qname);
 		linkElement.addAttribute("rel", "stylesheet");
 		linkElement.addAttribute("href", "http://www.example.com/css/common.css");
@@ -110,8 +107,8 @@ public class LinkElementTest {
 		assertEquals(iniSerial, xDoc.getStyleCacheSerial());
 		//
 		xDoc.getErrorHandler().reset();
-		// Set BASE URL to allow policy enforcement
-		xDoc.setBaseURL(new URL("http://www.example.com/example.html"));
+		// Set document URI to allow policy enforcement
+		xDoc.setDocumentURI("http://www.example.com/example.html");
 		linkElement.attribute("href").setValue("file:/dev/zero");
 		sheet = linkElement.getSheet();
 		assertNotNull(sheet);
