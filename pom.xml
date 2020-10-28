@@ -46,9 +46,16 @@
 		<optional>false</optional>
 	</dependency>
 	<dependency>
+		<groupId>xmlpull</groupId>
+		<artifactId>xmlpull</artifactId>
+		<version>1.2.0</version>
+		<scope>compile</scope>
+		<optional>true</optional>
+	</dependency>
+	<dependency>
 		<groupId>xpp3</groupId>
-		<artifactId>xpp3</artifactId>
-		<version>1.1.4c</version>
+		<artifactId>xpp3_min</artifactId>
+		<version>1.2.0</version>
 		<scope>compile</scope>
 		<optional>true</optional>
 	</dependency>
@@ -77,21 +84,6 @@
 	<plugins>
 		<plugin>
 			<groupId>org.apache.maven.plugins</groupId>
-			<artifactId>maven-compiler-plugin</artifactId>
-			<executions>
-				<execution>
-					<id>default-compile</id>
-					<configuration>
-						<compilerArgs>
-							<arg>--add-reads</arg>
-							<arg>io.sf.carte.css4j.dom4j=ALL-UNNAMED</arg>
-						</compilerArgs>
-					</configuration>
-				</execution>
-			</executions>
-		</plugin>
-		<plugin>
-			<groupId>org.apache.maven.plugins</groupId>
 			<artifactId>maven-javadoc-plugin</artifactId>
 			<configuration>
 				<overview>${project.basedir}/src/overview.html</overview>
@@ -100,10 +92,6 @@
 					<link>https://css4j.github.io/api/3/</link>
 					<link>https://dom4j.github.io/javadoc/2.1.1/</link>
 				</links>
-				<additionalOptions>
-					<option>--add-reads</option>
-					<option>io.sf.carte.css4j.dom4j=ALL-UNNAMED</option>
-				</additionalOptions>
 			</configuration>
 		</plugin>
 		<plugin>

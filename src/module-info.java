@@ -16,4 +16,7 @@ module io.sf.carte.css4j.dom4j {
 	requires static io.sf.carte.css4j.agent.net;
 	requires static io.sf.carte.xml.dtd;
 	requires transitive dom4j;
+	requires static org.xmlpull.mxp1;
+	requires static org.xmlpull.v1;
+	requires java.xml;
 }
