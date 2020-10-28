@@ -47,9 +47,16 @@
 		<optional>false</optional>
 	</dependency>
 	<dependency>
+		<groupId>xmlpull</groupId>
+		<artifactId>xmlpull</artifactId>
+		<version>1.2.0</version>
+		<scope>compile</scope>
+		<optional>true</optional>
+	</dependency>
+	<dependency>
 		<groupId>xpp3</groupId>
-		<artifactId>xpp3</artifactId>
-		<version>1.1.4c</version>
+		<artifactId>xpp3_min</artifactId>
+		<version>1.2.0</version>
 		<scope>compile</scope>
 		<optional>false</optional>
 	</dependency>
@@ -70,21 +77,6 @@
 	<sourceDirectory>${project.basedir}/src</sourceDirectory>
 	<testSourceDirectory>${project.basedir}/junit</testSourceDirectory>
 	<plugins>
-		<plugin>
-			<groupId>org.apache.maven.plugins</groupId>
-			<artifactId>maven-compiler-plugin</artifactId>
-			<executions>
-				<execution>
-					<id>default-compile</id>
-					<configuration>
-						<compilerArgs>
-							<arg>--add-reads</arg>
-							<arg>io.sf.carte.css4j.dom4j=ALL-UNNAMED</arg>
-						</compilerArgs>
-					</configuration>
-				</execution>
-			</executions>
-		</plugin>
 		<plugin>
 			<groupId>org.apache.maven.plugins</groupId>
 			<artifactId>maven-javadoc-plugin</artifactId>
