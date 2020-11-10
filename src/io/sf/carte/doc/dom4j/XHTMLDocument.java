@@ -178,7 +178,7 @@ public class XHTMLDocument extends DOMDocument implements CSSDocument {
 		return sheets;
 	}
 
-	protected void updateStyleLists() {
+	private void updateStyleLists() {
 		/*
 		 * Add the linked and embedded styles. Must be added in this order, as
 		 * mandated by the CSS spec.
@@ -649,6 +649,7 @@ public class XHTMLDocument extends DOMDocument implements CSSDocument {
 	 */
 	public void setBaseURL(URL baseURL) {
 		this.baseURL = baseURL;
+		BaseHrefAttribute.onBaseModify(this);
 	}
 
 	/**
@@ -771,8 +772,8 @@ public class XHTMLDocument extends DOMDocument implements CSSDocument {
 	@Override
 	public boolean isAuthorizedOrigin(URL url) {
 		String scheme = url.getProtocol();
-		URL base = getBaseURL();
-		if (base != null) {
+		if (documentURI != null) {
+			URL base = getBaseURL();
 			String baseScheme = base.getProtocol();
 			// To try to speed things up, only the parameter's scheme is compared
 			// case-insensitively
@@ -818,6 +819,7 @@ public class XHTMLDocument extends DOMDocument implements CSSDocument {
 	@Override
 	public void setDocumentURI(String documentURI) {
 		this.documentURI = documentURI;
+		setBaseURL(null);
 	}
 
 	@Override

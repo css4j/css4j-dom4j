@@ -17,6 +17,8 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import java.net.MalformedURLException;
+
 import org.dom4j.Namespace;
 import org.dom4j.QName;
 import org.junit.Before;
@@ -86,7 +88,7 @@ public class LinkElementTest {
 	}
 
 	@Test
-	public void getSheet() {
+	public void getSheet() throws MalformedURLException {
 		LinkElement linkElement = (LinkElement) headElement.addElement(link_qname);
 		linkElement.addAttribute("rel", "stylesheet");
 		linkElement.addAttribute("href", "http://www.example.com/css/common.css");
@@ -105,10 +107,20 @@ public class LinkElementTest {
 		assertTrue(xDoc.getErrorHandler().hasPolicyErrors());
 		iniSerial++;
 		assertEquals(iniSerial, xDoc.getStyleCacheSerial());
+		// Setting BASE does not change things
+		xDoc.getErrorHandler().reset();
+		CSSStylableElement base = xDoc.getDocumentFactory().createElement("base");
+		base.setAttribute("href", "jar:http://www.example.com/evil.jar!/dir/file");
+		headElement.appendChild(base);
+		sheet = linkElement.getSheet();
+		assertNotNull(sheet);
+		assertEquals(0, sheet.getCssRules().getLength());
+		assertTrue(xDoc.getErrorHandler().hasErrors());
+		assertTrue(xDoc.getErrorHandler().hasPolicyErrors());
+		// Set document URI to enable policy enforcement
+		xDoc.setDocumentURI("http://www.example.com/example.html");
 		//
 		xDoc.getErrorHandler().reset();
-		// Set document URI to allow policy enforcement
-		xDoc.setDocumentURI("http://www.example.com/example.html");
 		linkElement.attribute("href").setValue("file:/dev/zero");
 		sheet = linkElement.getSheet();
 		assertNotNull(sheet);
