@@ -69,6 +69,17 @@ abstract public class CSSStylableElement extends DOMElement implements
         super(qname, attributeCount);
     }
 
+	/**
+	 * The {@code XHTMLDocument} object which is the root ancestor of this node.
+	 * <p>
+	 * This is also the {@code XHTMLDocument} object used to create new nodes.
+	 * </p>
+	 * 
+	 * @return the {@code XHTMLDocument} object which is the root ancestor of this
+	 *         node, or {@code null} if this node is an {@code XHTMLDocument}, a
+	 *         {@code DocumentType} which is not used inside any
+	 *         {@code XHTMLDocument} yet, or this node is not part of a document.
+	 */
 	@Override
 	public XHTMLDocument getOwnerDocument() {
 		return (XHTMLDocument) super.getDocument();
