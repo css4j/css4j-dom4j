@@ -11,6 +11,8 @@
 
 package io.sf.carte.doc.dom4j;
 
+import java.util.Iterator;
+
 import org.dom4j.Element;
 import org.dom4j.QName;
 import org.dom4j.dom.DOMAttribute;
@@ -41,17 +43,23 @@ class BaseHrefAttribute extends DOMAttribute {
 	public void setValue(String value) {
 		super.setValue(value);
 		XHTMLDocument doc = (XHTMLDocument) getDocument();
-		if (value != null && value.length() != 0) {
-			org.w3c.dom.Element owner = getOwnerElement();
-			if(doc != null) {
+		if (doc != null) {
+			if (value != null && value.length() != 0) {
+				org.w3c.dom.Element owner = getOwnerElement();
 				// We set base to null first, in case setBaseURL(owner, base) fails
 				doc.setBaseURL(null);
 				doc.setBaseURL(owner, value);
-			}
-		} else {
-			if(doc != null) {
+			} else {
 				doc.setBaseURL(null);
 			}
+			onBaseModify(doc);
+		}
+	}
+
+	static void onBaseModify(XHTMLDocument doc) {
+		Iterator<LinkElement> links = doc.linkedStyle.iterator();
+		while (links.hasNext()) {
+			links.next().resetLinkedSheet();
 		}
 	}
 

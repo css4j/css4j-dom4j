@@ -852,9 +852,11 @@ public class XHTMLDocumentTest {
 		base.removeAttribute("href");
 		assertNull(xhtmlDoc.getBaseURI());
 		// Unsafe base assignment
+		xhtmlDoc.setDocumentURI("http://www.example.com/document.html");
+		assertEquals("http://www.example.com/document.html", xhtmlDoc.getDocumentURI());
 		base.setAttribute("href", "jar:http://www.example.com/evil.jar!/file");
 		assertTrue(xhtmlDoc.getErrorHandler().hasPolicyErrors());
-		assertNull(xhtmlDoc.getBaseURI());
+		assertEquals("http://www.example.com/document.html", xhtmlDoc.getBaseURI());
 		assertEquals("jar:http://www.example.com/evil.jar!/file", base.getAttribute("href"));
 	}
 
