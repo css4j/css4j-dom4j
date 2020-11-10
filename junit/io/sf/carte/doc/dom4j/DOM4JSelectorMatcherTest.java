@@ -147,6 +147,18 @@ public class DOM4JSelectorMatcherTest {
 	}
 
 	@Test
+	public void testMatchSelector3AttributeCI() throws Exception {
+		AbstractCSSStyleSheet css = parseStyle("p[title~=\"hi\"] {color: blue;}");
+		CSSStyleDeclarationRule rule = (CSSStyleDeclarationRule) css.getCssRules().item(0);
+		SelectorList selist = CSSOMBridge.getSelectorList(rule);
+		CSSStylableElement elm = createElement("p");
+		SelectorMatcher matcher = elm.getSelectorMatcher();
+		assertTrue(matcher.matches(selist) < 0);
+		elm.addAttribute("Title", "ho hi");
+		assertTrue(matcher.matches(selist) >= 0);
+	}
+
+	@Test
 	public void testMatchSelector4Attribute() throws Exception {
 		AbstractCSSStyleSheet css = parseStyle("p[lang|=\"en\"] {color: blue;}");
 		CSSStyleDeclarationRule rule = (CSSStyleDeclarationRule) css.getCssRules().item(0);
