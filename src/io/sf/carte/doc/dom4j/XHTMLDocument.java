@@ -667,15 +667,11 @@ public class XHTMLDocument extends DOMDocument implements CSSDocument {
 			try {
 				docUrl = new URL(docUri);
 			} catch (MalformedURLException e) {
-				docUrl = null;
+				return setBaseForNullDocumentURI(base, element);
 			}
 			URL urlBase;
 			try {
-				if (docUrl != null) {
-					urlBase = new URL(docUrl, base);
-				} else {
-					urlBase = new URL(base);
-				}
+				urlBase = new URL(docUrl, base);
 			} catch (MalformedURLException e) {
 				getErrorHandler().ioError(base, e);
 				return false;
@@ -694,19 +690,23 @@ public class XHTMLDocument extends DOMDocument implements CSSDocument {
 			baseURL = urlBase;
 			return true;
 		} else {
-			try {
-				URL urlBase = new URL(base);
-				String scheme = urlBase.getProtocol();
-				if (scheme.equals("https") || scheme.equals("http")) {
-					baseURL = urlBase;
-					return true;
-				}
-				// Remote document wants to set a non-http base URL
-				getErrorHandler().policyError(element,
-						"Remote document wants to set a non-http base URL: " + base);
-			} catch (MalformedURLException e) {
-				getErrorHandler().ioError(base, e);
+			return setBaseForNullDocumentURI(base, element);
+		}
+	}
+
+	private boolean setBaseForNullDocumentURI(String base, Element baseElement) {
+		try {
+			URL urlBase = new URL(base);
+			String scheme = urlBase.getProtocol();
+			if (scheme.equals("https") || scheme.equals("http")) {
+				baseURL = urlBase;
+				return true;
 			}
+			// Remote document wants to set a non-http base URL
+			getErrorHandler().policyError(baseElement,
+					"Untrusted document wants to set a non-http base URL: " + base);
+		} catch (MalformedURLException e) {
+			getErrorHandler().ioError(base, e);
 		}
 		return false;
 	}
