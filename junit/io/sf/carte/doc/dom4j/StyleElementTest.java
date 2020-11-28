@@ -12,6 +12,8 @@
 package io.sf.carte.doc.dom4j;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 import org.dom4j.Namespace;
 import org.dom4j.QName;
@@ -82,6 +84,24 @@ public class StyleElementTest {
 		xDoc.getDocumentFactory().getStyleSheetFactory().setStyleFormattingFactory(formattingf);
 		styleElement.normalize();
 		assertEquals("p {font-size: large; font-style: italic; }", styleElement.getText());
+		// Empty type
+		styleElement.setAttribute("type", "");
+		assertNotNull(styleElement.getSheet());
+		styleElement.normalize();
+		assertEquals("p {font-size: large; font-style: italic; }", styleElement.getText());
+		// Other type
+		styleElement.setAttribute("type", "text/xsl");
+		styleElement.setText(
+				"<?xml version=\"1.0\"?><xsl:stylesheet version=\"1.0\" xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\">"
+				+ "<xsl:output method=\"text\"/><xsl:template match=\"foo\">bar<xsl:value-of select=\".\"/>"
+				+ "</xsl:template></xsl:stylesheet>");
+		assertNull(styleElement.getSheet());
+		styleElement.normalize();
+		assertEquals(
+				"<?xml version=\"1.0\"?><xsl:stylesheet version=\"1.0\" xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\">"
+				+ "<xsl:output method=\"text\"/><xsl:template match=\"foo\">bar<xsl:value-of select=\".\"/>"
+				+ "</xsl:template></xsl:stylesheet>",
+				styleElement.getText());
 	}
 
 	@Test
