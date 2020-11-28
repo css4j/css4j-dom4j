@@ -50,8 +50,7 @@ class StyleElement extends StyleDefinerElement {
 		if (linkedSheet == null) {
 			super.normalize();
 		} else {
-			getSheet();
-			if (linkedSheet == null) {
+			if (getSheet() == null) {
 				super.normalize();
 			} else {
 				super.setText(linkedSheet.toString());
@@ -74,7 +73,7 @@ class StyleElement extends StyleDefinerElement {
 				return null;
 			}
 			String type = attributeValue("type");
-			if (type != null && !"text/css".equalsIgnoreCase(type)) {
+			if (type != null && !"text/css".equalsIgnoreCase(type) && type.length() != 0) {
 				return null;
 			}
 			String media = attributeValue("media");
