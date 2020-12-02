@@ -47,15 +47,33 @@ class StyleElement extends StyleDefinerElement {
 
 	@Override
 	public void normalize() {
-		if (linkedSheet == null) {
+		if (!containsCSS()) {
 			super.normalize();
 		} else {
-			if (getSheet() == null) {
+			// Local reference to sheet, to avoid race conditions.
+			final AbstractCSSStyleSheet sheet = getSheet();
+			if (sheet == null) {
 				super.normalize();
 			} else {
-				super.setText(linkedSheet.toString());
+				super.setText(sheet.toString());
 			}
 		}
+	}
+
+	private boolean containsCSS() {
+		if (linkedSheet != null) {
+			// Local reference to sheet, to avoid race conditions.
+			final AbstractCSSStyleSheet sheet;
+			String type = attributeValue("type");
+			if ("text/css".equalsIgnoreCase(type) || ((type == null || type.length() == 0)
+					&& (sheet = getSheet()) != null && sheet.getCssRules().getLength() != 0)) {
+				return true;
+			}
+		}
+		/*
+		 * If the sheet has not been processed yet, we return false as well.
+		 */
+		return false;
 	}
 
 	/**

@@ -89,6 +89,15 @@ public class StyleElementTest {
 		assertNotNull(styleElement.getSheet());
 		styleElement.normalize();
 		assertEquals("p {font-size: large; font-style: italic; }", styleElement.getText());
+		//
+		styleElement.setText("not style-related element");
+		assertEquals("not style-related element", styleElement.getText());
+		styleElement.normalize();
+		assertEquals("not style-related element", styleElement.getText());
+		// Remove attribute
+		styleElement.removeAttribute("type");
+		styleElement.normalize();
+		assertEquals("not style-related element", styleElement.getText());
 		// Other type
 		styleElement.setAttribute("type", "text/xsl");
 		styleElement.setText(
