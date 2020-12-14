@@ -12,7 +12,6 @@
 package io.sf.carte.doc.dom4j;
 
 import org.dom4j.Element;
-import org.dom4j.Node;
 import org.dom4j.QName;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.UserDataHandler;
@@ -81,22 +80,6 @@ public class XHTMLElement extends CSSStylableElement {
 			}
 		}
 		super.setAttributeNS(namespaceURI, qualifiedName, value);
-	}
-
-	@Override
-	protected void childAdded(Node node) {
-		super.childAdded(node);
-		if (node instanceof LinkStyle) {
-			getOwnerDocument().onEmbeddedStyleAdd((LinkStyle) node);
-		}
-	}
-
-	@Override
-	protected void childRemoved(Node node) {
-		if (node instanceof LinkStyle) {
-			getOwnerDocument().onEmbeddedStyleRemove((LinkStyle) node);
-		}
-		super.childRemoved(node);
 	}
 
 	@Override
