@@ -14,8 +14,7 @@ package io.sf.carte.doc.dom4j;
 import org.dom4j.Node;
 import org.dom4j.QName;
 import org.w3c.dom.Element;
-
-import io.sf.carte.doc.style.css.LinkStyle;
+import org.w3c.dom.stylesheets.LinkStyle;
 
 /**
  * XHTML head element.
@@ -35,15 +34,15 @@ class HeadElement extends XHTMLElement {
 		super(qname);
 	}
 
-    HeadElement(QName qname, int attributeCount) {
-        super(qname, attributeCount);
-    }
+	HeadElement(QName qname, int attributeCount) {
+		super(qname, attributeCount);
+	}
 
 	@Override
 	protected void childAdded(Node node) {
 		super.childAdded(node);
 		if (node instanceof LinkStyle) {
-			getOwnerDocument().onLinkStyleAdd((LinkStyle<?>) node);
+			getOwnerDocument().onLinkStyleAdd((LinkStyle) node);
 		} else if (node instanceof BaseURLElement) {
 			XHTMLDocument doc = getOwnerDocument();
 			if (doc != null) {
@@ -75,7 +74,7 @@ class HeadElement extends XHTMLElement {
 			}
 			getOwnerDocument().onMetaRemoved(name, elt.getAttribute("content"));
 		} else if (node instanceof LinkStyle) {
-			getOwnerDocument().onLinkStyleRemove((LinkStyle<?>) node);
+			getOwnerDocument().onLinkStyleRemove((LinkStyle) node);
 		}
 		super.childRemoved(node);
 	}

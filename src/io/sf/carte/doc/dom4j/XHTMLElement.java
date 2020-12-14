@@ -15,7 +15,6 @@ import org.dom4j.Element;
 import org.dom4j.QName;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.UserDataHandler;
-import org.w3c.dom.stylesheets.LinkStyle;
 
 /**
  * An XHTML element.

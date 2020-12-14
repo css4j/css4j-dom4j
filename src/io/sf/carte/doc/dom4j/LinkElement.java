@@ -15,8 +15,8 @@ import java.io.IOException;
 import java.net.URL;
 
 import org.dom4j.QName;
-import org.w3c.dom.DOMException;
 import org.w3c.css.sac.CSSException;
+import org.w3c.dom.DOMException;
 
 import io.sf.carte.doc.style.css.MediaQueryList;
 import io.sf.carte.doc.style.css.om.AbstractCSSStyleSheet;
