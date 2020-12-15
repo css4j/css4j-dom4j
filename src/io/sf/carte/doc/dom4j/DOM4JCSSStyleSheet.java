@@ -77,8 +77,8 @@ abstract class DOM4JCSSStyleSheet extends BaseCSSStyleSheet implements Cloneable
 	/**
 	 * Creates and returns a copy of this style sheet.
 	 * <p>
-	 * The copy is a shallow copy (the rule list is new, but the referenced rules are the same
-	 * as in the cloned object.
+	 * The copy is a shallow copy (the rule list is new, but the referenced rules
+	 * are the same as in the cloned object.
 	 * 
 	 * @return a clone of this instance.
 	 */

@@ -52,8 +52,7 @@ import io.sf.carte.doc.style.css.om.ComputedCSSStyle;
  * @author Carlos Amengual
  * 
  */
-abstract public class CSSStylableElement extends DOMElement implements
-	CSSElement {
+abstract public class CSSStylableElement extends DOMElement implements CSSElement {
 
 	private static final long serialVersionUID = 8L;
 
@@ -70,8 +69,8 @@ abstract public class CSSStylableElement extends DOMElement implements
 	}
 
 	protected CSSStylableElement(QName qname, int attributeCount) {
-        super(qname, attributeCount);
-    }
+		super(qname, attributeCount);
+	}
 
 	/**
 	 * The {@code XHTMLDocument} object which is the root ancestor of this node.
@@ -132,7 +131,7 @@ abstract public class CSSStylableElement extends DOMElement implements
 	@Override
 	public String getBaseURI() {
 		URL baseURL = getOwnerDocument().getBaseURL();
-		if(baseURL != null) {
+		if (baseURL != null) {
 			return baseURL.toExternalForm();
 		} else {
 			return null;
@@ -152,11 +151,11 @@ abstract public class CSSStylableElement extends DOMElement implements
 	 * @return the <code>id</code> attribute, or the empty string if has no ID.
 	 */
 	@Override
-    abstract public String getId();
+	abstract public String getId();
 
 	/**
-	 * Gets the inline style declaration from the current contents of the <code>style</code>
-	 * XHTML attribute.
+	 * Gets the inline style declaration from the current contents of the
+	 * <code>style</code> XHTML attribute.
 	 * 
 	 * @return the style declaration, or <code>null</code> if the element has no
 	 *         <code>style</code> attribute.
@@ -191,7 +190,7 @@ abstract public class CSSStylableElement extends DOMElement implements
 
 	@Override
 	public boolean hasOverrideStyle(String pseudoElt) {
-		if(overrideStyleSet == null) {
+		if (overrideStyleSet == null) {
 			return false;
 		}
 		return overrideStyleSet.containsKey(pseudoElt);
@@ -200,12 +199,12 @@ abstract public class CSSStylableElement extends DOMElement implements
 	@Override
 	public ExtendedCSSStyleDeclaration getOverrideStyle(String pseudoElt) {
 		ExtendedCSSStyleDeclaration overrideStyle = null;
-		if(overrideStyleSet == null) {
+		if (overrideStyleSet == null) {
 			overrideStyleSet = new HashMap<String, ExtendedCSSStyleDeclaration>(1);
 		} else {
 			overrideStyle = overrideStyleSet.get(pseudoElt);
 		}
-		if(overrideStyle == null) {
+		if (overrideStyle == null) {
 			overrideStyle = getDocumentFactory().createInlineStyle(this);
 			overrideStyleSet.put(pseudoElt, overrideStyle);
 		}
@@ -215,8 +214,7 @@ abstract public class CSSStylableElement extends DOMElement implements
 	/**
 	 * Gets the computed style declaration that applies to this element.
 	 * 
-	 * @param pseudoElt
-	 *            the pseudo-element name.
+	 * @param pseudoElt the pseudo-element name.
 	 * @return the computed style declaration.
 	 */
 	@Override
@@ -263,8 +261,8 @@ abstract public class CSSStylableElement extends DOMElement implements
 		@Override
 		protected AbstractSelectorMatcher getParentSelectorMatcher() {
 			Element parent = getParent();
-			if(parent instanceof CSSStylableElement) {
-				return (AbstractSelectorMatcher) ((CSSStylableElement)parent).getSelectorMatcher();
+			if (parent instanceof CSSStylableElement) {
+				return (AbstractSelectorMatcher) ((CSSStylableElement) parent).getSelectorMatcher();
 			} else {
 				return null;
 			}
@@ -273,7 +271,7 @@ abstract public class CSSStylableElement extends DOMElement implements
 		@Override
 		protected AbstractSelectorMatcher getPreviousSiblingSelectorMatcher() {
 			Element parent = getParent();
-			if(parent == null) {
+			if (parent == null) {
 				return null;
 			}
 			@SuppressWarnings("rawtypes")
@@ -282,8 +280,8 @@ abstract public class CSSStylableElement extends DOMElement implements
 			int sibindex = elements.indexOf(CSSStylableElement.this) - 1;
 			if (sibindex != -1) {
 				Object sibling = elements.get(sibindex);
-				if(sibling instanceof CSSStylableElement) {
-					return (AbstractSelectorMatcher) ((CSSStylableElement)sibling).getSelectorMatcher();
+				if (sibling instanceof CSSStylableElement) {
+					return (AbstractSelectorMatcher) ((CSSStylableElement) sibling).getSelectorMatcher();
 				}
 			}
 			return null;
@@ -292,15 +290,15 @@ abstract public class CSSStylableElement extends DOMElement implements
 		@Override
 		protected int indexOf(SelectorList selectors) {
 			Element parent = getParent();
-			if(parent == null) {
+			if (parent == null) {
 				return 1; // root element
 			}
 			NodeList list = getParentNode().getChildNodes();
 			int sz = list.getLength();
 			int idx = 0;
-			for (int i=0; i<sz; i++) {
+			for (int i = 0; i < sz; i++) {
 				Node node = list.item(i);
-				if (node.getNodeType() == Node.ELEMENT_NODE && matchSelectors(selectors, (CSSStylableElement)node)) {
+				if (node.getNodeType() == Node.ELEMENT_NODE && matchSelectors(selectors, (CSSStylableElement) node)) {
 					idx++;
 					if (node == CSSStylableElement.this) {
 						break;
@@ -313,15 +311,15 @@ abstract public class CSSStylableElement extends DOMElement implements
 		@Override
 		protected int reverseIndexOf(SelectorList selectors) {
 			Element parent = getParent();
-			if(parent == null) {
+			if (parent == null) {
 				return 1; // root element
 			}
 			NodeList list = getParentNode().getChildNodes();
 			int sz = list.getLength();
 			int idx = 0;
-			for (int i=sz-1; i>=0; i--) {
+			for (int i = sz - 1; i >= 0; i--) {
 				Node node = list.item(i);
-				if (node.getNodeType() == Node.ELEMENT_NODE && matchSelectors(selectors, (CSSStylableElement)node)) {
+				if (node.getNodeType() == Node.ELEMENT_NODE && matchSelectors(selectors, (CSSStylableElement) node)) {
 					idx++;
 					if (node == CSSStylableElement.this) {
 						break;
@@ -336,7 +334,7 @@ abstract public class CSSStylableElement extends DOMElement implements
 				return true;
 			}
 			int sz = selectors.getLength();
-			for (int i=0; i<sz; i++) {
+			for (int i = 0; i < sz; i++) {
 				if (node.getSelectorMatcher().matches(selectors.item(i))) {
 					return true;
 				}
@@ -357,7 +355,7 @@ abstract public class CSSStylableElement extends DOMElement implements
 		@Override
 		protected boolean isFirstChild() {
 			Element parent = getParent();
-			if(parent == null) {
+			if (parent == null) {
 				return true; // root element
 			}
 			return parent.elements().indexOf(CSSStylableElement.this) == 0;
@@ -366,7 +364,7 @@ abstract public class CSSStylableElement extends DOMElement implements
 		@Override
 		protected boolean isLastChild() {
 			Element parent = getParent();
-			if(parent == null) {
+			if (parent == null) {
 				return true; // root element
 			}
 			@SuppressWarnings("rawtypes")
@@ -402,10 +400,10 @@ abstract public class CSSStylableElement extends DOMElement implements
 		protected boolean isNthOfType(int step, int offset) {
 			int idx = 0;
 			Element parent = getParent();
-			if(parent != null) {
+			if (parent != null) {
 				NodeList list = getParentNode().getChildNodes();
 				int sz = list.getLength();
-				for (int i=0; i<sz; i++) {
+				for (int i = 0; i < sz; i++) {
 					Node node = list.item(i);
 					if (node.getNodeType() == Node.ELEMENT_NODE && getLocalName().equals(node.getNodeName())) {
 						idx++;
@@ -425,10 +423,10 @@ abstract public class CSSStylableElement extends DOMElement implements
 		protected boolean isNthLastOfType(int step, int offset) {
 			int idx = 0;
 			Element parent = getParent();
-			if(parent != null) {
+			if (parent != null) {
 				NodeList list = getParentNode().getChildNodes();
 				int sz = list.getLength();
-				for (int i=sz-1; i>=0; i--) {
+				for (int i = sz - 1; i >= 0; i--) {
 					Node node = list.item(i);
 					if (node.getNodeType() == Node.ELEMENT_NODE && getLocalName().equals(node.getNodeName())) {
 						idx++;
@@ -486,7 +484,7 @@ abstract public class CSSStylableElement extends DOMElement implements
 			if (hasChildNodes()) {
 				NodeList list = getChildNodes();
 				int sz = list.getLength();
-				for (int i=0; i<sz; i++) {
+				for (int i = 0; i < sz; i++) {
 					Node node = list.item(i);
 					short type = node.getNodeType();
 					if (type == Node.ELEMENT_NODE) {
@@ -509,7 +507,7 @@ abstract public class CSSStylableElement extends DOMElement implements
 			if (hasChildNodes()) {
 				NodeList list = getChildNodes();
 				int sz = list.getLength();
-				for (int i=0; i<sz; i++) {
+				for (int i = 0; i < sz; i++) {
 					Node node = list.item(i);
 					short type = node.getNodeType();
 					if (type == Node.ELEMENT_NODE) {
@@ -530,9 +528,9 @@ abstract public class CSSStylableElement extends DOMElement implements
 		@Override
 		protected boolean isDisabled() {
 			/*
-			 * A form control is disabled if its disabled attribute is set, or if it is a descendant
-			 * of a fieldset element whose disabled attribute is set and is not a descendant of that
-			 * fieldset element's first legend element child, if any.
+			 * A form control is disabled if its disabled attribute is set, or if it is a
+			 * descendant of a fieldset element whose disabled attribute is set and is not a
+			 * descendant of that fieldset element's first legend element child, if any.
 			 */
 			if (hasAttribute("disabled")) {
 				return true;
@@ -547,7 +545,7 @@ abstract public class CSSStylableElement extends DOMElement implements
 		@Override
 		protected boolean isDefaultButton() {
 			// "A form element's default button is the first submit button
-			//  in tree order whose form owner is that form element."
+			// in tree order whose form owner is that form element."
 			CSSStylableElement parent = (CSSStylableElement) getParent();
 			if (parent == null) {
 				return false;
@@ -577,7 +575,7 @@ abstract public class CSSStylableElement extends DOMElement implements
 						for (int i = 0; i < sz; i++) {
 							Node node = list.item(i);
 							if (node.getNodeType() == Node.ELEMENT_NODE) {
-								if (!defaultButtonCheck((CSSStylableElement)node, formid)) {
+								if (!defaultButtonCheck((CSSStylableElement) node, formid)) {
 									return false;
 								}
 							}
@@ -617,7 +615,7 @@ abstract public class CSSStylableElement extends DOMElement implements
 		@Override
 		protected String getAttributeValue(String attrName) {
 			String value = attributeValue(attrName);
-			return value != null? value : "";
+			return value != null ? value : "";
 		}
 
 		@Override
@@ -638,26 +636,26 @@ abstract public class CSSStylableElement extends DOMElement implements
 		@Override
 		protected String getLanguage() {
 			/*
-			 *  In (X)HTML, the lang attribute contains the language,
-			 *  but that may not be true for other XML.
+			 * In (X)HTML, the lang attribute contains the language, but that may not be
+			 * true for other XML.
 			 */
 			String lang = attributeValue("lang");
-			if(lang == null) {
+			if (lang == null) {
 				lang = attributeValue("LANG");
 			}
 			Element parent = CSSStylableElement.this;
-			while(lang == null || lang.length() == 0) {
+			while (lang == null || lang.length() == 0) {
 				parent = parent.getParent();
-				if(parent == null) {
+				if (parent == null) {
 					break;
 				} else {
 					lang = parent.attributeValue("lang");
-					if(lang == null) {
+					if (lang == null) {
 						lang = attributeValue("LANG");
 					}
 				}
 			}
-			if(lang == null) {
+			if (lang == null) {
 				lang = "";
 			}
 			return lang;
@@ -668,7 +666,7 @@ abstract public class CSSStylableElement extends DOMElement implements
 			SimpleSelector desc = selector.getSimpleSelector();
 			NodeList list = getChildNodes();
 			int sz = list.getLength();
-			for (int i=0; i<sz; i++) {
+			for (int i = 0; i < sz; i++) {
 				Node node = list.item(i);
 				if (node.getNodeType() == Node.ELEMENT_NODE) {
 					SelectorMatcher childSM = ((CSSStylableElement) node).getSelectorMatcher();
@@ -705,7 +703,7 @@ abstract public class CSSStylableElement extends DOMElement implements
 	 */
 	@Override
 	public SelectorMatcher getSelectorMatcher() {
-		if(selectorMatcher == null) {
+		if (selectorMatcher == null) {
 			selectorMatcher = new DOM4JSelectorMatcher();
 		}
 		return selectorMatcher;

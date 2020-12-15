@@ -16,7 +16,8 @@ import org.dom4j.QName;
 import org.dom4j.dom.DOMAttribute;
 
 /**
- * An attribute that fires a parent and document-wide style modify event when changed.
+ * An attribute that fires a parent and document-wide style modify event when
+ * changed.
  * 
  * @author Carlos Amengual
  *

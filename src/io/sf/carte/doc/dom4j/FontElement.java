@@ -17,7 +17,8 @@ import org.w3c.dom.css.CSSStyleDeclaration;
 import io.sf.carte.doc.style.css.property.AttributeToStyle;
 
 /**
- * Font element.<p>
+ * Font element.
+ * <p>
  * Provides equivalent CSS style for this deprecated element.
  * 
  * @author Carlos Amengual
@@ -35,9 +36,9 @@ class FontElement extends XHTMLElement {
 		super(qname);
 	}
 
-    FontElement(QName qname, int attributeCount) {
-        super(qname, attributeCount);
-    }
+	FontElement(QName qname, int attributeCount) {
+		super(qname, attributeCount);
+	}
 
 	@Override
 	public boolean hasPresentationalHints() {

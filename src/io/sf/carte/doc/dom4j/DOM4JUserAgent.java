@@ -92,12 +92,13 @@ public class DOM4JUserAgent extends AbstractUserAgent {
 	 * 
 	 * @param url the URL that points to the document.
 	 * @return the XHTMLDocument.
-	 * @throws IOException if there is an I/O problem reading the URL.
-	 * @throws io.sf.carte.doc.DocumentException if there is a problem parsing the document.
+	 * @throws IOException                       if there is an I/O problem reading
+	 *                                           the URL.
+	 * @throws io.sf.carte.doc.DocumentException if there is a problem parsing the
+	 *                                           document.
 	 */
 	@Override
-	public XHTMLDocument readURL(URL url)
-	throws IOException, io.sf.carte.doc.DocumentException {
+	public XHTMLDocument readURL(URL url) throws IOException, io.sf.carte.doc.DocumentException {
 		long time = System.currentTimeMillis();
 		URLConnection con = openConnection(url, time);
 		con.connect();
@@ -111,10 +112,9 @@ public class DOM4JUserAgent extends AbstractUserAgent {
 		} catch (IOException e) {
 			throw e;
 		} catch (io.sf.carte.doc.DocumentException e) {
-			throw new io.sf.carte.doc.DocumentException(
-					"Error parsing document " + url.toExternalForm(), e.getCause());
+			throw new io.sf.carte.doc.DocumentException("Error parsing document " + url.toExternalForm(), e.getCause());
 		} finally {
-			if(is != null) {
+			if (is != null) {
 				is.close();
 			}
 		}
@@ -124,20 +124,18 @@ public class DOM4JUserAgent extends AbstractUserAgent {
 		String defStyle = con.getHeaderField("Default-Style");
 		NodeList list = xdoc.getElementsByTagName("meta");
 		int listL = list.getLength();
-		for(int i = listL - 1; i>=0; i--) {
-			if("Default-Style".equalsIgnoreCase(
-					((DOMElement)list.item(i)).attributeValue("http-equiv"))) {
-				String metaDefStyle = ((DOMElement)list.item(i))
-					.attributeValue("content");
-				if(metaDefStyle != null) {
+		for (int i = listL - 1; i >= 0; i--) {
+			if ("Default-Style".equalsIgnoreCase(((DOMElement) list.item(i)).attributeValue("http-equiv"))) {
+				String metaDefStyle = ((DOMElement) list.item(i)).attributeValue("content");
+				if (metaDefStyle != null) {
 					// Per HTML4 spec § 14.3.2:
-					// "If two or more META declarations or HTTP headers specify 
-					//  the preferred style sheet, the last one takes precedence."
+					// "If two or more META declarations or HTTP headers specify
+					// the preferred style sheet, the last one takes precedence."
 					defStyle = metaDefStyle;
 				}
 			}
 		}
-		if(defStyle != null) {
+		if (defStyle != null) {
 			xdoc.setSelectedStyleSheetSet(defStyle);
 		}
 		// Referrer Policy
@@ -146,8 +144,8 @@ public class DOM4JUserAgent extends AbstractUserAgent {
 			xdoc.setReferrerPolicyHeader(referrerPolicy);
 		}
 		// Read cookies and close connection, if appropriate
-		if(con instanceof HttpURLConnection) {
-			HttpURLConnection hcon = (HttpURLConnection)con;
+		if (con instanceof HttpURLConnection) {
+			HttpURLConnection hcon = (HttpURLConnection) con;
 			readCookies(hcon, time);
 			hcon.disconnect();
 		}
@@ -160,19 +158,17 @@ public class DOM4JUserAgent extends AbstractUserAgent {
 
 	protected AgentXHTMLDocument parseDocument(Reader re) throws io.sf.carte.doc.DocumentException, IOException {
 		try {
-			if(useXPP3) {
+			if (useXPP3) {
 				return parseWithXPP3Reader(re);
 			} else {
 				return parseWithSAXReader(re);
 			}
 		} catch (DocumentException e) {
-			throw new io.sf.carte.doc.DocumentException(
-					"Error parsing document", e);
+			throw new io.sf.carte.doc.DocumentException("Error parsing document", e);
 		}
 	}
 
-	private AgentXHTMLDocument parseWithSAXReader(Reader re)
-	throws DocumentException {
+	private AgentXHTMLDocument parseWithSAXReader(Reader re) throws DocumentException {
 		InputSource isrc = new InputSource(re);
 		XHTMLDocumentFactory factory = getXHTMLDocumentFactory();
 		SAXReader reader = new SAXReader(factory);
@@ -180,8 +176,7 @@ public class DOM4JUserAgent extends AbstractUserAgent {
 		return (AgentXHTMLDocument) reader.read(isrc);
 	}
 
-	private AgentXHTMLDocument parseWithXPP3Reader(Reader re)
-	throws DocumentException, IOException {
+	private AgentXHTMLDocument parseWithXPP3Reader(Reader re) throws DocumentException, IOException {
 		XHTMLDocumentFactory factory = getXHTMLDocumentFactory();
 		XPP3Reader reader = new XPP3Reader(factory);
 		try {

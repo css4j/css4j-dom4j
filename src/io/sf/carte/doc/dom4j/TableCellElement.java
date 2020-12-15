@@ -34,14 +34,14 @@ class TableCellElement extends XHTMLElement {
 		super(qname);
 	}
 
-    TableCellElement(QName qname, int attributeCount) {
-        super(qname, attributeCount);
-    }
+	TableCellElement(QName qname, int attributeCount) {
+		super(qname, attributeCount);
+	}
 
 	@Override
 	public boolean hasPresentationalHints() {
-		return hasAttribute("bgcolor") || hasAttribute("width") || hasAttribute("height")
-				|| hasAttribute("background") || hasAttribute("align");
+		return hasAttribute("bgcolor") || hasAttribute("width") || hasAttribute("height") || hasAttribute("background")
+				|| hasAttribute("align");
 	}
 
 	@Override

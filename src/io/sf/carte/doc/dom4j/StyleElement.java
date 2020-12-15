@@ -80,9 +80,10 @@ class StyleElement extends StyleDefinerElement {
 	/**
 	 * Gets the associated style sheet for the node.
 	 * 
-	 * @return the associated style sheet for the node, or <code>null</code> if the sheet is
-	 *         not CSS or the media attribute was not understood. If the element is empty or
-	 *         the sheet could not be parsed, the returned sheet will be empty.
+	 * @return the associated style sheet for the node, or <code>null</code> if the
+	 *         sheet is not CSS or the media attribute was not understood. If the
+	 *         element is empty or the sheet could not be parsed, the returned sheet
+	 *         will be empty.
 	 */
 	@Override
 	public AbstractCSSStyleSheet getSheet() {

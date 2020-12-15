@@ -33,15 +33,15 @@ class BaseURLElement extends XHTMLElement {
 		super(qname);
 	}
 
-    BaseURLElement(QName qname, int attributeCount) {
-        super(qname, attributeCount);
-    }
+	BaseURLElement(QName qname, int attributeCount) {
+		super(qname, attributeCount);
+	}
 
 	@Override
 	protected void childAdded(Node node) {
 		super.childAdded(node);
-		if(node instanceof Attribute){
-			if(node.getName().equalsIgnoreCase("href")){
+		if (node instanceof Attribute) {
+			if (node.getName().equalsIgnoreCase("href")) {
 				String href = ((Attribute) node).getValue();
 				if (href != null) {
 					XHTMLDocument doc = getOwnerDocument();

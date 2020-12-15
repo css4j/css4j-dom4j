@@ -34,14 +34,13 @@ class TableRowElement extends XHTMLElement {
 		super(qname);
 	}
 
-    TableRowElement(QName qname, int attributeCount) {
-        super(qname, attributeCount);
-    }
+	TableRowElement(QName qname, int attributeCount) {
+		super(qname, attributeCount);
+	}
 
 	@Override
 	public boolean hasPresentationalHints() {
-		return hasAttribute("bgcolor") || hasAttribute("height") || hasAttribute("background")
-				|| hasAttribute("align");
+		return hasAttribute("bgcolor") || hasAttribute("height") || hasAttribute("background") || hasAttribute("align");
 	}
 
 	@Override

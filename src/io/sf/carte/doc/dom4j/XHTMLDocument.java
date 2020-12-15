@@ -165,11 +165,11 @@ public class XHTMLDocument extends DOMDocument implements CSSDocument {
 	}
 
 	/**
-	 * A list containing all the style sheets explicitly linked into or embedded
-	 * in a document. For HTML documents, this includes external style sheets,
-	 * included via the HTML LINK element, and inline STYLE elements. In XML,
-	 * this includes external style sheets, included via style sheet processing
-	 * instructions (see [XML StyleSheet]).
+	 * A list containing all the style sheets explicitly linked into or embedded in
+	 * a document. For HTML documents, this includes external style sheets, included
+	 * via the HTML LINK element, and inline STYLE elements. In XML, this includes
+	 * external style sheets, included via style sheet processing instructions (see
+	 * [XML StyleSheet]).
 	 */
 	@Override
 	public StyleSheetList getStyleSheets() {
@@ -181,8 +181,8 @@ public class XHTMLDocument extends DOMDocument implements CSSDocument {
 
 	private void updateStyleLists() {
 		/*
-		 * Add the linked and embedded styles. Must be added in this order, as
-		 * mandated by the CSS spec.
+		 * Add the linked and embedded styles. Must be added in this order, as mandated
+		 * by the CSS spec.
 		 */
 		sheets.clear();
 		// Add styles referenced by links
@@ -217,11 +217,11 @@ public class XHTMLDocument extends DOMDocument implements CSSDocument {
 	}
 
 	/**
-	 * Gets the merged style sheet that applies to this document, resulting from
-	 * the merge of the document's default style sheet, the document linked or
-	 * embedded style sheets, and the non-important part of the user style
-	 * sheet. Does not include overriden styles nor the 'important' part of the
-	 * user-defined style sheet.
+	 * Gets the merged style sheet that applies to this document, resulting from the
+	 * merge of the document's default style sheet, the document linked or embedded
+	 * style sheets, and the non-important part of the user style sheet. Does not
+	 * include overriden styles nor the 'important' part of the user-defined style
+	 * sheet.
 	 * <p>
 	 * The style sheet is lazily built.
 	 * 
@@ -252,20 +252,16 @@ public class XHTMLDocument extends DOMDocument implements CSSDocument {
 	}
 
 	/**
-	 * Adds a style sheet (contained by the given InputSource) to the global
-	 * style sheet defined by the document's default style sheet and all the
-	 * linked and embedded styles.
+	 * Adds a style sheet (contained by the given InputSource) to the global style
+	 * sheet defined by the document's default style sheet and all the linked and
+	 * embedded styles.
 	 * 
-	 * @param cssSrc
-	 *            the document's InputSource.
-	 * @return <code>true</code> if the parsing reported no errors or fatal errors, false
-	 *         otherwise.
-	 * @throws DOMException
-	 *             if a DOM problem is found parsing the sheet.
-	 * @throws CSSException
-	 *             if a non-DOM problem is found parsing the sheet.
-	 * @throws IOException
-	 *             if a problem is found reading the sheet.
+	 * @param cssSrc the document's InputSource.
+	 * @return <code>true</code> if the parsing reported no errors or fatal errors,
+	 *         false otherwise.
+	 * @throws DOMException if a DOM problem is found parsing the sheet.
+	 * @throws CSSException if a non-DOM problem is found parsing the sheet.
+	 * @throws IOException  if a problem is found reading the sheet.
 	 */
 	public boolean addStyleSheet(InputSource cssSrc) throws DOMException, CSSException, IOException {
 		String media = cssSrc.getMedia();
@@ -305,10 +301,10 @@ public class XHTMLDocument extends DOMDocument implements CSSDocument {
 	/**
 	 * Gets the title of the currently selected style sheet set.
 	 * 
-	 * @return the title of the currently selected style sheet, the empty string
-	 *         if none is selected, or <code>null</code> if there are style
-	 *         sheets from different style sheet sets that have their style
-	 *         sheet disabled flag unset.
+	 * @return the title of the currently selected style sheet, the empty string if
+	 *         none is selected, or <code>null</code> if there are style sheets from
+	 *         different style sheet sets that have their style sheet disabled flag
+	 *         unset.
 	 */
 	@Override
 	public String getSelectedStyleSheetSet() {
@@ -336,13 +332,11 @@ public class XHTMLDocument extends DOMDocument implements CSSDocument {
 	}
 
 	/**
-	 * Selects a style sheet set, disabling the other non-persistent sheet sets.
-	 * If the name is the empty string, all non-persistent sheets will be
-	 * disabled. Otherwise, if the name does not match any of the sets, does
-	 * nothing.
+	 * Selects a style sheet set, disabling the other non-persistent sheet sets. If
+	 * the name is the empty string, all non-persistent sheets will be disabled.
+	 * Otherwise, if the name does not match any of the sets, does nothing.
 	 * 
-	 * @param name
-	 *            the case-sensitive name of the set to select.
+	 * @param name the case-sensitive name of the set to select.
 	 */
 	@Override
 	public void setSelectedStyleSheetSet(String name) {
@@ -375,11 +369,10 @@ public class XHTMLDocument extends DOMDocument implements CSSDocument {
 	}
 
 	/**
-	 * Enables a style sheet set. If the name does not match any of the sets,
-	 * does nothing.
+	 * Enables a style sheet set. If the name does not match any of the sets, does
+	 * nothing.
 	 * 
-	 * @param name
-	 *            the case-sensitive name of the set to enable.
+	 * @param name the case-sensitive name of the set to enable.
 	 */
 	@Override
 	public void enableStyleSheetsForSet(String name) {
@@ -446,8 +439,8 @@ public class XHTMLDocument extends DOMDocument implements CSSDocument {
 	/**
 	 * Gets the serial number for the document-wide merged style sheet.
 	 * <p>
-	 * The serial number will be increased by one each time that any of the
-	 * sheets that conform the style is changed.
+	 * The serial number will be increased by one each time that any of the sheets
+	 * that conform the style is changed.
 	 * 
 	 * @return the serial number for the merged style sheet.
 	 */
@@ -458,22 +451,19 @@ public class XHTMLDocument extends DOMDocument implements CSSDocument {
 	/**
 	 * Gets the override style sheet for an element and pseudo-element.
 	 * <p>
-	 * The getOverrideStyle method provides a mechanism through which a DOM
-	 * author could effect immediate change to the style of an element without
-	 * modifying the explicitly linked style sheets of a document or the inline
-	 * style of elements in the style sheets.
+	 * The getOverrideStyle method provides a mechanism through which a DOM author
+	 * could effect immediate change to the style of an element without modifying
+	 * the explicitly linked style sheets of a document or the inline style of
+	 * elements in the style sheets.
 	 * </p>
 	 * <p>
-	 * The override style sheet comes after the author style sheet in the
-	 * cascade algorithm. DOM Level 2.
+	 * The override style sheet comes after the author style sheet in the cascade
+	 * algorithm. DOM Level 2.
 	 * </p>
 	 * 
-	 * @param elt
-	 *            the element.
-	 * @param pseudoElt
-	 *            the pseudo-element, or null if none.
-	 * @return the override style sheet for the given element and
-	 *         pseudo-element.
+	 * @param elt       the element.
+	 * @param pseudoElt the pseudo-element, or null if none.
+	 * @return the override style sheet for the given element and pseudo-element.
 	 */
 	@Override
 	public ExtendedCSSStyleDeclaration getOverrideStyle(Element elt, String pseudoElt) {
@@ -488,8 +478,7 @@ public class XHTMLDocument extends DOMDocument implements CSSDocument {
 	 * Gets the style database currently used to apply specific styles to this
 	 * document.
 	 * 
-	 * @return the style database, or null if no style database has been
-	 *         selected.
+	 * @return the style database, or null if no style database has been selected.
 	 */
 	@Override
 	public StyleDatabase getStyleDatabase() {
@@ -516,10 +505,9 @@ public class XHTMLDocument extends DOMDocument implements CSSDocument {
 	/**
 	 * Set the medium that will be used to compute the styles of this document.
 	 * 
-	 * @param medium
-	 *            the name of the target medium, like 'screen' or 'print'.
-	 * @throws CSSMediaException
-	 *             if the document is unable to target the given medium.
+	 * @param medium the name of the target medium, like 'screen' or 'print'.
+	 * @throws CSSMediaException if the document is unable to target the given
+	 *                           medium.
 	 */
 	@Override
 	public void setTargetMedium(String medium) throws CSSMediaException {
@@ -583,8 +571,8 @@ public class XHTMLDocument extends DOMDocument implements CSSDocument {
 	/**
 	 * Has any of the linked or embedded style sheets any error or warning ?
 	 * 
-	 * @return <code>true</code> if any of the linked or embedded style sheets has any SAC or rule error
-	 *         or warning, <code>false</code> otherwise.
+	 * @return <code>true</code> if any of the linked or embedded style sheets has
+	 *         any SAC or rule error or warning, <code>false</code> otherwise.
 	 */
 	@Override
 	public boolean hasStyleIssues() {
@@ -608,8 +596,8 @@ public class XHTMLDocument extends DOMDocument implements CSSDocument {
 	 * Gets the base URL of this Document.
 	 * <p>
 	 * If the Document's <code>head</code> element has a <code>base</code> child
-	 * element, the base URI is computed using the value of the href attribute
-	 * of the <code>base</code> element. It can also be set with the
+	 * element, the base URI is computed using the value of the href attribute of
+	 * the <code>base</code> element. It can also be set with the
 	 * <code>setBaseURL</code> method.
 	 * </p>
 	 * 
@@ -652,8 +640,8 @@ public class XHTMLDocument extends DOMDocument implements CSSDocument {
 	/**
 	 * Gets the absolute base URI of this node.
 	 * 
-	 * @return the absolute base URI of this node, or null if an absolute URI
-	 *         could not be obtained.
+	 * @return the absolute base URI of this node, or null if an absolute URI could
+	 *         not be obtained.
 	 */
 	@Override
 	public String getBaseURI() {
@@ -667,8 +655,7 @@ public class XHTMLDocument extends DOMDocument implements CSSDocument {
 	/**
 	 * Sets the Base URL of this Document.
 	 * 
-	 * @param baseURL
-	 *            the base URL.
+	 * @param baseURL the base URL.
 	 */
 	public void setBaseURL(URL baseURL) {
 		this.baseURL = baseURL;
@@ -680,7 +667,7 @@ public class XHTMLDocument extends DOMDocument implements CSSDocument {
 	 * given &lt;base&gt; element.
 	 * 
 	 * @param element the &lt;base&gt; element.
-	 * @param base     the value of the {@code href} attribute.
+	 * @param base    the value of the {@code href} attribute.
 	 * @return {@code true} if the {@code BASE} URL was set.
 	 */
 	boolean setBaseURL(Element element, String base) {
@@ -726,8 +713,7 @@ public class XHTMLDocument extends DOMDocument implements CSSDocument {
 				return true;
 			}
 			// Remote document wants to set a non-http base URL
-			getErrorHandler().policyError(baseElement,
-					"Untrusted document wants to set a non-http base URL: " + base);
+			getErrorHandler().policyError(baseElement, "Untrusted document wants to set a non-http base URL: " + base);
 		} catch (MalformedURLException e) {
 			getErrorHandler().ioError(base, e);
 		}
@@ -738,11 +724,9 @@ public class XHTMLDocument extends DOMDocument implements CSSDocument {
 	 * Gets an URL for the given URI, taking into account the Base URL if
 	 * appropriate.
 	 * 
-	 * @param uri
-	 *            the uri.
+	 * @param uri the uri.
 	 * @return the absolute URL.
-	 * @throws MalformedURLException
-	 *             if the uri was wrong.
+	 * @throws MalformedURLException if the uri was wrong.
 	 */
 	@Override
 	public URL getURL(String uri) throws MalformedURLException {
@@ -761,8 +745,7 @@ public class XHTMLDocument extends DOMDocument implements CSSDocument {
 	/**
 	 * Is the provided URL a safe origin to load certain external resources?
 	 * 
-	 * @param linkedURL
-	 *            the URL of the external resource.
+	 * @param linkedURL the URL of the external resource.
 	 * 
 	 * @return <code>true</code> if is a safe origin, <code>false</code> otherwise.
 	 */
@@ -811,8 +794,8 @@ public class XHTMLDocument extends DOMDocument implements CSSDocument {
 	}
 
 	/**
-	 * Get the referrer policy obtained through the 'Referrer-Policy' header or a meta
-	 * element.
+	 * Get the referrer policy obtained through the 'Referrer-Policy' header or a
+	 * meta element.
 	 * 
 	 * @return the referrer policy, or the empty string if none was specified.
 	 */
@@ -853,11 +836,9 @@ public class XHTMLDocument extends DOMDocument implements CSSDocument {
 	/**
 	 * Opens a connection for the given URL.
 	 * 
-	 * @param url
-	 *            the URL to open a connection to.
+	 * @param url the URL to open a connection to.
 	 * @return the URL connection.
-	 * @throws IOException
-	 *             if the connection could not be opened.
+	 * @throws IOException if the connection could not be opened.
 	 */
 	@Override
 	public URLConnection openConnection(URL url) throws IOException {
@@ -865,14 +846,12 @@ public class XHTMLDocument extends DOMDocument implements CSSDocument {
 	}
 
 	/**
-	 * Opens an InputStream for the given URI, taking into account the Base URL
-	 * if needed.
+	 * Opens an InputStream for the given URI, taking into account the Base URL if
+	 * needed.
 	 * 
-	 * @param uri
-	 *            the uri to open a connection.
+	 * @param uri the uri to open a connection.
 	 * @return the InputStream.
-	 * @throws IOException
-	 *             if the uri was wrong, or the stream could not be opened.
+	 * @throws IOException if the uri was wrong, or the stream could not be opened.
 	 */
 	public InputStream openStream(String uri) throws IOException {
 		return openConnection(getURL(uri)).getInputStream();
