@@ -65,20 +65,19 @@ abstract class DOM4JComputedStyle extends ComputedCSSStyle {
 	}
 
 	/**
-	 * Gets the (whitespace-trimmed) text content of the 
-	 * node associated to this style.
+	 * Gets the (whitespace-trimmed) text content of the node associated to this
+	 * style.
 	 * 
-	 * @return the text content, or the empty string if the box 
-	 * has no text.
+	 * @return the text content, or the empty string if the box has no text.
 	 */
 	@Override
 	public String getText() {
 		String text;
 		Node node = getOwnerNode();
-		if(node instanceof DOMElement) {
-			text = ((DOMElement)node).getTextTrim();
-		} else if(node instanceof org.dom4j.Node) {
-			text = BoxModelHelper.contractSpaces(((org.dom4j.Node)node).getText());
+		if (node instanceof DOMElement) {
+			text = ((DOMElement) node).getTextTrim();
+		} else if (node instanceof org.dom4j.Node) {
+			text = BoxModelHelper.contractSpaces(((org.dom4j.Node) node).getText());
 		} else {
 			text = "";
 		}
@@ -93,7 +92,7 @@ abstract class DOM4JComputedStyle extends ComputedCSSStyle {
 	@Override
 	public StyleDatabase getStyleDatabase() {
 		Node node = getOwnerNode();
-		if(node != null) {
+		if (node != null) {
 			CSSDocument doc = (CSSDocument) node.getOwnerDocument();
 			return doc.getStyleDatabase();
 		}

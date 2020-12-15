@@ -38,8 +38,7 @@ public class StyleElementTest {
 		XHTMLDocumentFactory factory = XHTMLDocumentFactory.getInstance();
 		headElement = (HeadElement) factory.createElement("head");
 		xDoc = factory.createDocument(headElement);
-		style_qname = new QName("style", new Namespace("", 
-				XHTMLDocument.XHTML_NAMESPACE_URI));
+		style_qname = new QName("style", new Namespace("", XHTMLDocument.XHTML_NAMESPACE_URI));
 		style_qname.setDocumentFactory(factory);
 	}
 

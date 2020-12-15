@@ -33,9 +33,9 @@ class HeadElement extends XHTMLElement {
 		super(qname);
 	}
 
-    HeadElement(QName qname, int attributeCount) {
-        super(qname, attributeCount);
-    }
+	HeadElement(QName qname, int attributeCount) {
+		super(qname, attributeCount);
+	}
 
 	@Override
 	protected void childAdded(Node node) {

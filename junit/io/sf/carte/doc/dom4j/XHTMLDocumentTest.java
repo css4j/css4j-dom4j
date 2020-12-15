@@ -79,8 +79,8 @@ public class XHTMLDocumentTest {
 
 	@Test
 	public void getStyleSheet() throws Exception {
-		int defSz = xhtmlDoc.getDocumentFactory()
-				.getDefaultStyleSheet(xhtmlDoc.getComplianceMode()).getCssRules().getLength();
+		int defSz = xhtmlDoc.getDocumentFactory().getDefaultStyleSheet(xhtmlDoc.getComplianceMode()).getCssRules()
+				.getLength();
 		assertEquals(113, defSz);
 		DocumentCSSStyleSheet css = xhtmlDoc.getStyleSheet();
 		assertNotNull(css);
@@ -102,8 +102,7 @@ public class XHTMLDocumentTest {
 		CSSValue ffval = fontface.getPropertyCSSValue("src");
 		assertEquals(CSSValue.CssType.TYPED, ffval.getCssValueType());
 		assertEquals(CSSValue.Type.URI, ((CSSTypedValue) ffval).getPrimitiveType());
-		assertTrue(
-				sheet.getCssRules().item(2).getMinifiedCssText().startsWith("@font-feature-values Foo Sans,Bar"));
+		assertTrue(sheet.getCssRules().item(2).getMinifiedCssText().startsWith("@font-feature-values Foo Sans,Bar"));
 		assertTrue(it.hasNext());
 		sheet = it.next().getSheet();
 		assertNotNull(sheet);
@@ -130,8 +129,8 @@ public class XHTMLDocumentTest {
 
 	@Test
 	public void getStyleSheetXPP3() throws Exception {
-		int defSz = xhtmlDoc.getDocumentFactory()
-				.getDefaultStyleSheet(xhtmlDoc.getComplianceMode()).getCssRules().getLength();
+		int defSz = xhtmlDoc.getDocumentFactory().getDefaultStyleSheet(xhtmlDoc.getComplianceMode()).getCssRules()
+				.getLength();
 		DocumentCSSStyleSheet css = xhtmlDoc.getStyleSheet();
 		assertNotNull(css);
 		assertNotNull(css.getCssRules());
@@ -731,8 +730,8 @@ public class XHTMLDocumentTest {
 		/*
 		 * attr() recursive with custom property (I).
 		 */
-		elm.getOverrideStyle(null).setCssText(
-			"margin-left:attr(noattr length,var(--foo));--foo:attr(noattr,var(margin-left))");
+		elm.getOverrideStyle(null)
+				.setCssText("margin-left:attr(noattr length,var(--foo));--foo:attr(noattr,var(margin-left))");
 		style = elm.getComputedStyle(null);
 		marginLeft = (CSSTypedValue) style.getPropertyCSSValue("margin-left");
 		assertEquals(0f, marginLeft.getFloatValue(CSSUnit.CSS_PT), 0.01f);

@@ -161,19 +161,17 @@ public class DOM4JUserAgent extends AbstractUserAgent {
 
 	protected AgentXHTMLDocument parseDocument(Reader re) throws io.sf.carte.doc.DocumentException, IOException {
 		try {
-			if(useXPP3) {
+			if (useXPP3) {
 				return parseWithXPP3Reader(re);
 			} else {
 				return parseWithSAXReader(re);
 			}
 		} catch (DocumentException e) {
-			throw new io.sf.carte.doc.DocumentException(
-					"Error parsing document", e);
+			throw new io.sf.carte.doc.DocumentException("Error parsing document", e);
 		}
 	}
 
-	private AgentXHTMLDocument parseWithSAXReader(Reader re)
-	throws DocumentException {
+	private AgentXHTMLDocument parseWithSAXReader(Reader re) throws DocumentException {
 		InputSource isrc = new InputSource(re);
 		XHTMLDocumentFactory factory = getXHTMLDocumentFactory();
 		SAXReader reader = new SAXReader(factory);
@@ -181,8 +179,7 @@ public class DOM4JUserAgent extends AbstractUserAgent {
 		return (AgentXHTMLDocument) reader.read(isrc);
 	}
 
-	private AgentXHTMLDocument parseWithXPP3Reader(Reader re)
-	throws DocumentException, IOException {
+	private AgentXHTMLDocument parseWithXPP3Reader(Reader re) throws DocumentException, IOException {
 		XHTMLDocumentFactory factory = getXHTMLDocumentFactory();
 		XPP3Reader reader = new XPP3Reader(factory);
 		try {

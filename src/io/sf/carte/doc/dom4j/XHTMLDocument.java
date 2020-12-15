@@ -651,7 +651,7 @@ public class XHTMLDocument extends DOMDocument implements CSSDocument {
 	 * given &lt;base&gt; element.
 	 * 
 	 * @param element the &lt;base&gt; element.
-	 * @param base     the value of the {@code href} attribute.
+	 * @param base    the value of the {@code href} attribute.
 	 * @return {@code true} if the {@code BASE} URL was set.
 	 */
 	boolean setBaseURL(Element element, String base) {

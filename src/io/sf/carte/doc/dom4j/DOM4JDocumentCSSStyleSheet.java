@@ -63,10 +63,8 @@ abstract class DOM4JDocumentCSSStyleSheet extends BaseDocumentCSSStyleSheet {
 	/**
 	 * Gets the computed style for the given DOM4J element and pseudo-element.
 	 * 
-	 * @param elm
-	 *            the element.
-	 * @param pseudoElt
-	 *            the pseudo-element.
+	 * @param elm       the element.
+	 * @param pseudoElt the pseudo-element.
 	 * @return the computed style declaration.
 	 */
 	@Override
@@ -83,8 +81,8 @@ abstract class DOM4JDocumentCSSStyleSheet extends BaseDocumentCSSStyleSheet {
 	/**
 	 * Creates and returns a copy of this style sheet.
 	 * <p>
-	 * The copy is a shallow copy (the rule list is new, but the referenced rules are the same
-	 * as in the cloned object.
+	 * The copy is a shallow copy (the rule list is new, but the referenced rules
+	 * are the same as in the cloned object.
 	 * 
 	 * @return a clone of this instance.
 	 */

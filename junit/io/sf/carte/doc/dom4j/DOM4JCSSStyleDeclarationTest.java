@@ -167,8 +167,7 @@ public class DOM4JCSSStyleDeclarationTest {
 		assertEquals(128, ((CSSTypedValue) color.toRGBColorValue().getBlue()).getFloatValue(CSSUnit.CSS_NUMBER),
 				0.001f);
 		assertEquals(0, ((CSSTypedValue) color.toRGBColorValue().getRed()).getFloatValue(CSSUnit.CSS_NUMBER), 0.001f);
-		assertEquals(0, ((CSSTypedValue) color.toRGBColorValue().getGreen()).getFloatValue(CSSUnit.CSS_NUMBER),
-				0.001f);
+		assertEquals(0, ((CSSTypedValue) color.toRGBColorValue().getGreen()).getFloatValue(CSSUnit.CSS_NUMBER), 0.001f);
 		pList.clear();
 	}
 

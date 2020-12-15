@@ -35,8 +35,8 @@ class ImgElement extends XHTMLElement {
 	}
 
 	ImgElement(QName qname, int attributeCount) {
-        super(qname, attributeCount);
-    }
+		super(qname, attributeCount);
+	}
 
 	@Override
 	public boolean hasPresentationalHints() {

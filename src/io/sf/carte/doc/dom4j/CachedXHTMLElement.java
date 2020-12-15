@@ -40,14 +40,14 @@ class CachedXHTMLElement extends XHTMLElement {
 		super(qname);
 	}
 
-    CachedXHTMLElement(QName qname, int attributeCount) {
-        super(qname, attributeCount);
-    }
+	CachedXHTMLElement(QName qname, int attributeCount) {
+		super(qname, attributeCount);
+	}
 
 	@Override
 	public ComputedCSSStyle getComputedStyle() {
 		int documentCacheSerial = getOwnerDocument().getStyleCacheSerial();
-		if(cachedComputedStyle == null || cacheSerial != documentCacheSerial){
+		if (cachedComputedStyle == null || cacheSerial != documentCacheSerial) {
 			cacheSerial = documentCacheSerial;
 			cachedComputedStyle = super.getComputedStyle();
 		}
@@ -64,10 +64,10 @@ class CachedXHTMLElement extends XHTMLElement {
 		// Cascade notification
 		@SuppressWarnings("rawtypes")
 		Iterator elements = elementIterator();
-		while(elements.hasNext()) {
+		while (elements.hasNext()) {
 			Element element = (Element) elements.next();
-			if(element instanceof CachedXHTMLElement) {
-				((CachedXHTMLElement)element).onStyleModify();
+			if (element instanceof CachedXHTMLElement) {
+				((CachedXHTMLElement) element).onStyleModify();
 			}
 		}
 		getDocument().onStyleModify();

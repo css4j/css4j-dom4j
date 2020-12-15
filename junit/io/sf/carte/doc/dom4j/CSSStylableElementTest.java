@@ -50,12 +50,12 @@ public class CSSStylableElementTest {
 	@SuppressWarnings("rawtypes")
 	@Test
 	public void getStyle() {
-		List pList = xhtmlDoc.selectNodes( "/*[name()='html']//*[name()='h3']" );
+		List pList = xhtmlDoc.selectNodes("/*[name()='html']//*[name()='h3']");
 		Iterator it = pList.iterator();
 		assertTrue(it.hasNext());
 		Object elm = it.next();
 		assertTrue(elm instanceof CSSStylableElement);
-		CSSStyleDeclaration style = ((CSSStylableElement)elm).getStyle();
+		CSSStyleDeclaration style = ((CSSStylableElement) elm).getStyle();
 		assertNotNull(style);
 		assertEquals("font-family: 'Does Not Exist', Neither; color: navy; ", style.getCssText());
 		pList.clear();
@@ -84,7 +84,7 @@ public class CSSStylableElementTest {
 	public void getStyleUppercase() {
 		Element elm = xhtmlDoc.getElementById("ul1li1");
 		assertTrue(elm instanceof CSSStylableElement);
-		CSSStyleDeclaration style = ((CSSStylableElement)elm).getStyle();
+		CSSStyleDeclaration style = ((CSSStylableElement) elm).getStyle();
 		assertNotNull(style);
 		assertEquals("color: blue; ", style.getCssText());
 	}
@@ -93,12 +93,12 @@ public class CSSStylableElementTest {
 	@Test
 	public void getComputedStyle() throws CSSMediaException {
 		xhtmlDoc.setTargetMedium("screen");
-		List pList = xhtmlDoc.selectNodes( "/*[name()='html']//*[name()='p']" );
+		List pList = xhtmlDoc.selectNodes("/*[name()='html']//*[name()='p']");
 		Iterator it = pList.iterator();
 		assertTrue(it.hasNext());
 		Object elm = it.next();
 		assertTrue(elm instanceof CSSStylableElement);
-		CSSStyleDeclaration style = ((CSSStylableElement)elm).getComputedStyle();
+		CSSStyleDeclaration style = ((CSSStylableElement) elm).getComputedStyle();
 		assertNotNull(style);
 		assertEquals("bold", style.getPropertyValue("font-weight"));
 		pList.clear();

@@ -36,9 +36,9 @@ public class XHTMLElementTest {
 		assertNotNull(elmdom);
 		assertTrue(elmdom instanceof XHTMLElement);
 		assertTrue(elm == elmdom);
-		assertEquals("listpara", ((XHTMLElement)elm).getId());
-		((XHTMLElement)elm).setAttribute("id", "foo");
-		assertEquals("foo", ((XHTMLElement)elm).getId());
+		assertEquals("listpara", ((XHTMLElement) elm).getId());
+		((XHTMLElement) elm).setAttribute("id", "foo");
+		assertEquals("foo", ((XHTMLElement) elm).getId());
 	}
 
 	@Test
@@ -49,11 +49,11 @@ public class XHTMLElementTest {
 		assertNotNull(elmdom);
 		assertTrue(elmdom instanceof XHTMLElement);
 		assertTrue(elm == elmdom);
-		assertEquals("ul1li1", ((XHTMLElement)elm).getAttribute("ID"));
-		assertEquals("ul1li1", ((XHTMLElement)elm).getId());
-		((XHTMLElement)elm).setAttribute("id", "foo");
-		assertEquals("foo", ((XHTMLElement)elm).getId());
-		assertEquals("foo", ((XHTMLElement)elm).getAttribute("ID"));
+		assertEquals("ul1li1", ((XHTMLElement) elm).getAttribute("ID"));
+		assertEquals("ul1li1", ((XHTMLElement) elm).getId());
+		((XHTMLElement) elm).setAttribute("id", "foo");
+		assertEquals("foo", ((XHTMLElement) elm).getId());
+		assertEquals("foo", ((XHTMLElement) elm).getAttribute("ID"));
 	}
 
 }

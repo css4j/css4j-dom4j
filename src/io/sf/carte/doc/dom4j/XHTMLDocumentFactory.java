@@ -106,26 +106,26 @@ public class XHTMLDocumentFactory extends DOMDocumentFactory {
 	}
 
 	/**
-	 * Indicates whether the stylable elements currently produced by this
-	 * factory are cache-enabled or not.
+	 * Indicates whether the stylable elements currently produced by this factory
+	 * are cache-enabled or not.
 	 * 
-	 * @return <code>true</code> if the per-element cache is enabled, <code>false</code> otherwise.
+	 * @return <code>true</code> if the per-element cache is enabled,
+	 *         <code>false</code> otherwise.
 	 */
 	public boolean isStyleCacheOn() {
 		return styleCacheOn;
 	}
 
 	/**
-	 * Can turn on or off the per-Element style caching capability (by default
-	 * is off).
+	 * Can turn on or off the per-Element style caching capability (by default is
+	 * off).
 	 * <p>
 	 * Only applications that repeatedly call the
 	 * {@link CSSStylableElement#getComputedStyle()} method on the same Element
 	 * should turn it on.
 	 * 
-	 * @param onOff
-	 *            set to true to turn on the cache capability, to false to turn
-	 *            it off.
+	 * @param onOff set to true to turn on the cache capability, to false to turn it
+	 *              off.
 	 */
 	public void setStyleCache(boolean onOff) {
 		this.styleCacheOn = onOff;
@@ -328,8 +328,7 @@ public class XHTMLDocumentFactory extends DOMDocumentFactory {
 		}
 
 		@Override
-		protected BaseCSSStyleSheet createLinkedStyleSheet(Node ownerNode, String title,
-				MediaQueryList mediaList) {
+		protected BaseCSSStyleSheet createLinkedStyleSheet(Node ownerNode, String title, MediaQueryList mediaList) {
 			return new MyDOM4JCSSStyleSheet(title, ownerNode, mediaList, null, CSSStyleSheetFactory.ORIGIN_AUTHOR);
 		}
 
@@ -516,8 +515,7 @@ public class XHTMLDocumentFactory extends DOMDocumentFactory {
 		}
 
 		/**
-		 * Sets a default HTML default style sheet as the user agent style
-		 * sheet.
+		 * Sets a default HTML default style sheet as the user agent style sheet.
 		 */
 		@Override
 		public void setDefaultHTMLUserAgentSheet() {

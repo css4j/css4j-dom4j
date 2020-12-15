@@ -41,8 +41,7 @@ public class BaseURLElementTest {
 		XHTMLDocumentFactory factory = XHTMLDocumentFactory.getInstance();
 		headElement = (HeadElement) factory.createElement("head");
 		xDoc = factory.createDocument(headElement);
-		base_qname = new QName("base", new Namespace("", 
-				XHTMLDocument.XHTML_NAMESPACE_URI));
+		base_qname = new QName("base", new Namespace("", XHTMLDocument.XHTML_NAMESPACE_URI));
 		base_qname.setDocumentFactory(factory);
 	}
 
@@ -77,8 +76,7 @@ public class BaseURLElementTest {
 		CSSDocument xhtmlDoc = XHTMLDocumentFactoryTest.parseXML(isrc);
 		re.close();
 		assertNotNull(xhtmlDoc.getBaseURL());
-		assertEquals("http://www.example.com/", 
-				xhtmlDoc.getBaseURL().toExternalForm());
+		assertEquals("http://www.example.com/", xhtmlDoc.getBaseURL().toExternalForm());
 	}
 
 	@Test
@@ -86,8 +84,7 @@ public class BaseURLElementTest {
 		Reader re = DOMCSSStyleSheetFactoryTest.sampleHTMLReader();
 		CSSDocument xhtmlDoc = XHTMLDocumentFactoryTest.parseXPP3(re);
 		assertNotNull(xhtmlDoc.getBaseURL());
-		assertEquals("http://www.example.com/", 
-				xhtmlDoc.getBaseURL().toExternalForm());
+		assertEquals("http://www.example.com/", xhtmlDoc.getBaseURL().toExternalForm());
 		re.close();
 	}
 

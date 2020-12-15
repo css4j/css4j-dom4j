@@ -73,8 +73,7 @@ public class XHTMLDocumentFactoryTest {
 		InputStream is = doc.openStream("http://www.example.com/css/common.css");
 		assertNotNull(is);
 		is.close();
-		URLConnection ucon = doc.openConnection(new URL(
-				"http://www.example.com/css/common.css"));
+		URLConnection ucon = doc.openConnection(new URL("http://www.example.com/css/common.css"));
 		assertNotNull(ucon);
 		is = ucon.getInputStream();
 		assertNotNull(is);
@@ -153,27 +152,24 @@ public class XHTMLDocumentFactoryTest {
 		assertEquals("ítem", ent0.getNodeValue());
 	}
 
-	public static XHTMLDocument parseXML(InputSource is)
-	throws DocumentException, SAXException {
+	public static XHTMLDocument parseXML(InputSource is) throws DocumentException, SAXException {
 		TestDocumentFactory factory = new TestDocumentFactory();
 		factory.getStyleSheetFactory().setDefaultHTMLUserAgentSheet();
 		SAXReader reader = new SAXReader(factory);
 		reader.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", true);
 		reader.setEntityResolver(new DefaultEntityResolver());
-		XHTMLDocument document = (XHTMLDocument)reader.read(is);
+		XHTMLDocument document = (XHTMLDocument) reader.read(is);
 		return document;
 	}
 
-	public static XHTMLDocument parseXPP3(Reader re)
-	throws Exception {
+	public static XHTMLDocument parseXPP3(Reader re) throws Exception {
 		TestDocumentFactory factory = new TestDocumentFactory();
 		XPP3Reader reader = new XPP3Reader(factory);
-		XHTMLDocument document = (XHTMLDocument)reader.read(re);
+		XHTMLDocument document = (XHTMLDocument) reader.read(re);
 		return document;
 	}
 
-	public static XHTMLDocument sampleXHTML()
-	throws DocumentException, SAXException, IOException {
+	public static XHTMLDocument sampleXHTML() throws DocumentException, SAXException, IOException {
 		Reader re = DOMCSSStyleSheetFactoryTest.sampleHTMLReader();
 		InputSource isrc = new InputSource(re);
 		XHTMLDocument xhtmlDoc = parseXML(isrc);
