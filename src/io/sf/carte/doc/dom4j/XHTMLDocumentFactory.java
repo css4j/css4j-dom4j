@@ -262,12 +262,13 @@ public class XHTMLDocumentFactory extends DOMDocumentFactory {
 	@Override
 	public Attribute createAttribute(Element owner, QName qname, String value) {
 		String name = qname.getName();
-		if (owner instanceof StyleDefinerElement) {
-			return new DocumentStyleEventAttribute(qname, value);
-		} else if ((name = qname.getName()).equals("href") && owner instanceof BaseURLElement) {
-			return new BaseHrefAttribute(qname, value);
+		if ((name = qname.getName()).equals("href")) {
+			return new HrefAttribute(qname, value);
 		} else if (name.equalsIgnoreCase("style")) {
 			return new StyleAttribute(qname, value);
+		} else if (name.equalsIgnoreCase("type") || name.equalsIgnoreCase("media") || name.equalsIgnoreCase("rel")
+				|| name.equalsIgnoreCase("title")) {
+			return new DocumentStyleEventAttribute(qname, value);
 		} else {
 			return super.createAttribute(owner, qname, value);
 		}

@@ -672,7 +672,7 @@ public class XHTMLDocument extends DOMDocument implements CSSDocument {
 	 */
 	public void setBaseURL(URL baseURL) {
 		this.baseURL = baseURL;
-		BaseHrefAttribute.onBaseModify(this);
+		HrefAttribute.onBaseModify(this);
 	}
 
 	/**
