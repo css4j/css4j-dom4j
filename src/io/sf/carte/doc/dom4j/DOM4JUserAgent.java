@@ -192,8 +192,6 @@ public class DOM4JUserAgent extends AbstractUserAgent {
 	}
 
 	public XHTMLDocumentFactory getXHTMLDocumentFactory() {
-		// Uncomment the next line to use PDF.
-		//factory.getDeviceFactory().setStyleDatabase("pdf", new PDFStyleDatabase());
 		return factory;
 	}
 
