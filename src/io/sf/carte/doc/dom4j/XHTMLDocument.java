@@ -402,9 +402,6 @@ public class XHTMLDocument extends DOMDocument implements CSSDocument {
 		}
 	}
 
-	/*
-	 * This method should only be called from HeadElement.
-	 */
 	void onLinkStyleAdd(LinkStyle<?> element) {
 		if (element instanceof LinkElement) {
 			linkedStyle.add((LinkElement) element);
@@ -414,9 +411,6 @@ public class XHTMLDocument extends DOMDocument implements CSSDocument {
 		onStyleModify();
 	}
 
-	/*
-	 * This method should only be called from HeadElement.
-	 */
 	void onLinkStyleRemove(LinkStyle<?> element) {
 		if (element instanceof LinkElement) {
 			linkedStyle.remove(element);
