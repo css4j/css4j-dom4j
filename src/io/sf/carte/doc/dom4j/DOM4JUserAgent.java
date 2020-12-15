@@ -26,8 +26,6 @@ import org.dom4j.dom.DOMDocumentType;
 import org.dom4j.dom.DOMElement;
 import org.dom4j.io.SAXReader;
 import org.dom4j.io.XPP3Reader;
-import org.w3c.dom.DOMException;
-import org.w3c.dom.DocumentType;
 import org.w3c.dom.NodeList;
 import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
@@ -209,19 +207,9 @@ public class DOM4JUserAgent extends AbstractUserAgent {
 		}
 
 		@Override
-		public XHTMLDocument createDocument(String namespaceURI, String qualifiedName, DocumentType docType)
-				throws DOMException {
-			XHTMLDocument document;
-			if (docType != null) {
-				DOMDocumentType documentType = asDocumentType(docType);
-				document = new AgentXHTMLDocument(documentType);
-			} else {
-				document = new AgentXHTMLDocument();
-			}
+		protected XHTMLDocument createDocument(DOMDocumentType documentType) {
+			AgentXHTMLDocument document = new AgentXHTMLDocument(documentType);
 			document.setDocumentFactory(this);
-			if (qualifiedName != null) {
-				document.add(createElement(createQName(qualifiedName, namespaceURI)));
-			}
 			return document;
 		}
 
