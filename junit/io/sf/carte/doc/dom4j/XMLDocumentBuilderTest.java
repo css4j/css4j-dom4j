@@ -164,6 +164,7 @@ public class XMLDocumentBuilderTest {
 	private Document parseDocument(Reader re) throws SAXException, IOException {
 		XMLDocumentBuilder builder = new XMLDocumentBuilder(factory);
 		builder.setIgnoreElementContentWhitespace(true);
+		builder.setHTMLProcessing(true);
 		builder.setEntityResolver(resolver);
 		InputSource is = new InputSource(re);
 		Document document = builder.parse(is);
