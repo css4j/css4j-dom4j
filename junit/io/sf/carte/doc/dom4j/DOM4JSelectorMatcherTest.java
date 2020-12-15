@@ -19,6 +19,7 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.dom4j.DocumentType;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -157,6 +158,42 @@ public class DOM4JSelectorMatcherTest {
 		document.getDocumentElement().add(elm);
 		SelectorMatcher matcher = elm.getSelectorMatcher();
 		assertTrue(matcher.matches(selist) >= 0);
+		// Case insensitive
+		elm.setAttribute("class", "exampleClass");
+		assertEquals(0, matcher.matches(selist));
+	}
+
+	@Test
+	public void testMatchSelector1ClassCI() throws Exception {
+		AbstractCSSStyleSheet css = parseStyle(".exampleClass {color: blue;}");
+		CSSStyleDeclarationRule rule = (CSSStyleDeclarationRule) css.getCssRules().item(0);
+		SelectorList selist = CSSOMBridge.getSelectorList(rule);
+		CSSStylableElement elm = createElement("p");
+		elm.addAttribute("class", "exampleclass");
+		document.getDocumentElement().add(elm);
+		SelectorMatcher matcher = elm.getSelectorMatcher();
+		assertTrue(matcher.matches(selist) >= 0);
+		// Case insensitive
+		elm.setAttribute("class", "exampleClass");
+		assertEquals(0, matcher.matches(selist));
+	}
+
+	@Test
+	public void testMatchSelector1ClassStrict() throws Exception {
+		DocumentType docType = factory.createDocType("html", null, null);
+		document.setDocType(docType);
+		AbstractCSSStyleSheet css = parseStyle(".exampleclass {color: blue;}");
+		CSSStyleDeclarationRule rule = (CSSStyleDeclarationRule) css.getCssRules().item(0);
+		SelectorList selist = CSSOMBridge.getSelectorList(rule);
+		CSSStylableElement elm = createElement("p");
+		elm.addAttribute("class", "exampleclass");
+		document.getDocumentElement().add(elm);
+		SelectorMatcher matcher = elm.getSelectorMatcher();
+		assertTrue(matcher.matches(selist) >= 0);
+		// Case sensitive
+		elm.setAttribute("class", "exampleClass");
+		matcher = elm.getSelectorMatcher();
+		assertEquals(-1, matcher.matches(selist));
 	}
 
 	@Test
@@ -287,6 +324,44 @@ public class DOM4JSelectorMatcherTest {
 		document.getDocumentElement().add(elm);
 		SelectorMatcher matcher = elm.getSelectorMatcher();
 		assertTrue(matcher.matches(selist) >= 0);
+		// Case insensitive
+		elm.addAttribute("id", "exampleId");
+		assertTrue(matcher.matches(selist) >= 0);
+	}
+
+	@Test
+	public void testMatchSelector1IdCI() throws Exception {
+		AbstractCSSStyleSheet css = parseStyle("#exampleId {color: blue;}");
+		CSSStyleDeclarationRule rule = (CSSStyleDeclarationRule) css.getCssRules().item(0);
+		SelectorList selist = CSSOMBridge.getSelectorList(rule);
+		CSSStylableElement elm = createElement("p");
+		elm.addAttribute("class", "exampleclass");
+		elm.addAttribute("id", "exampleid");
+		document.getDocumentElement().add(elm);
+		SelectorMatcher matcher = elm.getSelectorMatcher();
+		assertTrue(matcher.matches(selist) >= 0);
+		// Case insensitive
+		elm.addAttribute("id", "exampleId");
+		assertTrue(matcher.matches(selist) >= 0);
+	}
+
+	@Test
+	public void testMatchSelector1IdCIStrict() throws Exception {
+		DocumentType docType = factory.createDocType("html", null, null);
+		document.setDocType(docType);
+		AbstractCSSStyleSheet css = parseStyle("#exampleId {color: blue;}");
+		CSSStyleDeclarationRule rule = (CSSStyleDeclarationRule) css.getCssRules().item(0);
+		SelectorList selist = CSSOMBridge.getSelectorList(rule);
+		CSSStylableElement elm = createElement("p");
+		elm.addAttribute("class", "exampleclass");
+		elm.addAttribute("id", "exampleid");
+		document.getDocumentElement().add(elm);
+		SelectorMatcher matcher = elm.getSelectorMatcher();
+		assertEquals(-1, matcher.matches(selist));
+		// Case insensitive
+		elm.addAttribute("id", "exampleId");
+		matcher = elm.getSelectorMatcher();
+		assertEquals(0, matcher.matches(selist));
 	}
 
 	@Test
