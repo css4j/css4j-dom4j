@@ -47,7 +47,7 @@ class BaseURLElement extends XHTMLElement {
 					XHTMLDocument doc = getOwnerDocument();
 					if (doc != null) {
 						doc.setBaseURL(this, href);
-						BaseHrefAttribute.onBaseModify(doc);
+						HrefAttribute.onBaseModify(doc);
 					}
 				}
 			}
@@ -60,7 +60,7 @@ class BaseURLElement extends XHTMLElement {
 			XHTMLDocument doc = getOwnerDocument();
 			if (doc != null) {
 				doc.setBaseURL(null);
-				BaseHrefAttribute.onBaseModify(doc);
+				HrefAttribute.onBaseModify(doc);
 			}
 		}
 		super.childRemoved(node);

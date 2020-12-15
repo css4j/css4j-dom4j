@@ -40,9 +40,13 @@ class DocumentStyleEventAttribute extends DOMAttribute {
 	@Override
 	public void setValue(String value) {
 		super.setValue(value);
-		StyleDefinerElement element = (StyleDefinerElement) getParent();
-		if (element != null) {
-			element.resetLinkedSheet();
+		Element owner = getParent();
+		if (owner != null) {
+			if (owner instanceof StyleDefinerElement) {
+				((StyleDefinerElement) owner).resetLinkedSheet();
+			} else if (owner instanceof CachedXHTMLElement) {
+				((CachedXHTMLElement) owner).onStyleModify();
+			}
 		}
 	}
 

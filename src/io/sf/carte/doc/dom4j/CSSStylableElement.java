@@ -23,6 +23,7 @@ import org.dom4j.Attribute;
 import org.dom4j.Element;
 import org.dom4j.QName;
 import org.dom4j.dom.DOMElement;
+import org.dom4j.tree.DefaultAttribute;
 import org.w3c.dom.Attr;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Node;
@@ -93,6 +94,36 @@ abstract public class CSSStylableElement extends DOMElement implements
 	@Override
 	protected XHTMLDocumentFactory getDocumentFactory() {
 		return (XHTMLDocumentFactory) super.getDocumentFactory();
+	}
+
+	@Override
+	public Attr setAttributeNode(Attr newAttr) throws DOMException {
+		Attribute attribute = attribute(newAttr);
+		if (attribute != newAttr) {
+			if (newAttr.getOwnerElement() != null) {
+				throw new DOMException(DOMException.INUSE_ATTRIBUTE_ERR, "Attribute is already in use");
+			}
+			if (attribute != null) {
+				attribute.detach();
+				add((Attribute) newAttr);
+				if (attribute instanceof Attr) {
+					return (Attr) attribute;
+				}
+			} else {
+				add((Attribute) newAttr);
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public Attr setAttributeNodeNS(Attr newAttr) throws DOMException {
+		return setAttributeNode(newAttr);
+	}
+
+	@Override
+	protected Attribute attribute(Attr attr) {
+		return attribute(((DefaultAttribute) attr).getQName());
 	}
 
 	@Override
