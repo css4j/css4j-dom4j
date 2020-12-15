@@ -239,17 +239,22 @@ public class XHTMLDocumentFactory extends DOMDocumentFactory {
 		return mydoc;
 	}
 
+	protected XHTMLDocument createDocument(DOMDocumentType documentType) {
+		XHTMLDocument document = new XHTMLDocument(documentType);
+		document.setDocumentFactory(this);
+		return document;
+	}
+
 	@Override
 	public XHTMLDocument createDocument(String namespaceURI, String qualifiedName, DocumentType docType)
 			throws DOMException {
 		XHTMLDocument document;
 		if (docType != null) {
 			DOMDocumentType documentType = asDocumentType(docType);
-			document = new XHTMLDocument(documentType);
+			document = createDocument(documentType);
 		} else {
-			document = new XHTMLDocument();
+			document = createDocument();
 		}
-		document.setDocumentFactory(this);
 		if (qualifiedName != null) {
 			if (namespaceURI == null) {
 				namespaceURI = "";

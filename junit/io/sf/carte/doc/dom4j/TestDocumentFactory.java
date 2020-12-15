@@ -53,6 +53,13 @@ public class TestDocumentFactory extends XHTMLDocumentFactory {
 		return mydoc;
 	}
 
+	@Override
+	protected XHTMLDocument createDocument(DOMDocumentType documentType) {
+		XHTMLDocument document = new MyXHTMLDocument(documentType);
+		document.setDocumentFactory(this);
+		return document;
+	}
+
 	class MyXHTMLDocument extends XHTMLDocument {
 
 		private static final long serialVersionUID = 4L;
