@@ -88,7 +88,7 @@ class StyleElement extends StyleDefinerElement {
 	public AbstractCSSStyleSheet getSheet() {
 		if (needsUpdate) {
 			String nsuri = getNamespaceURI();
-			if (nsuri.length() != 0 && !nsuri.equals(XHTMLDocument.XHTML_NAMESPACE_URI)) {
+			if (nsuri != null && nsuri.length() != 0 && !nsuri.equals(XHTMLDocument.XHTML_NAMESPACE_URI)) {
 				return null;
 			}
 			String type = attributeValue("type");

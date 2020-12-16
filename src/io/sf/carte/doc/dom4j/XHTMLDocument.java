@@ -412,21 +412,26 @@ public class XHTMLDocument extends DOMDocument implements CSSDocument {
 	}
 
 	void onLinkStyleRemove(LinkStyle<?> element) {
+		boolean removed;
 		if (element instanceof LinkElement) {
-			linkedStyle.remove(element);
+			removed = linkedStyle.remove(element);
 		} else if (element instanceof StyleElement) {
-			embeddedStyle.remove(element);
+			removed = embeddedStyle.remove(element);
+		} else {
+			removed = false;
 		}
-		CSSStyleSheet sheet = element.getSheet();
-		if (sheet != null) {
-			String title = sheet.getTitle();
-			if (title != null) {
-				sheets.remove(title);
-			} else {
-				sheets.remove(sheet);
+		if (removed) {
+			CSSStyleSheet sheet = element.getSheet();
+			if (sheet != null) {
+				String title = sheet.getTitle();
+				if (title != null) {
+					sheets.remove(title);
+				} else {
+					sheets.remove(sheet);
+				}
 			}
+			onStyleModify();
 		}
-		onStyleModify();
 	}
 
 	/**

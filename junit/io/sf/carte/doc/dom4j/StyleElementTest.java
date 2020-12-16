@@ -36,7 +36,7 @@ public class StyleElementTest {
 	@Before
 	public void setUp() {
 		XHTMLDocumentFactory factory = XHTMLDocumentFactory.getInstance();
-		headElement = (HeadElement) factory.createElement("head");
+		headElement = (HeadElement) factory.createElement("head", XHTMLDocument.XHTML_NAMESPACE_URI);
 		xDoc = factory.createDocument(headElement);
 		style_qname = new QName("style", new Namespace("", XHTMLDocument.XHTML_NAMESPACE_URI));
 		style_qname.setDocumentFactory(factory);

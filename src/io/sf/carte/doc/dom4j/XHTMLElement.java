@@ -87,15 +87,20 @@ public class XHTMLElement extends CSSStylableElement {
 	@Override
 	protected void childAdded(Node node) {
 		super.childAdded(node);
-		if (node instanceof LinkStyle) {
-			getOwnerDocument().onLinkStyleAdd((LinkStyle<?>) node);
+		String nsUri;
+		XHTMLDocument doc;
+		if (node instanceof LinkStyle && (doc = getOwnerDocument()) != null
+				&& ((nsUri = ((CSSStylableElement) node).getNamespaceURI()) == null || nsUri.length() == 0
+						|| nsUri.equals(doc.getDocumentElement().getNamespaceURI()))) {
+			doc.onLinkStyleAdd((LinkStyle<?>) node);
 		}
 	}
 
 	@Override
 	protected void childRemoved(Node node) {
-		if (node instanceof LinkStyle) {
-			getOwnerDocument().onLinkStyleRemove((LinkStyle<?>) node);
+		XHTMLDocument doc;
+		if (node instanceof LinkStyle && (doc = getOwnerDocument()) != null) {
+			doc.onLinkStyleRemove((LinkStyle<?>) node);
 		}
 		super.childRemoved(node);
 	}
