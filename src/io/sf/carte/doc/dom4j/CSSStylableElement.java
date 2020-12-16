@@ -18,6 +18,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 import org.dom4j.Attribute;
 import org.dom4j.Element;
@@ -253,13 +254,39 @@ abstract public class CSSStylableElement extends DOMElement implements CSSElemen
 		String value = null;
 		Attribute attr = attribute(attrName);
 		if (attr == null) {
+			/*
+			 * There could be 3 reasons for this:
+			 * 1) There is no attribute with attrName.
+			 * 2) attrName contains a prefix and DOM4J does not like that.
+			 * 3) We are in HTML and attrName is a valid case-insensitive match.
+			 */
+			String prefix = "";
+			String localName;
+			int idx = attrName.indexOf(':');
+			if (idx != -1) {
+				prefix = attrName.substring(0, idx);
+				idx++;
+				if (idx < attrName.length()) {
+					localName = attrName.substring(idx);
+				} else {
+					return "";
+				}
+			} else {
+				localName = attrName;
+			}
 			List<Attribute> list = attributeList();
 			for (Attribute item : list) {
 				String nsuri; // In some configurations, nsuri could be null
-				if (attrName.equalsIgnoreCase(item.getName()) && ((nsuri = item.getNamespaceURI()) == null
-						|| nsuri.length() == 0 || XHTMLDocument.XHTML_NAMESPACE_URI.equals(nsuri))) {
-					value = item.getValue();
-					break;
+				if (localName.equalsIgnoreCase(item.getName())) {
+					// Aren't we in HTML? Then the problem is the prefix? Check CS match
+					if ((nsuri = item.getNamespaceURI()) != null && nsuri.length() != 0
+							&& !XHTMLDocument.XHTML_NAMESPACE_URI.equals(nsuri) && !localName.equals(item.getName())) {
+						continue;
+					}
+					if (Objects.equals(prefix, item.getNamespacePrefix())) {
+						value = item.getValue();
+						break;
+					}
 				}
 			}
 		} else {
@@ -468,26 +495,6 @@ abstract public class CSSStylableElement extends DOMElement implements CSSElemen
 		}
 
 		@Override
-		protected boolean isNotVisitedLink() {
-			String href = getAttribute("href");
-			if (href != null && href.length() != 0) {
-				return !getOwnerDocument().isVisitedURI(href);
-			} else {
-				return false;
-			}
-		}
-
-		@Override
-		protected boolean isVisitedLink() {
-			String href = getAttribute("href");
-			if (href != null && href.length() != 0) {
-				return getOwnerDocument().isVisitedURI(href);
-			} else {
-				return false;
-			}
-		}
-
-		@Override
 		protected boolean isTarget() {
 			String uri = getOwnerDocument().getDocumentURI();
 			int idx;
@@ -665,8 +672,8 @@ abstract public class CSSStylableElement extends DOMElement implements CSSElemen
 		}
 
 		@Override
-		protected CSSDocument.ComplianceMode getComplianceMode() {
-			return CSSStylableElement.this.getOwnerDocument().getComplianceMode();
+		protected CSSDocument getOwnerDocument() {
+			return CSSStylableElement.this.getOwnerDocument();
 		}
 
 		@Override
