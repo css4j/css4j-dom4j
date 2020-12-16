@@ -67,13 +67,14 @@ public class CSSStylableElementTest {
 		assertNull(body.getStyle());
 		assertFalse(body.hasAttributes());
 		xhtmlDoc.getDocumentElement().appendChild(body);
-		body.setAttribute("style", "font-family: Arial");
+		body.setAttribute("style", "font-family:Arial");
 		assertTrue(body.hasAttributes());
 		assertTrue(body.hasAttribute("style"));
-		assertEquals("font-family: Arial; ", body.getAttribute("style"));
+		assertEquals("font-family:Arial", body.getAttribute("style"));
 		CSSStyleDeclaration style = body.getStyle();
 		assertNotNull(style);
 		assertEquals(1, style.getLength());
+		assertEquals("font-family: Arial; ", body.getAttribute("style"));
 		assertEquals("font-family: Arial; ", style.getCssText());
 		style.setCssText("font-family: Helvetica");
 		assertEquals("font-family: Helvetica; ", style.getCssText());

@@ -54,6 +54,9 @@ class StyleAttribute extends DOMAttribute {
 
 	@Override
 	public String getValue() {
+		if (inlineStyle == null || inlineStyle.getLength() == 0) {
+			return super.getValue();
+		}
 		return getStyle().getCssText();
 	}
 
