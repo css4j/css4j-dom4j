@@ -563,6 +563,50 @@ public class DOM4JSelectorMatcherTest {
 	}
 
 	@Test
+	public void testMatchSelectorPseudoAnyLink() throws Exception {
+		CSSStylableElement a = createElement("a");
+		a.setAttribute("href", "foo");
+		CSSStylableElement elm = document.getDocumentElement();
+		elm.appendChild(a);
+		SelectorMatcher matcher = a.getSelectorMatcher();
+		AbstractCSSStyleSheet css = parseStyle(":any-link {color: blue;}");
+		CSSStyleDeclarationRule rule = (CSSStyleDeclarationRule) css.getCssRules().item(0);
+		SelectorList selist = CSSOMBridge.getSelectorList(rule);
+		assertEquals(0, matcher.matches(selist));
+		//
+		matcher = elm.getSelectorMatcher();
+		assertEquals(-1, matcher.matches(selist));
+		elm.setAttributeNS("http://www.w3.org/1999/xlink", "xlink:href", "bar");
+		assertEquals(0, matcher.matches(selist));
+		//
+		a.removeAttribute("href");
+		matcher = a.getSelectorMatcher();
+		assertEquals(-1, matcher.matches(selist));
+	}
+
+	@Test
+	public void testMatchSelectorPseudoLink() throws Exception {
+		CSSStylableElement a = createElement("a");
+		a.setAttribute("href", "foo");
+		CSSStylableElement elm = document.getDocumentElement();
+		elm.appendChild(a);
+		SelectorMatcher matcher = a.getSelectorMatcher();
+		AbstractCSSStyleSheet css = parseStyle(":link {color: blue;}");
+		CSSStyleDeclarationRule rule = (CSSStyleDeclarationRule) css.getCssRules().item(0);
+		SelectorList selist = CSSOMBridge.getSelectorList(rule);
+		assertEquals(0, matcher.matches(selist));
+		//
+		matcher = elm.getSelectorMatcher();
+		assertEquals(-1, matcher.matches(selist));
+		elm.setAttributeNS("http://www.w3.org/1999/xlink", "xlink:href", "bar");
+		assertEquals(0, matcher.matches(selist));
+		//
+		a.removeAttribute("href");
+		matcher = a.getSelectorMatcher();
+		assertEquals(-1, matcher.matches(selist));
+	}
+
+	@Test
 	public void testMatchSelectorPseudoRoot() throws Exception {
 		CSSStylableElement root = document.getDocumentElement();
 		root.add(createElement("div"));
