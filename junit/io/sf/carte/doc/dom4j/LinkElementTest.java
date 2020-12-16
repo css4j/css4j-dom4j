@@ -37,7 +37,7 @@ public class LinkElementTest {
 	@Before
 	public void setUp() {
 		XHTMLDocumentFactory factory = new TestDocumentFactory();
-		headElement = (HeadElement) factory.createElement("head");
+		headElement = (HeadElement) factory.createElement("head", XHTMLDocument.XHTML_NAMESPACE_URI);
 		xDoc = factory.createDocument(headElement);
 		link_qname = new QName("link", new Namespace("", XHTMLDocument.XHTML_NAMESPACE_URI));
 		link_qname.setDocumentFactory(factory);

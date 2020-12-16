@@ -391,9 +391,6 @@ public class XHTMLDocument extends DOMDocument implements CSSDocument {
 		}
 	}
 
-	/*
-	 * This method should only be called from HeadElement.
-	 */
 	void onLinkStyleAdd(LinkStyle element) {
 		if (element instanceof LinkElement) {
 			linkedStyle.add((LinkElement) element);
@@ -403,25 +400,27 @@ public class XHTMLDocument extends DOMDocument implements CSSDocument {
 		onStyleModify();
 	}
 
-	/*
-	 * This method should only be called from HeadElement.
-	 */
 	void onLinkStyleRemove(LinkStyle element) {
+		boolean removed;
 		if (element instanceof LinkElement) {
-			linkedStyle.remove(element);
+			removed = linkedStyle.remove(element);
 		} else if (element instanceof StyleElement) {
-			embeddedStyle.remove(element);
+			removed = embeddedStyle.remove(element);
+		} else {
+			removed = false;
 		}
-		CSSStyleSheet sheet = (CSSStyleSheet) element.getSheet();
-		if (sheet != null) {
-			String title = sheet.getTitle();
-			if (title != null) {
-				sheets.remove(title);
-			} else {
-				sheets.remove(sheet);
+		if (removed) {
+			CSSStyleSheet sheet = (CSSStyleSheet) element.getSheet();
+			if (sheet != null) {
+				String title = sheet.getTitle();
+				if (title != null) {
+					sheets.remove(title);
+				} else {
+					sheets.remove(sheet);
+				}
 			}
+			onStyleModify();
 		}
-		onStyleModify();
 	}
 
 	/**
