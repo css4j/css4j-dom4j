@@ -489,26 +489,6 @@ abstract public class CSSStylableElement extends DOMElement implements CSSElemen
 		}
 
 		@Override
-		protected boolean isNotVisitedLink() {
-			String href = getAttribute("href");
-			if (href != null && href.length() != 0) {
-				return !getOwnerDocument().isVisitedURI(href);
-			} else {
-				return false;
-			}
-		}
-
-		@Override
-		protected boolean isVisitedLink() {
-			String href = getAttribute("href");
-			if (href != null && href.length() != 0) {
-				return getOwnerDocument().isVisitedURI(href);
-			} else {
-				return false;
-			}
-		}
-
-		@Override
 		protected boolean isTarget() {
 			String uri = getOwnerDocument().getDocumentURI();
 			int idx;
