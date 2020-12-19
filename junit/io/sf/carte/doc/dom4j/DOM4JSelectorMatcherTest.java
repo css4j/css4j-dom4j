@@ -32,7 +32,6 @@ import io.sf.carte.doc.style.css.nsac.SelectorList;
 import io.sf.carte.doc.style.css.om.AbstractCSSStyleSheet;
 import io.sf.carte.doc.style.css.om.BaseCSSStyleSheet;
 import io.sf.carte.doc.style.css.om.CSSOMBridge;
-import io.sf.carte.doc.style.css.om.CSSStyleDeclarationRule;
 import io.sf.carte.doc.style.css.om.StyleRule;
 import io.sf.carte.doc.style.css.parser.CSSParser;
 
@@ -57,8 +56,8 @@ public class DOM4JSelectorMatcherTest {
 	@Test
 	public void testMatchSelector1Element() throws Exception {
 		AbstractCSSStyleSheet css = parseStyle("p {color: blue;}");
-		CSSStyleDeclarationRule rule = (CSSStyleDeclarationRule) css.getCssRules().item(0);
-		SelectorList selist = CSSOMBridge.getSelectorList(rule);
+		StyleRule rule = (StyleRule) css.getCssRules().item(0);
+		SelectorList selist = rule.getSelectorList();
 		CSSStylableElement elm = createElement("p");
 		SelectorMatcher matcher = elm.getSelectorMatcher();
 		assertTrue(matcher.matches(selist) >= 0);
@@ -67,8 +66,8 @@ public class DOM4JSelectorMatcherTest {
 	@Test
 	public void testMatchSelector1Attribute() throws Exception {
 		AbstractCSSStyleSheet css = parseStyle("p[title] {color: blue;}");
-		CSSStyleDeclarationRule rule = (CSSStyleDeclarationRule) css.getCssRules().item(0);
-		SelectorList selist = CSSOMBridge.getSelectorList(rule);
+		StyleRule rule = (StyleRule) css.getCssRules().item(0);
+		SelectorList selist = rule.getSelectorList();
 		CSSStylableElement elm = createElement("p");
 		SelectorMatcher matcher = elm.getSelectorMatcher();
 		assertTrue(matcher.matches(selist) < 0);
@@ -79,8 +78,8 @@ public class DOM4JSelectorMatcherTest {
 	@Test
 	public void testMatchSelector1AttributeCI() throws Exception {
 		AbstractCSSStyleSheet css = parseStyle("p[title] {color: blue;}");
-		CSSStyleDeclarationRule rule = (CSSStyleDeclarationRule) css.getCssRules().item(0);
-		SelectorList selist = CSSOMBridge.getSelectorList(rule);
+		StyleRule rule = (StyleRule) css.getCssRules().item(0);
+		SelectorList selist = rule.getSelectorList();
 		CSSStylableElement elm = createElement("p");
 		SelectorMatcher matcher = elm.getSelectorMatcher();
 		assertTrue(matcher.matches(selist) < 0);
@@ -97,8 +96,8 @@ public class DOM4JSelectorMatcherTest {
 	@Test
 	public void testMatchSelector2Attribute() throws Exception {
 		AbstractCSSStyleSheet css = parseStyle("p[title=\"hi\"] {color: blue;}");
-		CSSStyleDeclarationRule rule = (CSSStyleDeclarationRule) css.getCssRules().item(0);
-		SelectorList selist = CSSOMBridge.getSelectorList(rule);
+		StyleRule rule = (StyleRule) css.getCssRules().item(0);
+		SelectorList selist = rule.getSelectorList();
 		CSSStylableElement elm = createElement("p");
 		SelectorMatcher matcher = elm.getSelectorMatcher();
 		assertTrue(matcher.matches(selist) < 0);
@@ -117,8 +116,8 @@ public class DOM4JSelectorMatcherTest {
 	@Test
 	public void testMatchSelector2AttributeCI() throws Exception {
 		AbstractCSSStyleSheet css = parseStyle("p[title=\"hi\"] {color: blue;}");
-		CSSStyleDeclarationRule rule = (CSSStyleDeclarationRule) css.getCssRules().item(0);
-		SelectorList selist = CSSOMBridge.getSelectorList(rule);
+		StyleRule rule = (StyleRule) css.getCssRules().item(0);
+		SelectorList selist = rule.getSelectorList();
 		CSSStylableElement elm = createElement("p");
 		SelectorMatcher matcher = elm.getSelectorMatcher();
 		assertTrue(matcher.matches(selist) < 0);
@@ -138,8 +137,8 @@ public class DOM4JSelectorMatcherTest {
 	@Test
 	public void testMatchSelector3Attribute() throws Exception {
 		AbstractCSSStyleSheet css = parseStyle("p[title~=\"hi\"] {color: blue;}");
-		CSSStyleDeclarationRule rule = (CSSStyleDeclarationRule) css.getCssRules().item(0);
-		SelectorList selist = CSSOMBridge.getSelectorList(rule);
+		StyleRule rule = (StyleRule) css.getCssRules().item(0);
+		SelectorList selist = rule.getSelectorList();
 		CSSStylableElement elm = createElement("p");
 		SelectorMatcher matcher = elm.getSelectorMatcher();
 		assertTrue(matcher.matches(selist) < 0);
@@ -150,8 +149,8 @@ public class DOM4JSelectorMatcherTest {
 	@Test
 	public void testMatchSelector3AttributeCI() throws Exception {
 		AbstractCSSStyleSheet css = parseStyle("p[title~=\"hi\"] {color: blue;}");
-		CSSStyleDeclarationRule rule = (CSSStyleDeclarationRule) css.getCssRules().item(0);
-		SelectorList selist = CSSOMBridge.getSelectorList(rule);
+		StyleRule rule = (StyleRule) css.getCssRules().item(0);
+		SelectorList selist = rule.getSelectorList();
 		CSSStylableElement elm = createElement("p");
 		SelectorMatcher matcher = elm.getSelectorMatcher();
 		assertTrue(matcher.matches(selist) < 0);
@@ -162,8 +161,8 @@ public class DOM4JSelectorMatcherTest {
 	@Test
 	public void testMatchSelector4Attribute() throws Exception {
 		AbstractCSSStyleSheet css = parseStyle("p[lang|=\"en\"] {color: blue;}");
-		CSSStyleDeclarationRule rule = (CSSStyleDeclarationRule) css.getCssRules().item(0);
-		SelectorList selist = CSSOMBridge.getSelectorList(rule);
+		StyleRule rule = (StyleRule) css.getCssRules().item(0);
+		SelectorList selist = rule.getSelectorList();
 		CSSStylableElement elm = createElement("p");
 		SelectorMatcher matcher = elm.getSelectorMatcher();
 		assertTrue(matcher.matches(selist) < 0);
@@ -174,8 +173,8 @@ public class DOM4JSelectorMatcherTest {
 	@Test
 	public void testMatchSelector1Lang() throws Exception {
 		AbstractCSSStyleSheet css = parseStyle("p:lang(en) {color: blue;}");
-		CSSStyleDeclarationRule rule = (CSSStyleDeclarationRule) css.getCssRules().item(0);
-		SelectorList selist = CSSOMBridge.getSelectorList(rule);
+		StyleRule rule = (StyleRule) css.getCssRules().item(0);
+		SelectorList selist = rule.getSelectorList();
 		CSSStylableElement elm = createElement("p");
 		document.getDocumentElement().add(elm);
 		SelectorMatcher matcher = elm.getSelectorMatcher();
@@ -187,8 +186,8 @@ public class DOM4JSelectorMatcherTest {
 	@Test
 	public void testMatchSelector1Class() throws Exception {
 		AbstractCSSStyleSheet css = parseStyle(".exampleclass {color: blue;}");
-		CSSStyleDeclarationRule rule = (CSSStyleDeclarationRule) css.getCssRules().item(0);
-		SelectorList selist = CSSOMBridge.getSelectorList(rule);
+		StyleRule rule = (StyleRule) css.getCssRules().item(0);
+		SelectorList selist = rule.getSelectorList();
 		CSSStylableElement elm = createElement("p");
 		elm.addAttribute("class", "exampleclass");
 		document.getDocumentElement().add(elm);
@@ -202,8 +201,8 @@ public class DOM4JSelectorMatcherTest {
 	@Test
 	public void testMatchSelector1ClassCI() throws Exception {
 		AbstractCSSStyleSheet css = parseStyle(".exampleClass {color: blue;}");
-		CSSStyleDeclarationRule rule = (CSSStyleDeclarationRule) css.getCssRules().item(0);
-		SelectorList selist = CSSOMBridge.getSelectorList(rule);
+		StyleRule rule = (StyleRule) css.getCssRules().item(0);
+		SelectorList selist = rule.getSelectorList();
 		CSSStylableElement elm = createElement("p");
 		elm.addAttribute("class", "exampleclass");
 		document.getDocumentElement().add(elm);
@@ -219,8 +218,8 @@ public class DOM4JSelectorMatcherTest {
 		DocumentType docType = factory.createDocType("html", null, null);
 		document.setDocType(docType);
 		AbstractCSSStyleSheet css = parseStyle(".exampleclass {color: blue;}");
-		CSSStyleDeclarationRule rule = (CSSStyleDeclarationRule) css.getCssRules().item(0);
-		SelectorList selist = CSSOMBridge.getSelectorList(rule);
+		StyleRule rule = (StyleRule) css.getCssRules().item(0);
+		SelectorList selist = rule.getSelectorList();
 		CSSStylableElement elm = createElement("p");
 		elm.addAttribute("class", "exampleclass");
 		document.getDocumentElement().add(elm);
@@ -235,8 +234,8 @@ public class DOM4JSelectorMatcherTest {
 	@Test
 	public void testMatchSelector2Class() throws Exception {
 		AbstractCSSStyleSheet css = parseStyle("z.exampleclass {color: blue;}");
-		CSSStyleDeclarationRule rule = (CSSStyleDeclarationRule) css.getCssRules().item(0);
-		SelectorList selist = CSSOMBridge.getSelectorList(rule);
+		StyleRule rule = (StyleRule) css.getCssRules().item(0);
+		SelectorList selist = rule.getSelectorList();
 		CSSStylableElement elm = createElement("p");
 		elm.addAttribute("class", "exampleclass");
 		document.getDocumentElement().add(elm);
@@ -247,8 +246,8 @@ public class DOM4JSelectorMatcherTest {
 	@Test
 	public void testMatchSelector3Class() throws Exception {
 		AbstractCSSStyleSheet css = parseStyle("p.exampleclass {color: blue;}");
-		CSSStyleDeclarationRule rule = (CSSStyleDeclarationRule) css.getCssRules().item(0);
-		SelectorList selist = CSSOMBridge.getSelectorList(rule);
+		StyleRule rule = (StyleRule) css.getCssRules().item(0);
+		SelectorList selist = rule.getSelectorList();
 		CSSStylableElement elm = createElement("p");
 		elm.addAttribute("class", "exampleclass");
 		document.getDocumentElement().add(elm);
@@ -259,8 +258,8 @@ public class DOM4JSelectorMatcherTest {
 	@Test
 	public void testMatchSelector4Class() throws Exception {
 		AbstractCSSStyleSheet css = parseStyle(".exampleclass span {color: blue;}");
-		CSSStyleDeclarationRule rule = (CSSStyleDeclarationRule) css.getCssRules().item(0);
-		SelectorList selist = CSSOMBridge.getSelectorList(rule);
+		StyleRule rule = (StyleRule) css.getCssRules().item(0);
+		SelectorList selist = rule.getSelectorList();
 		CSSStylableElement parent = createElement("p");
 		parent.addAttribute("class", "exampleclass");
 		parent.addAttribute("id", "exampleid");
@@ -285,8 +284,8 @@ public class DOM4JSelectorMatcherTest {
 	@Test
 	public void testMatchSelector1MultipleClasses() throws Exception {
 		AbstractCSSStyleSheet css = parseStyle("p.firstclass {color: blue;}");
-		CSSStyleDeclarationRule rule = (CSSStyleDeclarationRule) css.getCssRules().item(0);
-		SelectorList selist = CSSOMBridge.getSelectorList(rule);
+		StyleRule rule = (StyleRule) css.getCssRules().item(0);
+		SelectorList selist = rule.getSelectorList();
 		CSSStylableElement elm = createElement("p");
 		elm.addAttribute("class", "firstclass secondclass");
 		document.getDocumentElement().add(elm);
@@ -297,8 +296,8 @@ public class DOM4JSelectorMatcherTest {
 	@Test
 	public void testMatchSelector2MultipleClasses() throws Exception {
 		AbstractCSSStyleSheet css = parseStyle("p.secondclass {color: blue;}");
-		CSSStyleDeclarationRule rule = (CSSStyleDeclarationRule) css.getCssRules().item(0);
-		SelectorList selist = CSSOMBridge.getSelectorList(rule);
+		StyleRule rule = (StyleRule) css.getCssRules().item(0);
+		SelectorList selist = rule.getSelectorList();
 		CSSStylableElement elm = createElement("p");
 		elm.addAttribute("class", "firstclass secondclass");
 		document.getDocumentElement().add(elm);
@@ -309,8 +308,8 @@ public class DOM4JSelectorMatcherTest {
 	@Test
 	public void testMatchSelector3MultipleClasses() throws Exception {
 		AbstractCSSStyleSheet css = parseStyle("p.firstclass {color: blue;}");
-		CSSStyleDeclarationRule rule = (CSSStyleDeclarationRule) css.getCssRules().item(0);
-		SelectorList selist = CSSOMBridge.getSelectorList(rule);
+		StyleRule rule = (StyleRule) css.getCssRules().item(0);
+		SelectorList selist = rule.getSelectorList();
 		CSSStylableElement elm = createElement("p");
 		elm.addAttribute("class", " firstclass");
 		document.getDocumentElement().add(elm);
@@ -321,8 +320,8 @@ public class DOM4JSelectorMatcherTest {
 	@Test
 	public void testMatchSelector4MultipleClasses() throws Exception {
 		AbstractCSSStyleSheet css = parseStyle("p.firstclass {color: blue;}");
-		CSSStyleDeclarationRule rule = (CSSStyleDeclarationRule) css.getCssRules().item(0);
-		SelectorList selist = CSSOMBridge.getSelectorList(rule);
+		StyleRule rule = (StyleRule) css.getCssRules().item(0);
+		SelectorList selist = rule.getSelectorList();
 		CSSStylableElement elm = createElement("p");
 		elm.addAttribute("class", "firstclass ");
 		document.getDocumentElement().add(elm);
@@ -333,8 +332,8 @@ public class DOM4JSelectorMatcherTest {
 	@Test
 	public void testMatchSelector1Firstchild() throws Exception {
 		AbstractCSSStyleSheet css = parseStyle("p:first-child {color: blue;}");
-		CSSStyleDeclarationRule rule = (CSSStyleDeclarationRule) css.getCssRules().item(0);
-		SelectorList selist = CSSOMBridge.getSelectorList(rule);
+		StyleRule rule = (StyleRule) css.getCssRules().item(0);
+		SelectorList selist = rule.getSelectorList();
 		CSSStylableElement parent = createElement("div");
 		parent.addAttribute("id", "parentid");
 		CSSStylableElement firstChild = createElement("p");
@@ -352,8 +351,8 @@ public class DOM4JSelectorMatcherTest {
 	@Test
 	public void testMatchSelector1Id() throws Exception {
 		AbstractCSSStyleSheet css = parseStyle("#exampleid {color: blue;}");
-		CSSStyleDeclarationRule rule = (CSSStyleDeclarationRule) css.getCssRules().item(0);
-		SelectorList selist = CSSOMBridge.getSelectorList(rule);
+		StyleRule rule = (StyleRule) css.getCssRules().item(0);
+		SelectorList selist = rule.getSelectorList();
 		CSSStylableElement elm = createElement("p");
 		elm.addAttribute("class", "exampleclass");
 		elm.addAttribute("id", "exampleid");
@@ -368,8 +367,8 @@ public class DOM4JSelectorMatcherTest {
 	@Test
 	public void testMatchSelector1IdCI() throws Exception {
 		AbstractCSSStyleSheet css = parseStyle("#exampleId {color: blue;}");
-		CSSStyleDeclarationRule rule = (CSSStyleDeclarationRule) css.getCssRules().item(0);
-		SelectorList selist = CSSOMBridge.getSelectorList(rule);
+		StyleRule rule = (StyleRule) css.getCssRules().item(0);
+		SelectorList selist = rule.getSelectorList();
 		CSSStylableElement elm = createElement("p");
 		elm.addAttribute("class", "exampleclass");
 		elm.addAttribute("id", "exampleid");
@@ -386,8 +385,8 @@ public class DOM4JSelectorMatcherTest {
 		DocumentType docType = factory.createDocType("html", null, null);
 		document.setDocType(docType);
 		AbstractCSSStyleSheet css = parseStyle("#exampleId {color: blue;}");
-		CSSStyleDeclarationRule rule = (CSSStyleDeclarationRule) css.getCssRules().item(0);
-		SelectorList selist = CSSOMBridge.getSelectorList(rule);
+		StyleRule rule = (StyleRule) css.getCssRules().item(0);
+		SelectorList selist = rule.getSelectorList();
 		CSSStylableElement elm = createElement("p");
 		elm.addAttribute("class", "exampleclass");
 		elm.addAttribute("id", "exampleid");
@@ -403,8 +402,8 @@ public class DOM4JSelectorMatcherTest {
 	@Test
 	public void testMatchSelector2Id() throws Exception {
 		AbstractCSSStyleSheet css = parseStyle("#exampleid span {color: blue;}");
-		CSSStyleDeclarationRule rule = (CSSStyleDeclarationRule) css.getCssRules().item(0);
-		SelectorList selist = CSSOMBridge.getSelectorList(rule);
+		StyleRule rule = (StyleRule) css.getCssRules().item(0);
+		SelectorList selist = rule.getSelectorList();
 		CSSStylableElement parent = createElement("p");
 		parent.addAttribute("class", "exampleclass");
 		parent.addAttribute("id", "exampleid");
@@ -429,8 +428,8 @@ public class DOM4JSelectorMatcherTest {
 	@Test
 	public void testMatchSelector3Id() throws Exception {
 		AbstractCSSStyleSheet css = parseStyle("#exampleid > span {color: blue;}");
-		CSSStyleDeclarationRule rule = (CSSStyleDeclarationRule) css.getCssRules().item(0);
-		SelectorList selist = CSSOMBridge.getSelectorList(rule);
+		StyleRule rule = (StyleRule) css.getCssRules().item(0);
+		SelectorList selist = rule.getSelectorList();
 		CSSStylableElement parent = createElement("p");
 		parent.addAttribute("class", "exampleclass");
 		parent.addAttribute("id", "exampleid");
@@ -449,8 +448,8 @@ public class DOM4JSelectorMatcherTest {
 	@Test
 	public void testMatchSelectorAdjacentSibling() throws Exception {
 		AbstractCSSStyleSheet css = parseStyle("p.exampleclass + p {color: blue;}");
-		CSSStyleDeclarationRule rule = (CSSStyleDeclarationRule) css.getCssRules().item(0);
-		SelectorList selist = CSSOMBridge.getSelectorList(rule);
+		StyleRule rule = (StyleRule) css.getCssRules().item(0);
+		SelectorList selist = rule.getSelectorList();
 		CSSStylableElement parent = createElement("div");
 		document.getDocumentElement().add(parent);
 		parent.addAttribute("id", "div1");
@@ -585,8 +584,8 @@ public class DOM4JSelectorMatcherTest {
 	@Test
 	public void testMatchSelectorPseudoClass1() throws Exception {
 		AbstractCSSStyleSheet css = parseStyle("p:first-child {color: blue;}");
-		CSSStyleDeclarationRule rule = (CSSStyleDeclarationRule) css.getCssRules().item(0);
-		SelectorList selist = CSSOMBridge.getSelectorList(rule);
+		StyleRule rule = (StyleRule) css.getCssRules().item(0);
+		SelectorList selist = rule.getSelectorList();
 		CSSStylableElement parent = createElement("div");
 		parent.add(factory.createText("foo"));
 		CSSStylableElement elm = createElement("p");
@@ -595,21 +594,21 @@ public class DOM4JSelectorMatcherTest {
 		SelectorMatcher matcher = elm.getSelectorMatcher();
 		assertTrue(matcher.matches(selist) >= 0);
 		css = parseStyle("p:last-child {color: blue;}");
-		rule = (CSSStyleDeclarationRule) css.getCssRules().item(0);
-		selist = CSSOMBridge.getSelectorList(rule);
+		rule = (StyleRule) css.getCssRules().item(0);
+		selist = rule.getSelectorList();
 		assertTrue(matcher.matches(selist) < 0);
 		css = parseStyle("p:only-child {color: blue;}");
-		rule = (CSSStyleDeclarationRule) css.getCssRules().item(0);
-		selist = CSSOMBridge.getSelectorList(rule);
+		rule = (StyleRule) css.getCssRules().item(0);
+		selist = rule.getSelectorList();
 		assertTrue(matcher.matches(selist) < 0);
 	}
 
 	@Test
 	public void testMatchSelectorPseudoClassNth() throws Exception {
 		AbstractCSSStyleSheet css = parseStyle("p:nth-child(1) {color: blue;}");
-		CSSStyleDeclarationRule rule = (CSSStyleDeclarationRule) css.getCssRules().item(0);
+		StyleRule rule = (StyleRule) css.getCssRules().item(0);
 		if (rule != null) {
-			SelectorList selist = CSSOMBridge.getSelectorList(rule);
+			SelectorList selist = rule.getSelectorList();
 			CSSStylableElement parent = createElement("div");
 			parent.add(factory.createText("foo"));
 			CSSStylableElement elm = createElement("p");
@@ -618,17 +617,17 @@ public class DOM4JSelectorMatcherTest {
 			SelectorMatcher matcher = elm.getSelectorMatcher();
 			assertTrue(matcher.matches(selist) >= 0);
 			css = parseStyle("p:nth-last-child(1) {color: blue;}");
-			rule = (CSSStyleDeclarationRule) css.getCssRules().item(0);
-			selist = CSSOMBridge.getSelectorList(rule);
+			rule = (StyleRule) css.getCssRules().item(0);
+			selist = rule.getSelectorList();
 			assertTrue(matcher.matches(selist) < 0);
 			css = parseStyle("p:nth-last-child(2) {color: blue;}");
-			rule = (CSSStyleDeclarationRule) css.getCssRules().item(0);
-			selist = CSSOMBridge.getSelectorList(rule);
+			rule = (StyleRule) css.getCssRules().item(0);
+			selist = rule.getSelectorList();
 			assertTrue(matcher.matches(selist) >= 0);
 			parent.add(createElement("div"));
 			css = parseStyle("p:nth-last-child(3) {color: blue;}");
-			rule = (CSSStyleDeclarationRule) css.getCssRules().item(0);
-			selist = CSSOMBridge.getSelectorList(rule);
+			rule = (StyleRule) css.getCssRules().item(0);
+			selist = rule.getSelectorList();
 			assertTrue(matcher.matches(selist) >= 0);
 		}
 	}
@@ -636,9 +635,9 @@ public class DOM4JSelectorMatcherTest {
 	@Test
 	public void testMatchSelectorPseudoClassNthSelector() throws Exception {
 		AbstractCSSStyleSheet css = parseStyle("p:nth-child(1 of p) {color: blue;}");
-		CSSStyleDeclarationRule rule = (CSSStyleDeclarationRule) css.getCssRules().item(0);
+		StyleRule rule = (StyleRule) css.getCssRules().item(0);
 		if (rule != null) {
-			SelectorList selist = CSSOMBridge.getSelectorList(rule);
+			SelectorList selist = rule.getSelectorList();
 			CSSStylableElement parent = createElement("div");
 			parent.add(createElement("div"));
 			parent.add(factory.createText("foo"));
@@ -648,16 +647,16 @@ public class DOM4JSelectorMatcherTest {
 			SelectorMatcher matcher = elm.getSelectorMatcher();
 			assertTrue(matcher.matches(selist) >= 0);
 			css = parseStyle("p:nth-last-child(2 of p) {color: blue;}");
-			rule = (CSSStyleDeclarationRule) css.getCssRules().item(0);
-			selist = CSSOMBridge.getSelectorList(rule);
+			rule = (StyleRule) css.getCssRules().item(0);
+			selist = rule.getSelectorList();
 			assertTrue(matcher.matches(selist) >= 0);
 			css = parseStyle("p:nth-child(even of p) {color: blue;}");
-			rule = (CSSStyleDeclarationRule) css.getCssRules().item(0);
-			selist = CSSOMBridge.getSelectorList(rule);
+			rule = (StyleRule) css.getCssRules().item(0);
+			selist = rule.getSelectorList();
 			assertTrue(matcher.matches(selist) < 0);
 			css = parseStyle("p:nth-child(odd of p) {color: blue;}");
-			rule = (CSSStyleDeclarationRule) css.getCssRules().item(0);
-			selist = CSSOMBridge.getSelectorList(rule);
+			rule = (StyleRule) css.getCssRules().item(0);
+			selist = rule.getSelectorList();
 			assertTrue(matcher.matches(selist) >= 0);
 		}
 	}
@@ -665,9 +664,9 @@ public class DOM4JSelectorMatcherTest {
 	@Test
 	public void testMatchSelectorPseudoClassNthOfType() throws Exception {
 		AbstractCSSStyleSheet css = parseStyle("p:nth-of-type(1) {color: blue;}");
-		CSSStyleDeclarationRule rule = (CSSStyleDeclarationRule) css.getCssRules().item(0);
+		StyleRule rule = (StyleRule) css.getCssRules().item(0);
 		if (rule != null) {
-			SelectorList selist = CSSOMBridge.getSelectorList(rule);
+			SelectorList selist = rule.getSelectorList();
 			CSSStylableElement parent = createElement("div");
 			parent.add(createElement("div"));
 			parent.add(factory.createText("foo"));
@@ -677,16 +676,16 @@ public class DOM4JSelectorMatcherTest {
 			SelectorMatcher matcher = elm.getSelectorMatcher();
 			assertTrue(matcher.matches(selist) >= 0);
 			css = parseStyle("p:nth-last-of-type(2) {color: blue;}");
-			rule = (CSSStyleDeclarationRule) css.getCssRules().item(0);
-			selist = CSSOMBridge.getSelectorList(rule);
+			rule = (StyleRule) css.getCssRules().item(0);
+			selist = rule.getSelectorList();
 			assertTrue(matcher.matches(selist) >= 0);
 			css = parseStyle("p:nth-of-type(even) {color: blue;}");
-			rule = (CSSStyleDeclarationRule) css.getCssRules().item(0);
-			selist = CSSOMBridge.getSelectorList(rule);
+			rule = (StyleRule) css.getCssRules().item(0);
+			selist = rule.getSelectorList();
 			assertTrue(matcher.matches(selist) < 0);
 			css = parseStyle("p:nth-of-type(odd) {color: blue;}");
-			rule = (CSSStyleDeclarationRule) css.getCssRules().item(0);
-			selist = CSSOMBridge.getSelectorList(rule);
+			rule = (StyleRule) css.getCssRules().item(0);
+			selist = rule.getSelectorList();
 			assertTrue(matcher.matches(selist) >= 0);
 		}
 	}
@@ -694,8 +693,8 @@ public class DOM4JSelectorMatcherTest {
 	@Test
 	public void testMatchSelectorPseudoOfType() throws Exception {
 		AbstractCSSStyleSheet css = parseStyle("p:first-of-type {color: blue;}");
-		CSSStyleDeclarationRule rule = (CSSStyleDeclarationRule) css.getCssRules().item(0);
-		SelectorList selist = CSSOMBridge.getSelectorList(rule);
+		StyleRule rule = (StyleRule) css.getCssRules().item(0);
+		SelectorList selist = rule.getSelectorList();
 		CSSStylableElement parent = createElement("div");
 		parent.add(createElement("div"));
 		parent.add(factory.createText("foo"));
@@ -705,12 +704,12 @@ public class DOM4JSelectorMatcherTest {
 		SelectorMatcher matcher = elm.getSelectorMatcher();
 		assertTrue(matcher.matches(selist) >= 0);
 		css = parseStyle("p:last-of-type {color: blue;}");
-		rule = (CSSStyleDeclarationRule) css.getCssRules().item(0);
-		selist = CSSOMBridge.getSelectorList(rule);
+		rule = (StyleRule) css.getCssRules().item(0);
+		selist = rule.getSelectorList();
 		assertTrue(matcher.matches(selist) < 0);
 		css = parseStyle("p:only-of-type {color: blue;}");
-		rule = (CSSStyleDeclarationRule) css.getCssRules().item(0);
-		selist = CSSOMBridge.getSelectorList(rule);
+		rule = (StyleRule) css.getCssRules().item(0);
+		selist = rule.getSelectorList();
 		assertTrue(matcher.matches(selist) < 0);
 	}
 
@@ -765,8 +764,8 @@ public class DOM4JSelectorMatcherTest {
 		CSSStylableElement div = createElement("div");
 		root.add(div);
 		AbstractCSSStyleSheet css = parseStyle(":root {color: blue;}");
-		CSSStyleDeclarationRule rule = (CSSStyleDeclarationRule) css.getCssRules().item(0);
-		SelectorList selist = CSSOMBridge.getSelectorList(rule);
+		StyleRule rule = (StyleRule) css.getCssRules().item(0);
+		SelectorList selist = rule.getSelectorList();
 		assertTrue(root.getSelectorMatcher().matches(selist) >= 0);
 		assertTrue(div.getSelectorMatcher().matches(selist) < 0);
 	}
@@ -777,8 +776,8 @@ public class DOM4JSelectorMatcherTest {
 		document.getDocumentElement().add(div);
 		div.add(factory.createText(""));
 		AbstractCSSStyleSheet css = parseStyle("div:empty {color: blue;}");
-		CSSStyleDeclarationRule rule = (CSSStyleDeclarationRule) css.getCssRules().item(0);
-		SelectorList selist = CSSOMBridge.getSelectorList(rule);
+		StyleRule rule = (StyleRule) css.getCssRules().item(0);
+		SelectorList selist = rule.getSelectorList();
 		assertTrue(div.getSelectorMatcher().matches(selist) >= 0);
 		CSSStylableElement p = createElement("p");
 		div.appendChild(p);
@@ -795,8 +794,8 @@ public class DOM4JSelectorMatcherTest {
 		document.getDocumentElement().add(div);
 		div.add(factory.createText("   "));
 		AbstractCSSStyleSheet css = parseStyle("div:blank {color: blue;}");
-		CSSStyleDeclarationRule rule = (CSSStyleDeclarationRule) css.getCssRules().item(0);
-		SelectorList selist = CSSOMBridge.getSelectorList(rule);
+		StyleRule rule = (StyleRule) css.getCssRules().item(0);
+		SelectorList selist = rule.getSelectorList();
 		assertTrue(div.getSelectorMatcher().matches(selist) >= 0);
 		CSSStylableElement p = createElement("p");
 		div.appendChild(p);
@@ -834,8 +833,8 @@ public class DOM4JSelectorMatcherTest {
 	@Test
 	public void testMatchSelectorPseudoHas2() throws Exception {
 		AbstractCSSStyleSheet css = parseStyle("p.exampleclass:has(+ p) {color: blue;}");
-		CSSStyleDeclarationRule rule = (CSSStyleDeclarationRule) css.getCssRules().item(0);
-		SelectorList selist = CSSOMBridge.getSelectorList(rule);
+		StyleRule rule = (StyleRule) css.getCssRules().item(0);
+		SelectorList selist = rule.getSelectorList();
 		CSSStylableElement parent = createElement("div");
 		parent.setAttribute("id", "div1");
 		document.getDocumentElement().add(parent);
