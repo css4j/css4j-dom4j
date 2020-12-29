@@ -674,8 +674,13 @@ abstract public class CSSStylableElement extends DOMElement implements CSSElemen
 		}
 
 		@Override
-		protected CSSDocument getOwnerDocument() {
-			return CSSStylableElement.this.getOwnerDocument();
+		protected CSSDocument.ComplianceMode getComplianceMode() {
+			return CSSStylableElement.this.getOwnerDocument().getComplianceMode();
+		}
+
+		@Override
+		protected boolean isVisitedURI(String href) {
+			return CSSStylableElement.this.getOwnerDocument().isVisitedURI(href);
 		}
 
 		@Override
