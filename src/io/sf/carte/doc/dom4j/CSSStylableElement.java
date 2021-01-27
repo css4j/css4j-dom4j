@@ -37,6 +37,8 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.css.CSSStyleDeclaration;
 
+import io.sf.carte.doc.DirectionalityHelper;
+import io.sf.carte.doc.DirectionalityHelper.Directionality;
 import io.sf.carte.doc.agent.CSSCanvas;
 import io.sf.carte.doc.style.css.CSSDocument;
 import io.sf.carte.doc.style.css.CSSElement;
@@ -696,6 +698,20 @@ abstract public class CSSStylableElement extends DOMElement implements CSSElemen
 				lang = "";
 			}
 			return lang;
+		}
+
+		@Override
+		protected boolean isDir(String argument) {
+			try {
+				return super.isDir(argument);
+			} catch (RuntimeException e) {
+				return false;
+			}
+		}
+
+		@Override
+		protected Directionality getDirectionality() {
+			return DirectionalityHelper.getDirectionality(CSSStylableElement.this);
 		}
 
 		@Override
