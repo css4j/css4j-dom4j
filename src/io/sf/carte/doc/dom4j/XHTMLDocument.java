@@ -17,6 +17,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Map;
@@ -37,6 +38,7 @@ import io.sf.carte.doc.agent.DeviceFactory;
 import io.sf.carte.doc.style.css.CSSCanvas;
 import io.sf.carte.doc.style.css.CSSDocument;
 import io.sf.carte.doc.style.css.CSSMediaException;
+import io.sf.carte.doc.style.css.CSSPropertyDefinition;
 import io.sf.carte.doc.style.css.DocumentCSSStyleSheet;
 import io.sf.carte.doc.style.css.ErrorHandler;
 import io.sf.carte.doc.style.css.LinkStyle;
@@ -63,13 +65,15 @@ public class XHTMLDocument extends DOMDocument implements CSSDocument {
 
 	private static final long serialVersionUID = 7L;
 
+	private String documentURI = null;
+
+	private URL baseURL = null;
+
 	private DocumentCSSStyleSheet mergedStyleSheet = null;
 
 	private int styleCacheSerial = Integer.MIN_VALUE;
 
-	private String documentURI = null;
-
-	private URL baseURL = null;
+	private Set<CSSPropertyDefinition> registeredPropertySet = null;
 
 	Set<LinkElement> linkedStyle = new LinkedHashSet<LinkElement>(4);
 
@@ -163,6 +167,15 @@ public class XHTMLDocument extends DOMDocument implements CSSDocument {
 		return null;
 	}
 
+	@Override
+	public void registerProperty(CSSPropertyDefinition definition) {
+		if (registeredPropertySet == null) {
+			registeredPropertySet = new HashSet<>();
+		}
+		registeredPropertySet.add(definition);
+		mergedStyleSheet = null;
+	}
+
 	/**
 	 * A list containing all the style sheets explicitly linked into or embedded
 	 * in a document. For HTML documents, this includes external style sheets,
@@ -247,6 +260,12 @@ public class XHTMLDocument extends DOMDocument implements CSSDocument {
 		Iterator<AbstractCSSStyleSheet> it = sheets.iterator();
 		while (it.hasNext()) {
 			mergedStyleSheet.addStyleSheet(it.next());
+		}
+		// Add DOM property definitions
+		if (registeredPropertySet != null) {
+			for (CSSPropertyDefinition def : registeredPropertySet) {
+				mergedStyleSheet.registerProperty(def);
+			}
 		}
 	}
 
