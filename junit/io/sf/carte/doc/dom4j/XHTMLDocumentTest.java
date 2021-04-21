@@ -842,12 +842,12 @@ public class XHTMLDocumentTest {
 		/*
 		 * attr() recursive with custom property (II).
 		 */
-		elm.getOverrideStyle(null).setCssText("margin-left:attr(noattr length,var(--foo));--foo:attr(noattr)");
+		elm.getOverrideStyle(null).setCssText("margin-left:attr(noattr length,var(--foo));--foo:attr(noattr length)");
 		style = elm.getComputedStyle(null);
 		marginLeft = (CSSTypedValue) style.getPropertyCSSValue("margin-left");
 		assertEquals(0f, marginLeft.getFloatValue(CSSUnit.CSS_PT), 0.01f);
-		assertTrue(xhtmlDoc.getErrorHandler().hasComputedStyleErrors());
-		assertTrue(xhtmlDoc.getErrorHandler().hasErrors());
+		assertFalse(xhtmlDoc.getErrorHandler().hasComputedStyleErrors());
+		assertFalse(xhtmlDoc.getErrorHandler().hasErrors());
 		assertFalse(xhtmlDoc.getErrorHandler().hasWarnings());
 	}
 
