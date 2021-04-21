@@ -1,0 +1,46 @@
+plugins {
+	id 'css4j.java-conventions'
+	id 'de.jjohannes.extra-java-module-info'
+}
+
+dependencies {
+	api project(':css4j')
+	implementation project(':css4j-agent')
+	api "org.dom4j:dom4j:${dom4jVersion}"
+	implementation "xmlpull:xmlpull:${xmlpullVersion}"
+	implementation "xpp3:xpp3_min:${xmlpullVersion}"
+	testImplementation project(path: ':css4j', configuration: 'tests')
+	testImplementation "jaxen:jaxen:${jaxenVersion}"
+	testImplementation "org.slf4j:slf4j-api:${slf4jVersion}"
+}
+
+extraJavaModuleInfo {
+	failOnMissingModuleInfo.set(false)
+	automaticModule("dom4j-${dom4jVersion}.jar", 'dom4j')
+	automaticModule("htmlparser-${htmlparserVersion}.jar", 'htmlparser')
+}
+
+description = 'css4j-dom4j'
+
+tasks.register('testsJar', Jar) {
+	archiveClassifier = 'tests'
+	from(sourceSets.test.output)
+}
+
+configurations {
+	tests
+}
+
+artifacts {
+	tests testsJar
+}
+
+publishing.publications.maven.artifact(testsJar)
+
+publishing.publications.maven(MavenPublication).pom {
+	description = "CSS4J DOM4J module"
+}
+
+java {
+	withJavadocJar()
+}
