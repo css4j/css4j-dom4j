@@ -6,6 +6,10 @@ plugins {
 dependencies {
 	api project(':css4j')
 	implementation project(':css4j-agent')
+	/*
+	 * Any dom4j version can be used, but tests may not pass with versions prior
+	 * to 2.1.1, due to changes in dom4j's defaults.
+	 */
 	api "org.dom4j:dom4j:${dom4jVersion}"
 	implementation "xmlpull:xmlpull:${xmlpullVersion}"
 	implementation "xpp3:xpp3_min:${xmlpullVersion}"
