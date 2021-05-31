@@ -3,16 +3,26 @@ plugins {
 	id 'de.jjohannes.extra-java-module-info'
 }
 
+java {
+	registerFeature('xmlpull') {
+		usingSourceSet(sourceSets.main)
+	}
+	registerFeature('useragent') {
+		usingSourceSet(sourceSets.main)
+	}
+	withJavadocJar()
+}
+
 dependencies {
 	api project(':css4j')
-	implementation project(':css4j-agent')
+	useragentImplementation project(':css4j-agent')
 	/*
 	 * Any dom4j version can be used, but tests may not pass with versions prior
 	 * to 2.1.1, due to changes in dom4j's defaults.
 	 */
 	api "org.dom4j:dom4j:${dom4jVersion}"
-	implementation "xmlpull:xmlpull:${xmlpullVersion}"
-	implementation "xpp3:xpp3_min:${xmlpullVersion}"
+	xmlpullImplementation "xmlpull:xmlpull:${xmlpullVersion}"
+	xmlpullImplementation "xpp3:xpp3_min:${xmlpullVersion}"
 	testImplementation project(path: ':css4j', configuration: 'tests')
 	testImplementation "jaxen:jaxen:${jaxenVersion}"
 	testImplementation "org.slf4j:slf4j-api:${slf4jVersion}"
@@ -43,8 +53,4 @@ publishing.publications.maven.artifact(testsJar)
 
 publishing.publications.maven(MavenPublication).pom {
 	description = "CSS4J DOM4J module"
-}
-
-java {
-	withJavadocJar()
 }
