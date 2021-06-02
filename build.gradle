@@ -10,7 +10,6 @@ java {
 	registerFeature('useragent') {
 		usingSourceSet(sourceSets.main)
 	}
-	withJavadocJar()
 }
 
 dependencies {
