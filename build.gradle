@@ -35,6 +35,8 @@ extraJavaModuleInfo {
 
 description = 'css4j-dom4j'
 
+compileJava.dependsOn tasks.jvmVersionAttribute
+
 tasks.register('testsJar', Jar) {
 	archiveClassifier = 'tests'
 	from(sourceSets.test.output)
