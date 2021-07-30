@@ -18,5 +18,8 @@
 *.iws
 
 # Gradle
-/.gradle
+**/.gradle
 /build/
+/buildSrc/build/
+
+/CHANGES.txt
