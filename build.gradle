@@ -171,6 +171,17 @@ tasks.register('lineEndingConversion', CRLFConvert) {
 	file "$rootDir/RELEASE_NOTES.txt"
 }
 
+tasks.register('cleanBuildSrc') {
+	description = 'Clean the buildSrc directory'
+	doLast {
+		delete("$rootDir/buildSrc/build")
+	}
+}
+
+tasks.named('clean') {
+	finalizedBy('cleanBuildSrc')
+}
+
 tasks.withType(JavaCompile) {
 	options.encoding = 'UTF-8'
 }
