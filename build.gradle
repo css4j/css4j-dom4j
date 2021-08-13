@@ -166,7 +166,6 @@ classes.finalizedBy checkLegacyJava
 
 tasks.register('lineEndingConversion', CRLFConvert) {
 	file "$rootDir/LICENSE.txt"
-	file "$rootDir/LICENSES.txt"
 	file "$rootDir/CHANGES.txt"
 	file "$rootDir/RELEASE_NOTES.txt"
 }
@@ -194,10 +193,15 @@ tasks.withType(Javadoc) {
 	options.links 'https://docs.oracle.com/en/java/javase/11/docs/api/'
 }
 
-// Reproducible build
 tasks.withType(AbstractArchiveTask).configureEach {
+	// Reproducible build
 	preserveFileTimestamps = false
 	reproducibleFileOrder = true
+	// Copy license file
+	dependsOn lineEndingConversion
+	from ('LICENSE.txt') {
+		into 'META-INF'
+	}
 }
 
 tasks.withType(PublishToMavenRepository) { task ->
