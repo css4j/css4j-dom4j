@@ -181,6 +181,49 @@ public class XHTMLDocument extends DOMDocument implements CSSDocument {
 		return null;
 	}
 
+	/**
+	 * Give the encoding used when the document was parsed, if known.
+	 * 
+	 * @return <code>null</code>.
+	 */
+	@Override
+	public String getInputEncoding() {
+		return null;
+	}
+
+	/**
+	 * Now deprecated, this method gave the encoding specified at the XML declaration.
+	 * 
+	 * @return <code>null</code>.
+	 */
+	@Deprecated
+	@Override
+	public String getXmlEncoding() {
+		return null;
+	}
+
+	/**
+	 * Get whether this document is standalone as specified at the XML declaration.
+	 * 
+	 * @return <code>null</code>.
+	 */
+	@Deprecated
+	@Override
+	public boolean getXmlStandalone() {
+		return false;
+	}
+
+	/**
+	 * Get the version for the "XML" feature.
+	 * 
+	 * @return <code>null</code>.
+	 */
+	@Deprecated
+	@Override
+	public String getXmlVersion() {
+		return null;
+	}
+
 	@Override
 	public void registerProperty(CSSPropertyDefinition definition) {
 		if (registeredPropertySet == null) {
