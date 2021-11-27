@@ -128,6 +128,20 @@ public class XHTMLDocument extends DOMDocument implements CSSDocument {
 		return element.attributeValue("id");
 	}
 
+	/**
+	 * Get the compatibility mode ({@code compatMode}) attribute.
+	 * 
+	 * @return the string "BackCompat" if document’s mode is {@code QUIRKS},
+	 *         otherwise "CSS1Compat".
+	 */
+	public String getCompatMode() {
+		DocumentType doctype = getDoctype();
+		if (doctype != null) {
+			return "CSS1Compat";
+		}
+		return "BackCompat";
+	}
+
 	@Override
 	public CSSDocument.ComplianceMode getComplianceMode() {
 		DocumentType doctype = getDoctype();

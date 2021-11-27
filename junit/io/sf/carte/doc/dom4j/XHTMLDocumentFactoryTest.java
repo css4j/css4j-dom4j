@@ -55,9 +55,11 @@ public class XHTMLDocumentFactoryTest {
 		assertEquals(CSSDocument.ComplianceMode.STRICT, xhtmlDoc.getComplianceMode());
 		XHTMLDocumentFactory factory = XHTMLDocumentFactory.getInstance();
 		XHTMLDocument document = factory.createDocument(null, null, null);
+		assertEquals("BackCompat", document.getCompatMode());
 		assertEquals(CSSDocument.ComplianceMode.QUIRKS, document.getComplianceMode());
 		DocumentType doctype = factory.createDocumentType("html", null, null);
 		document = factory.createDocument(null, null, doctype);
+		assertEquals("CSS1Compat", document.getCompatMode());
 		assertEquals(CSSDocument.ComplianceMode.STRICT, document.getComplianceMode());
 	}
 
