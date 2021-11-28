@@ -1,10 +1,23 @@
 # css4j - dom4j module
 
 Subclasses several [dom4j](https://dom4j.github.io/) classes and provides CSS functionality to it.
-Licence is BSD 3-clause.
+
+[License](LICENSE.txt) is BSD 3-clause.
+
+See the [latest Release Notes](RELEASE_NOTES.md).
+
+## Java™ Runtime Environment requirements
+All the classes in the binary package have been compiled with a [Java compiler](https://adoptium.net/)
+set to 1.8 compiler compliance level, except the `module-info.java` file.
+
+Building the library requires JDK 11 or higher.
+
+<br/>
 
 ## Build from source
-To build css4j-dom4j from the code that is currently at the Git repository, Java 11 or later is needed.
+To build css4j-dom4j from the code that is currently at the Git repository, Java
+11 or later is needed, although the resulting jar files can be run with a 1.8 JRE.
+
 You can run a variety of Gradle tasks with the Gradle wrapper (on Windows shells you can omit the `./`):
 
 - `./gradlew build` (normal build)
@@ -44,6 +57,42 @@ dependencies {
 }
 ```
 where `css4jDom4jVersion` would be defined in a `gradle.properties` file.
+
+<br/>
+
+## Software dependencies
+
+In case that you do not use a Gradle or Maven build (which would manage the
+dependencies according to the relevant `.module` or `.pom` files), the required
+and optional library packages are the following:
+
+### Compile-time dependencies
+
+- The [css4j](https://github.com/css4j/css4j/releases) library (and its transitive
+  dependencies); version 3.6.1 or higher is recommended (compatibility with 4.0 or
+  higher is not guaranteed):
+
+- The [css4j-agent](https://github.com/css4j/css4j-agent/releases) library;
+  version 3.6.0 or higher is recommended (compatibility with 4.0 or higher is
+  not guaranteed). **It is optional at runtime.**
+
+- The [dom4j](https://github.com/dom4j/dom4j) JAR package (tested with 2.1.1).
+  Requires at least version 2.0 to compile and 2.1.1 to run the tests, but you
+  should be able to run the resulting jar file with dom4j 1.6 if you are stuck with it.
+
+- The [XPP3 Pull Parser](https://github.com/xmlpull-xpp3/xmlpull-xpp3) (which
+  can be used with this library but beware that it does not support [character
+  entities](https://dev.w3.org/html5/html-author/charref)).
+  **It is optional at runtime.**
+
+### Test dependencies
+
+- A recent version of [JUnit 4](https://junit.org/junit4/).
+
+- [Jaxen](https://github.com/jaxen-xpath/jaxen), this software was tested with
+  version 1.2.0.
+
+- [SLF4J](http://www.slf4j.org/), which is a logging package.
 
 <br/>
 
