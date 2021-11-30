@@ -26,7 +26,7 @@ dependencies {
 	api('io.sf.carte:css4j') {
 		version {
 			strictly '[3.4.0,4.0['
-			prefer '3.6.1'
+			prefer '3.7.0'
 		}
 	}
 	useragentImplementation('io.sf.carte:css4j-agent') {
@@ -50,7 +50,7 @@ dependencies {
 	testImplementation(group: 'io.sf.carte', name: 'css4j', classifier: 'tests') {
 		version {
 			strictly '[3.4.0,4.0['
-			prefer '3.6.1'
+			prefer '3.7.0'
 		}
 	}
 	testImplementation 'jaxen:jaxen:1.2.0'
