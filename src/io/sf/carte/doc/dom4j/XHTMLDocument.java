@@ -1,6 +1,6 @@
 /*
 
- Copyright (c) 2005-2021, Carlos Amengual.
+ Copyright (c) 2005-2022, Carlos Amengual.
 
  SPDX-License-Identifier: BSD-3-Clause
 
@@ -134,6 +134,7 @@ public class XHTMLDocument extends DOMDocument implements CSSDocument {
 	 * @return the string "BackCompat" if document’s mode is {@code QUIRKS},
 	 *         otherwise "CSS1Compat".
 	 */
+	@Override
 	public String getCompatMode() {
 		DocumentType doctype = getDoctype();
 		if (doctype != null) {

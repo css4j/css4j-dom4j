@@ -1,6 +1,6 @@
 /*
 
- Copyright (c) 2005-2021, Carlos Amengual.
+ Copyright (c) 2005-2022, Carlos Amengual.
 
  SPDX-License-Identifier: BSD-3-Clause
 
@@ -17,6 +17,7 @@ import java.net.URL;
 import org.dom4j.QName;
 import org.w3c.dom.DOMException;
 
+import io.sf.carte.doc.DOMPolicyException;
 import io.sf.carte.doc.style.css.MediaQueryList;
 import io.sf.carte.doc.style.css.nsac.CSSBudgetException;
 import io.sf.carte.doc.style.css.om.AbstractCSSStyleSheet;
@@ -147,6 +148,9 @@ class LinkElement extends StyleDefinerElement {
 			}
 		} catch (IOException e) {
 			getErrorHandler().ioError(href, e);
+		} catch (DOMPolicyException e) {
+			// Already logged
+			linkedSheet = null;
 		} catch (DOMException e) {
 			// Already logged
 		} catch (Exception e) {

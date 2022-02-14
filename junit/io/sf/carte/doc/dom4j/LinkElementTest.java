@@ -1,6 +1,6 @@
 /*
 
- Copyright (c) 2005-2021, Carlos Amengual.
+ Copyright (c) 2005-2022, Carlos Amengual.
 
  SPDX-License-Identifier: BSD-3-Clause
 
@@ -125,6 +125,14 @@ public class LinkElementTest {
 		sheet = linkElement.getSheet();
 		assertNotNull(sheet);
 		assertEquals(0, sheet.getCssRules().getLength());
+		assertTrue(xDoc.getErrorHandler().hasErrors());
+		assertTrue(xDoc.getErrorHandler().hasPolicyErrors());
+		assertEquals(iniSerial, xDoc.getStyleCacheSerial());
+		//
+		xDoc.getErrorHandler().reset();
+		linkElement.attribute("href").setValue("http://www.example.com/etc/fakepasswd");
+		sheet = linkElement.getSheet();
+		assertNull(sheet);
 		assertTrue(xDoc.getErrorHandler().hasErrors());
 		assertTrue(xDoc.getErrorHandler().hasPolicyErrors());
 		assertEquals(iniSerial, xDoc.getStyleCacheSerial());
