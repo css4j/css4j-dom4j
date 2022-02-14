@@ -1,27 +1,13 @@
-# css4j-dom4j version 3.6.1 Release Notes
+# css4j-dom4j version 3.7.0 Release Notes
 
-### November 28, 2021
+### ??? ??, 2022
 
 <br/>
 
 ## Release Highlights
 
-### DOM conformance.
-
-  - `XHTMLDocument` has gained `getCompatMode()`.
-
-  - `XHTMLDocument` now returns sane default values for `Document.inputEncoding`,
-    `xmlEncoding`, `xmlStandalone` and `xmlVersion` attributes (instead of throwing an
-    exception). Thanks to that, css4j-dom4j documents can now be used with a
-    wider XML infrastructure like `javax.xml.transform.Transformer`.
-
-### Build & CI.
-
-  - Miscellaneous build improvements.
-
-  - Added a CI workflow.
-
-  - New workflow to automatically publish in Github packages on release.
+css4j-dom4j now requires css4j 3.7.0 or later to build, but can use previous 3.x
+versions at runtime.
 
 
 ## Project Sites
