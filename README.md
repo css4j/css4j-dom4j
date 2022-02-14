@@ -25,7 +25,7 @@ You can run a variety of Gradle tasks with the Gradle wrapper (on Windows shells
 - `./gradlew copyJars` (to copy jar files into a top-level _jar_ directory)
 - `./gradlew lineEndingConversion` (to convert line endings of top-level text files to CRLF)
 - `./gradlew publish` (to deploy to a Maven repository, as described in the `publishing.repositories.maven` block of
-[build.gradle](https://github.com/css4j/css4j/blob/master/build.gradle))
+[build.gradle](https://github.com/css4j/css4j-dom4j/blob/master/build.gradle))
 
 <br/>
 

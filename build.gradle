@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'io.sf.carte'
-version = '3.6.1'
+version = '3.7.0'
 
 description = 'css4j-dom4j'
 
@@ -25,8 +25,8 @@ java {
 dependencies {
 	api('io.sf.carte:css4j') {
 		version {
-			strictly '[3.4.0,4.0['
-			prefer '3.7.0'
+			strictly '[3.7.0,)'
+			prefer '3.7.1'
 		}
 	}
 	useragentImplementation('io.sf.carte:css4j-agent') {
@@ -49,15 +49,15 @@ dependencies {
 	xmlpullImplementation 'xpp3:xpp3_min:1.2.0'
 	testImplementation(group: 'io.sf.carte', name: 'css4j', classifier: 'tests') {
 		version {
-			strictly '[3.4.0,4.0['
-			prefer '3.7.0'
+			strictly '[3.7.0,)'
+			prefer '3.7.1'
 		}
 	}
 	testImplementation 'jaxen:jaxen:1.2.0'
 	testImplementation('org.slf4j:slf4j-api') {
 		version {
 			require '[1.7.28,)'
-			prefer '1.7.32'
+			prefer '1.7.35'
 		}
 	}
 	testImplementation 'junit:junit:4.13.2'
@@ -164,6 +164,18 @@ tasks.register('checkLegacyJava') {
 
 classes.finalizedBy checkLegacyJava
 
+// Copy jar files to 'jar' directory
+tasks.register('copyJars', Copy) {
+	description = 'Copy jar files to \'jar\' directory'
+	dependsOn tasks.build
+	dependsOn 'testsJar'
+	include '**/*.jar'
+	excludes = ['slf4j*.jar']
+	from layout.buildDirectory.dir("libs")
+	from configurations.runtimeClasspath
+	into "${rootDir}/jar"
+}
+
 tasks.register('lineEndingConversion', CRLFConvert) {
 	file "$rootDir/LICENSE.txt"
 	file "$rootDir/CHANGES.txt"
@@ -186,11 +198,13 @@ tasks.withType(JavaCompile) {
 }
 
 tasks.withType(Javadoc) {
-	failOnError false
 	options.addStringOption('Xdoclint:none', '-quiet')
 	options.addStringOption('encoding', 'UTF-8')
 	options.addStringOption('charset', 'UTF-8')
+	options.overview = 'src/overview.html'
 	options.links 'https://docs.oracle.com/en/java/javase/11/docs/api/'
+	options.links 'https://css4j.github.io/api/3/'
+	options.links 'https://dom4j.github.io/javadoc/2.1.1/'
 }
 
 tasks.withType(AbstractArchiveTask).configureEach {
