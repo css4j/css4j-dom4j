@@ -1,0 +1,288 @@
+plugins {
+	id 'java-library'
+	id 'maven-publish'
+	id 'de.jjohannes.extra-java-module-info' version '0.11'
+}
+
+group = 'io.sf.carte'
+version = '1.3.0'
+
+description = 'css4j-dom4j'
+
+java {
+	sourceCompatibility = JavaVersion.VERSION_1_7
+	targetCompatibility = JavaVersion.VERSION_1_7
+	withJavadocJar()
+	withSourcesJar()
+	registerFeature('xmlpull') {
+		usingSourceSet(sourceSets.main)
+	}
+	registerFeature('useragent') {
+		usingSourceSet(sourceSets.main)
+	}
+}
+
+dependencies {
+	api('io.sf.carte:css4j') {
+		version {
+			strictly '[1.3.0,2.0['
+			prefer '1.3.1'
+		}
+	}
+	useragentImplementation('io.sf.carte:css4j-agent') {
+		version {
+			strictly '[1.2.0,2.0['
+			prefer '1.3.0'
+		}
+	}
+	/*
+	 * Any dom4j version can be used, but tests may not pass with versions prior
+	 * to 2.1.1, due to changes in dom4j's defaults.
+	 */
+	api('org.dom4j:dom4j') {
+		version {
+			require '[1.6.0,)'
+			prefer '2.1.1'
+		}
+	}
+	xmlpullImplementation 'xmlpull:xmlpull:1.2.0'
+	xmlpullImplementation 'xpp3:xpp3_min:1.2.0'
+	testImplementation(group: 'io.sf.carte', name: 'css4j', classifier: 'tests') {
+		version {
+			strictly '[1.3.0,2.0['
+			prefer '1.3.1'
+		}
+	}
+	testImplementation 'org.apache.xmlgraphics:batik-css:1.14'
+	testImplementation 'org.apache.xmlgraphics:batik-util:1.14'
+	testImplementation 'org.apache.xmlgraphics:batik-i18n:1.14'
+	testImplementation 'jaxen:jaxen:1.2.0'
+	testImplementation('org.slf4j:slf4j-api') {
+		version {
+			require '[1.7.28,)'
+			prefer '1.7.35'
+		}
+	}
+	testImplementation 'junit:junit:4.13.2'
+}
+
+extraJavaModuleInfo {
+	failOnMissingModuleInfo.set(false)
+	automaticModule('dom4j-2.1.1.jar', 'dom4j')
+	automaticModule('htmlparser-1.4.16.jar', 'htmlparser')
+	automaticModule('sac-1.3.jar', 'sac')
+}
+
+repositories {
+	maven {
+		url = uri('https://repo.maven.apache.org/maven2/')
+	}
+	maven {
+		url "https://css4j.github.io/maven/"
+		mavenContent {
+			releasesOnly()
+		}
+		content {
+			includeGroup 'io.sf.carte'
+			includeGroup 'io.sf.jclf'
+			includeGroup 'xmlpull'
+			includeGroup 'xpp3'
+		}
+	}
+}
+
+sourceSets {
+	main {
+		java {
+			srcDirs = ['src']
+			includes += ["**/*.java"]
+		}
+		resources {
+			srcDirs = ['src']
+			excludes += ["**/*.java"]
+		}
+	}
+	test {
+		java {
+			srcDirs = ['junit']
+			includes += ["**/*.java"]
+		}
+		resources {
+			srcDirs = ['junit']
+			excludes += ["**/*.java"]
+		}
+	}
+}
+
+tasks.register('testsJar', Jar) {
+	archiveClassifier = 'tests'
+	from(sourceSets.test.output)
+}
+
+configurations {
+	tests
+}
+
+artifacts {
+	tests testsJar
+}
+
+tasks.compileJava {
+	excludes += ['module-info.java']
+	modularity.inferModulePath = false
+}
+
+tasks.register('compileModuleInfo', JavaCompile) {
+	description = 'Compile module-info to Java 11 bytecode'
+	dependsOn tasks.compileJava
+	sourceCompatibility = JavaVersion.VERSION_11
+	targetCompatibility = JavaVersion.VERSION_11
+	source = sourceSets.main.java
+	classpath = sourceSets.main.compileClasspath
+	destinationDirectory = sourceSets.main.java.destinationDirectory
+	modularity.inferModulePath = true
+	includes = ['module-info.java']
+}
+
+classes.dependsOn compileModuleInfo
+
+// Check bytecode version, in case some other task screws it
+tasks.register('checkLegacyJava') {
+	description = 'Check that classes are Java 7 bytecode (except module-info)'
+	def classdir = sourceSets.main.output.classesDirs.files.stream().findAny().get()
+	def classfiles = fileTree(classdir).matching({it.exclude('module-info.class')}).files
+	doFirst() {
+		if (!classfiles.isEmpty()) {
+			def classfile = classfiles.stream().findAny().get()
+			if (classfile != null) {
+				def classbytes = classfile.bytes
+				def bcversion = classbytes[6] * 128 + classbytes[7]
+				if (bcversion != 51) {
+					throw new GradleException("Bytecode on " + classfile +
+							" is not valid Java 7. Version should be 51, instead is " + bcversion)
+				}
+			}
+		}
+	}
+}
+
+classes.finalizedBy checkLegacyJava
+
+// Copy jar files to 'jar' directory
+tasks.register('copyJars', Copy) {
+	description = 'Copy jar files to \'jar\' directory'
+	dependsOn tasks.build
+	dependsOn 'testsJar'
+	include '**/*.jar'
+	excludes = ['slf4j*.jar']
+	from layout.buildDirectory.dir("libs")
+	from configurations.runtimeClasspath
+	into "${rootDir}/jar"
+}
+
+tasks.register('lineEndingConversion', CRLFConvert) {
+	file "$rootDir/LICENSE.txt"
+	file "$rootDir/CHANGES.txt"
+	file "$rootDir/RELEASE_NOTES.md"
+}
+
+tasks.register('cleanBuildSrc') {
+	description = 'Clean the buildSrc directory'
+	doLast {
+		delete("$rootDir/buildSrc/build")
+	}
+}
+
+tasks.named('clean') {
+	finalizedBy('cleanBuildSrc')
+}
+
+tasks.withType(JavaCompile) {
+	options.encoding = 'UTF-8'
+}
+
+tasks.withType(Javadoc) {
+	options.addStringOption('Xdoclint:none', '-quiet')
+	options.addStringOption('encoding', 'UTF-8')
+	options.addStringOption('charset', 'UTF-8')
+	options.overview = 'src/overview.html'
+	options.links 'https://docs.oracle.com/en/java/javase/11/docs/api/'
+	options.links 'https://css4j.github.io/api/1.0/'
+	options.links 'https://dom4j.github.io/javadoc/2.1.1/'
+}
+
+tasks.withType(AbstractArchiveTask).configureEach {
+	// Reproducible build
+	preserveFileTimestamps = false
+	reproducibleFileOrder = true
+	// Copy license file
+	dependsOn lineEndingConversion
+	from ('LICENSE.txt') {
+		into 'META-INF'
+	}
+}
+
+tasks.withType(PublishToMavenRepository) { task ->
+	doFirst {
+		if (repository == publishing.repositories.getByName('mavenRepo')) {
+			logger.lifecycle "Deploying artifacts to \"${it.repository.url}\""
+		}
+	}
+}
+
+publishing {
+	publications {
+		maven(MavenPublication) {
+			description = 'css4j DOM4J module'
+			from(components.java)
+			suppressAllPomMetadataWarnings()
+			artifact(testsJar)
+			pom {
+				description = 'css4j DOM4J module'
+				url = "https://github.com/css4j/css4j-dom4j/"
+				licenses {
+					license {
+						name = "BSD 3-clause license"
+						url = "https://css4j.github.io/LICENSE.txt"
+					}
+				}
+			}
+		}
+	}
+	repositories {
+		maven {
+			name = 'mavenRepo'
+			/*
+			 * The following section applies to the 'publish' task:
+			 *
+			 * If you plan to deploy to a repository, please configure the
+			 * 'mavenReleaseRepoUrl' and/or 'mavenSnapshotRepoUrl' properties
+			 * (for example in GRADLE_USER_HOME/gradle.properties).
+			 *
+			 * Otherwise, Gradle shall create a 'build/repository' subdirectory
+			 * at ${rootDir} and deploy there.
+			 *
+			 * Properties 'mavenRepoUsername' and 'mavenRepoPassword' can also
+			 * be set (generally from command line).
+			 */
+			def releasesUrl
+			def snapshotsUrl
+			if (project.hasProperty('mavenReleaseRepoUrl') && project.mavenReleaseRepoUrl) {
+				releasesUrl = mavenReleaseRepoUrl
+			} else {
+				releasesUrl = "${buildDir}/repository/releases"
+			}
+			if (project.hasProperty('mavenSnapshotRepoUrl') && project.mavenSnapshotRepoUrl) {
+				snapshotsUrl = mavenSnapshotRepoUrl
+			} else {
+				snapshotsUrl = "${buildDir}/repository/snapshots"
+			}
+			url = version.endsWith('-SNAPSHOT') ? snapshotsUrl : releasesUrl
+			if (project.hasProperty('mavenRepoUsername') &&
+					project.hasProperty('mavenRepoPassword')) {
+				credentials.username = mavenRepoUsername
+				credentials.password = mavenRepoPassword
+			}
+		}
+	}
+}
