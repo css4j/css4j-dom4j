@@ -1,13 +1,15 @@
 # css4j-dom4j version 3.7.0 Release Notes
 
-### ??? ??, 2022
+### February 15, 2022
 
 <br/>
 
 ## Release Highlights
 
-css4j-dom4j now requires css4j 3.7.0 or later to build, but can use previous 3.x
-versions at runtime.
+- `getSheet()` now returns null if the sheet's Content-Type is invalid.
+
+- css4j-dom4j now requires css4j 3.7.1 or later to build, but can use previous
+  3.x versions at runtime.
 
 
 ## Project Sites
