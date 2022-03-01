@@ -26,13 +26,13 @@ dependencies {
 	api('io.sf.carte:css4j') {
 		version {
 			strictly '[3.7.1,)'
-			prefer '3.7.1'
+			prefer '3.7.2'
 		}
 	}
 	useragentImplementation('io.sf.carte:css4j-agent') {
 		version {
-			strictly '[3.4.0,4.0['
-			prefer '3.6.0'
+			strictly '[3.4.0,)'
+			prefer '3.7.0'
 		}
 	}
 	/*
@@ -50,14 +50,14 @@ dependencies {
 	testImplementation(group: 'io.sf.carte', name: 'css4j', classifier: 'tests') {
 		version {
 			strictly '[3.7.1,)'
-			prefer '3.7.1'
+			prefer '3.7.2'
 		}
 	}
 	testImplementation 'jaxen:jaxen:1.2.0'
 	testImplementation('org.slf4j:slf4j-api') {
 		version {
 			require '[1.7.28,)'
-			prefer '1.7.35'
+			prefer '1.7.36'
 		}
 	}
 	testImplementation 'junit:junit:4.13.2'
