@@ -355,11 +355,11 @@ abstract public class CSSStylableElement extends DOMElement implements CSSElemen
 				if (node.getNodeType() == Node.ELEMENT_NODE && matchSelectors(selectors, (CSSStylableElement) node)) {
 					idx++;
 					if (node == CSSStylableElement.this) {
-						break;
+						return idx;
 					}
 				}
 			}
-			return idx == sz ? -1 : idx;
+			return -1;
 		}
 
 		@Override
