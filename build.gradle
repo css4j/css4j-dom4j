@@ -1,7 +1,7 @@
 plugins {
 	id 'java-library'
 	id 'maven-publish'
-	id 'de.jjohannes.extra-java-module-info' version '0.11'
+	id 'de.jjohannes.extra-java-module-info' version '0.14'
 }
 
 group = 'io.sf.carte'
@@ -65,7 +65,7 @@ dependencies {
 
 extraJavaModuleInfo {
 	failOnMissingModuleInfo.set(false)
-	automaticModule('dom4j-2.1.1.jar', 'dom4j')
+	automaticModule('org.dom4j:dom4j', 'dom4j')
 	automaticModule('htmlparser-1.4.16.jar', 'htmlparser')
 }
 
