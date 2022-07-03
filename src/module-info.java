@@ -9,6 +9,9 @@
 
  */
 
+/**
+ * Brings CSS functionality to dom4j.
+ */
 module io.sf.carte.css4j.dom4j {
 	exports io.sf.carte.doc.dom4j;
 
