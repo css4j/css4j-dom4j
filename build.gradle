@@ -199,7 +199,7 @@ tasks.withType(Javadoc) {
 	options.addStringOption('charset', 'UTF-8')
 	options.overview = 'src/overview.html'
 	options.links 'https://docs.oracle.com/en/java/javase/11/docs/api/'
-	options.links 'https://css4j.github.io/api/3/'
+	options.links 'https://css4j.github.io/api/latest/'
 	options.links 'https://dom4j.github.io/javadoc/2.1.1/'
 }
 
