@@ -87,11 +87,8 @@ public class XHTMLElement extends CSSStylableElement {
 	@Override
 	protected void childAdded(Node node) {
 		super.childAdded(node);
-		String nsUri;
 		XHTMLDocument doc;
-		if (node instanceof LinkStyle && (doc = getOwnerDocument()) != null
-				&& ((nsUri = ((CSSStylableElement) node).getNamespaceURI()) == null || nsUri.length() == 0
-						|| nsUri.equals(doc.getDocumentElement().getNamespaceURI()))) {
+		if (node instanceof LinkStyle && (doc = getOwnerDocument()) != null) {
 			doc.onLinkStyleAdd((LinkStyle<?>) node);
 		}
 	}

@@ -86,30 +86,37 @@ public class XHTMLDocumentTest {
 
 	@Test
 	public void getStyleSheet() throws Exception {
-		int defSz = xhtmlDoc.getDocumentFactory().getDefaultStyleSheet(xhtmlDoc.getComplianceMode()).getCssRules()
-				.getLength();
+		int defSz = xhtmlDoc.getDocumentFactory().getDefaultStyleSheet(xhtmlDoc.getComplianceMode())
+			.getCssRules().getLength();
 		assertEquals(113, defSz);
 		DocumentCSSStyleSheet css = xhtmlDoc.getStyleSheet();
 		assertNotNull(css);
 		assertNotNull(css.getCssRules());
 		int countInternalSheets = xhtmlDoc.embeddedStyle.size() + xhtmlDoc.linkedStyle.size();
-		assertEquals(6, countInternalSheets);
-		assertEquals(6, xhtmlDoc.getStyleSheets().getLength());
-		assertEquals("http://www.example.com/css/common.css", xhtmlDoc.getStyleSheets().item(0).getHref());
+		assertEquals(7, countInternalSheets);
+		assertEquals(7, xhtmlDoc.getStyleSheets().getLength());
+		assertEquals("http://www.example.com/css/common.css",
+			xhtmlDoc.getStyleSheets().item(0).getHref());
 		assertEquals(3, xhtmlDoc.getStyleSheetSets().getLength());
+
 		Iterator<LinkElement> it = xhtmlDoc.linkedStyle.iterator();
 		assertTrue(it.hasNext());
 		AbstractCSSStyleSheet sheet = it.next().getSheet();
 		assertNotNull(sheet);
 		assertEquals(null, sheet.getTitle());
 		assertEquals(3, sheet.getCssRules().getLength());
-		assertEquals("background-color: red;\n", ((CSSStyleRule) sheet.getCssRules().item(0)).getStyle().getCssText());
-		AbstractCSSStyleDeclaration fontface = ((BaseCSSDeclarationRule) sheet.getCssRules().item(1)).getStyle();
-		assertEquals("url('http://www.example.com/fonts/OpenSans-Regular.ttf')", fontface.getPropertyValue("src"));
+		assertEquals("background-color: red;\n",
+			((CSSStyleRule) sheet.getCssRules().item(0)).getStyle().getCssText());
+		AbstractCSSStyleDeclaration fontface = ((BaseCSSDeclarationRule) sheet.getCssRules()
+			.item(1)).getStyle();
+		assertEquals("url('http://www.example.com/fonts/OpenSans-Regular.ttf')",
+			fontface.getPropertyValue("src"));
 		CSSValue ffval = fontface.getPropertyCSSValue("src");
 		assertEquals(CSSValue.CssType.TYPED, ffval.getCssValueType());
 		assertEquals(CSSValue.Type.URI, ((CSSTypedValue) ffval).getPrimitiveType());
-		assertTrue(sheet.getCssRules().item(2).getMinifiedCssText().startsWith("@font-feature-values Foo Sans,Bar"));
+		assertTrue(sheet.getCssRules().item(2).getMinifiedCssText()
+			.startsWith("@font-feature-values Foo Sans,Bar"));
+
 		assertTrue(it.hasNext());
 		sheet = it.next().getSheet();
 		assertNotNull(sheet);
@@ -131,7 +138,9 @@ public class XHTMLDocumentTest {
 		assertNull(sheet.getTitle());
 		assertEquals("print", sheet.getMedia().getMediaText());
 		assertEquals(1, sheet.getCssRules().getLength());
-		assertEquals(defSz + 20, css.getCssRules().getLength());
+
+		assertEquals(defSz + 25, css.getCssRules().getLength());
+		assertFalse(xhtmlDoc.getStyleSheet().getErrorHandler().hasSacErrors());
 	}
 
 	@Test
@@ -142,10 +151,10 @@ public class XHTMLDocumentTest {
 		assertNotNull(css);
 		assertNotNull(css.getCssRules());
 		int countInternalSheets = xhtmlDoc.embeddedStyle.size() + xhtmlDoc.linkedStyle.size();
-		assertEquals(6, countInternalSheets);
-		assertEquals(6, xhtmlDoc.getStyleSheets().getLength());
+		assertEquals(7, countInternalSheets);
+		assertEquals(7, xhtmlDoc.getStyleSheets().getLength());
 		assertEquals(3, xhtmlDoc.getStyleSheetSets().getLength());
-		assertEquals(defSz + 20, css.getCssRules().getLength());
+		assertEquals(defSz + 25, css.getCssRules().getLength());
 	}
 
 	@Test
@@ -1029,11 +1038,11 @@ public class XHTMLDocumentTest {
 		DocumentCSSStyleSheet css = xhtmlDoc.getStyleSheet();
 		assertNotNull(css);
 		assertNotNull(css.getCssRules());
-		assertEquals(133, css.getCssRules().getLength());
+		assertEquals(138, css.getCssRules().getLength());
 		StringReader re = new StringReader("p{color:#a1e3f0}#noid{margin:0.04em;}");
 		InputSource cssSrc = new InputSource(re);
 		xhtmlDoc.addStyleSheet(cssSrc);
-		assertEquals(135, css.getCssRules().getLength());
+		assertEquals(140, css.getCssRules().getLength());
 	}
 
 }

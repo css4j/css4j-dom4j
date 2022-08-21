@@ -87,10 +87,6 @@ class StyleElement extends StyleDefinerElement {
 	@Override
 	public AbstractCSSStyleSheet getSheet() {
 		if (needsUpdate) {
-			String nsuri = getNamespaceURI();
-			if (nsuri != null && nsuri.length() != 0 && !nsuri.equals(XHTMLDocument.XHTML_NAMESPACE_URI)) {
-				return null;
-			}
 			String type = attributeValue("type");
 			if (type != null && !"text/css".equalsIgnoreCase(type) && type.length() != 0) {
 				return null;
@@ -101,7 +97,8 @@ class StyleElement extends StyleDefinerElement {
 				mediaList = MediaFactory.createAllMedia();
 			} else {
 				try {
-					mediaList = getDocumentFactory().getStyleSheetFactory().createImmutableMediaQueryList(media, this);
+					mediaList = getDocumentFactory().getStyleSheetFactory()
+						.createImmutableMediaQueryList(media, this);
 				} catch (CSSBudgetException e) {
 					getErrorHandler().linkedStyleError(this, e.getMessage());
 					return null;

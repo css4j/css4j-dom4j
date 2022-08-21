@@ -12,6 +12,7 @@
 package io.sf.carte.doc.dom4j;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -135,20 +136,27 @@ public class DOM4JCSSStyleDeclarationTest {
 		assertTrue(elm instanceof CSSStylableElement);
 		CSSComputedProperties style = ((CSSStylableElement) elm).getComputedStyle();
 		assertNotNull(style);
-		assertEquals(12f, style.getComputedFontSize(), 0.01f);
+		assertEquals(15f, style.getComputedFontSize(), 1e-5);
+		assertEquals("#fd8eab", style.getPropertyValue("color"));
+
 		Element para = xhtmlDoc.elementByID("para2");
 		assertTrue(para instanceof CSSStylableElement);
 		CSSComputedProperties stylePara = ((CSSStylableElement) para).getComputedStyle();
 		assertNotNull(stylePara);
-		assertEquals(12f, stylePara.getComputedFontSize(), 0.01f);
+		assertEquals(12f, stylePara.getComputedFontSize(), 1e-5);
+
 		xhtmlDoc.setTargetMedium("screen");
 		assertEquals("screen", xhtmlDoc.getStyleSheet().getTargetMedium());
 		style = ((CSSStylableElement) elm).getComputedStyle();
 		assertNotNull(style);
-		assertEquals(20f, style.getComputedFontSize(), 0.01f);
+		assertEquals(20f, style.getComputedFontSize(), 1e-5);
+		assertEquals("#fd8eab", style.getPropertyValue("color"));
+
 		stylePara = ((CSSStylableElement) para).getComputedStyle();
-		assertEquals(16f, stylePara.getComputedFontSize(), 0.01f);
+		assertEquals(16f, stylePara.getComputedFontSize(), 1e-5);
 		xhtmlDoc.setTargetMedium("all");
+		assertFalse(xhtmlDoc.getErrorHandler().hasComputedStyleErrors());
+		assertFalse(xhtmlDoc.getErrorHandler().hasComputedStyleWarnings());
 	}
 
 	@SuppressWarnings("rawtypes")
