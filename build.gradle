@@ -1,7 +1,7 @@
 plugins {
 	id 'java-library'
 	id 'maven-publish'
-	id 'de.jjohannes.extra-java-module-info' version '0.15'
+	id 'org.gradlex.extra-java-module-info' version '1.0'
 }
 
 group = 'io.sf.carte'
