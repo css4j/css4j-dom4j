@@ -69,7 +69,7 @@ and optional library packages are the following:
 ### Compile-time dependencies
 
 - The [css4j](https://github.com/css4j/css4j/releases) library (and its transitive
-  dependencies); version 3.7.2 or higher is recommended (compatibility with 4.0 or
+  dependencies); version 3.8.0 or higher is recommended (compatibility with 4.0 or
   higher is not guaranteed).
 
 - The [css4j-agent](https://github.com/css4j/css4j-agent/releases) library;
