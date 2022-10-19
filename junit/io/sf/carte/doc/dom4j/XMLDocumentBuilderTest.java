@@ -12,6 +12,7 @@
 package io.sf.carte.doc.dom4j;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -153,9 +154,14 @@ public class XMLDocumentBuilderTest {
 		Element docElement = document.getDocumentElement();
 		assertNotNull(docElement);
 		assertEquals("body", docElement.getNodeName());
+
 		Element element = document.getElementById("divid");
 		assertNotNull(element);
 		assertTrue(element.hasChildNodes());
+		assertEquals("divid", element.getAttribute("id"));
+
+		assertFalse(element.hasAttribute("xmlns"));
+
 		Node parent = element.getParentNode();
 		assertNotNull(parent);
 		assertEquals("body", parent.getNodeName());

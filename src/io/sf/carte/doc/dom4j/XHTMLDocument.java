@@ -611,6 +611,11 @@ public class XHTMLDocument extends DOMDocument implements CSSDocument {
 	}
 
 	@Override
+	public void rebuildCascade() {
+		onStyleModify();
+	}
+
+	@Override
 	protected XHTMLDocumentFactory getDocumentFactory() {
 		return (XHTMLDocumentFactory) super.getDocumentFactory();
 	}
