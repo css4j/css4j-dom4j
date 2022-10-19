@@ -100,10 +100,16 @@ abstract public class CSSStylableElement extends DOMElement implements CSSElemen
 
 	@Override
 	public Attr setAttributeNode(Attr newAttr) throws DOMException {
+		if (isReadOnly()) {
+			throw new DOMException(DOMException.NO_MODIFICATION_ALLOWED_ERR,
+				"No modification allowed");
+		}
+
 		Attribute attribute = attribute(newAttr);
 		if (attribute != newAttr) {
 			if (newAttr.getOwnerElement() != null) {
-				throw new DOMException(DOMException.INUSE_ATTRIBUTE_ERR, "Attribute is already in use");
+				throw new DOMException(DOMException.INUSE_ATTRIBUTE_ERR,
+					"Attribute is already in use");
 			}
 			if (attribute != null) {
 				attribute.detach();
