@@ -574,10 +574,12 @@ public class XHTMLDocument extends DOMDocument implements CSSDocument {
 	 */
 	@Override
 	public void setTargetMedium(String medium) throws CSSMediaException {
-		medium = medium.intern();
 		if ("all".equalsIgnoreCase(medium)) {
 			targetMedium = null;
 		} else {
+			if (medium != null) {
+				medium = medium.intern();
+			}
 			targetMedium = medium;
 		}
 		onStyleModify();
