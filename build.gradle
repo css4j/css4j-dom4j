@@ -173,9 +173,13 @@ tasks.register('copyJars', Copy) {
 }
 
 tasks.register('lineEndingConversion', CRLFConvert) {
-	file "$rootDir/LICENSE.txt"
-	file "$rootDir/CHANGES.txt"
+	description 'Convert top-level files to Windows line endings'
 	file "$rootDir/RELEASE_NOTES.md"
+}
+
+tasks.register('lineEndingConvCopy', CRLFConvertCopy) {
+	description 'Convert LICENSE.txt to Windows line endings'
+	from "$rootDir/LICENSE.txt"
 }
 
 tasks.register('cleanBuildSrc') {
@@ -208,11 +212,13 @@ tasks.withType(AbstractArchiveTask).configureEach {
 	preserveFileTimestamps = false
 	reproducibleFileOrder = true
 	// Copy license file
-	dependsOn lineEndingConversion
-	from ('LICENSE.txt') {
+	dependsOn lineEndingConvCopy
+	from ("$buildDir/tmp/crlf/LICENSE.txt") {
 		into 'META-INF'
 	}
 }
+
+build.dependsOn lineEndingConversion
 
 tasks.withType(PublishToMavenRepository) { task ->
 	doFirst {
