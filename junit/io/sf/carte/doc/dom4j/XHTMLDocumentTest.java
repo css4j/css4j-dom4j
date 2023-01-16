@@ -1064,13 +1064,39 @@ public class XHTMLDocumentTest {
 	}
 
 	@Test
+	public void testMetaElement() {
+		XHTMLElement meta = xhtmlDoc.createElement("meta");
+		meta.setAttribute("http-equiv", "Content-Type");
+		meta.setAttribute("content", "text/html; charset=utf-8");
+
+		Node head = xhtmlDoc.getElementsByTagName("head").item(0);
+		head.appendChild(meta);
+	}
+
+	@Test
+	public void testMetaElement2() {
+		XHTMLElement paragraph = xhtmlDoc.createElement("p");
+		xhtmlDoc.getDocumentElement().appendChild(paragraph);
+
+		XHTMLElement meta = xhtmlDoc.createElement("meta");
+		meta.setAttribute("itemprop", "name");
+		meta.setAttribute("content", "foo");
+		paragraph.appendChild(meta);
+	}
+
+	@Test
 	public void testMetaElementDefaultSheetSet() {
+		assertEquals("Default", xhtmlDoc.getSelectedStyleSheetSet());
+
 		XHTMLElement meta = xhtmlDoc.createElement("meta");
 		meta.setAttribute("http-equiv", "Default-Style");
 		meta.setAttribute("content", "Alter 1");
 		XHTMLElement head = (XHTMLElement) xhtmlDoc.getElementsByTagName("head").item(0);
 		head.appendChild(meta);
 		assertEquals("Alter 1", xhtmlDoc.getSelectedStyleSheetSet());
+
+		head.removeChild(meta);
+		assertEquals("Default", xhtmlDoc.getSelectedStyleSheetSet());
 	}
 
 	@Test
