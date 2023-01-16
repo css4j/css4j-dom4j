@@ -1057,6 +1057,38 @@ public class XHTMLDocumentTest {
 	}
 
 	@Test
+	public void testBaseAttribute() throws MalformedURLException {
+		assertEquals("http://www.example.com/", xhtmlDoc.getBaseURI());
+		XHTMLElement root = xhtmlDoc.getDocumentElement();
+
+		// Find BASE element and remove it
+		XHTMLElement base = (XHTMLElement) root.getElementsByTagName("base").item(0);
+		base.getParent().remove(base);
+
+		// Play with xml:base
+		root.setAttribute("xml:base", "http://www.example.com/newbase/");
+		assertEquals("http://www.example.com/newbase/", xhtmlDoc.getBaseURI());
+		// Wrong URL
+		root.setAttribute("xml:base", "http//");
+		assertNull(xhtmlDoc.getBaseURI());
+		assertEquals("http//", root.getAttribute("xml:base"));
+		assertTrue(xhtmlDoc.getErrorHandler().hasIOErrors());
+		// Relative URL
+		root.setAttribute("xml:base", "foo");
+		assertEquals("foo", root.getAttribute("xml:base"));
+		assertNull(xhtmlDoc.getBaseURI());
+		// Remove attribute
+		root.removeAttribute("xml:base");
+		assertNull(xhtmlDoc.getBaseURI());
+		// Unsafe base assignment
+		xhtmlDoc.setDocumentURI("http://www.example.com/document.html");
+		root.setAttribute("xml:base", "jar:http://www.example.com/evil.jar!/file");
+		assertEquals("http://www.example.com/document.html", xhtmlDoc.getBaseURI());
+		assertEquals("jar:http://www.example.com/evil.jar!/file", root.getAttribute("xml:base"));
+		assertTrue(xhtmlDoc.getErrorHandler().hasPolicyErrors());
+	}
+
+	@Test
 	public void testSetBaseURL() throws MalformedURLException {
 		assertEquals("http://www.example.com/", xhtmlDoc.getBaseURI());
 		xhtmlDoc.setBaseURL(new URL("http://www.example.com/newbase/"));

@@ -669,8 +669,8 @@ public class XHTMLDocument extends DOMDocument implements CSSDocument {
 	 * Gets the base URL of this Document.
 	 * <p>
 	 * If the Document's <code>head</code> element has a <code>base</code> child
-	 * element, the base URI is computed using the value of the href attribute
-	 * of the <code>base</code> element. It can also be set with the
+	 * element, the base URI is computed using the value of the href attribute of
+	 * the <code>base</code> element. It can also be set with the
 	 * <code>setBaseURL</code> method.
 	 * </p>
 	 * 
@@ -679,7 +679,6 @@ public class XHTMLDocument extends DOMDocument implements CSSDocument {
 	@Override
 	public URL getBaseURL() {
 		if (baseURL == null) {
-			String buri = documentURI;
 			XHTMLElement elm = getDocumentElement();
 			if (elm != null) {
 				String attr = elm.getAttribute("xml:base");
@@ -687,23 +686,21 @@ public class XHTMLDocument extends DOMDocument implements CSSDocument {
 					if (setBaseURL(elm, attr)) {
 						return baseURL;
 					}
-				} else {
-					// BASE element
-					NodeList headnl = getElementsByTagName("head");
-					if (headnl.getLength() != 0) {
-						NodeList nl = ((DOMElement) headnl.item(0)).getElementsByTagName("base");
-						if (nl.getLength() != 0) {
-							CSSStylableElement base = (CSSStylableElement) nl.item(0);
-							String href = base.getAttribute("href");
-							if (href.length() != 0 && setBaseURL(base, href)) {
-								return baseURL;
-							}
+				}
+				// Look for BASE element
+				org.dom4j.Element head = elm.element("head");
+				if (head != null) {
+					DOMElement base = (DOMElement) head.element("base");
+					if (base != null) {
+						String href = base.attributeValue("href");
+						if (href != null && href.length() != 0 && setBaseURL(base, href)) {
+							return baseURL;
 						}
 					}
 				}
 			}
 			try {
-				baseURL = new URL(buri);
+				baseURL = new URL(documentURI);
 			} catch (MalformedURLException e) {
 			}
 		}

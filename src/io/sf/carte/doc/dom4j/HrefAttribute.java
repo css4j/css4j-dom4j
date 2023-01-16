@@ -49,12 +49,11 @@ class HrefAttribute extends DOMAttribute {
 				StyleDefinerElement element = (StyleDefinerElement) owner;
 				element.resetLinkedSheet();
 			} else if ("base".equalsIgnoreCase(owner.getLocalName())) {
+				// We set base to null unconditionally first,
+				// in case setBaseURL(owner, base) fails
+				doc.setBaseURL(null);
 				if (value != null && value.length() != 0) {
-					// We set base to null first, in case setBaseURL(owner, base) fails
-					doc.setBaseURL(null);
 					doc.setBaseURL(owner, value);
-				} else {
-					doc.setBaseURL(null);
 				}
 				onBaseModify(doc);
 			}

@@ -63,13 +63,20 @@ class HeadElement extends XHTMLElement {
 
 	@Override
 	protected void childRemoved(Node node) {
-		if ("meta".equalsIgnoreCase(node.getName())) {
+		String nName = node.getName();
+		if ("meta".equalsIgnoreCase(nName)) {
 			Element elt = (Element) node;
 			String name = elt.getAttribute("http-equiv");
 			if (name.length() == 0) {
 				name = elt.getAttribute("name");
 			}
 			getOwnerDocument().onMetaRemoved(name, elt.getAttribute("content"));
+		} else if (node instanceof BaseURLElement) {
+			XHTMLDocument doc = getOwnerDocument();
+			if (doc != null) {
+				doc.setBaseURL(null);
+				HrefAttribute.onBaseModify(doc);
+			}
 		}
 		super.childRemoved(node);
 	}
