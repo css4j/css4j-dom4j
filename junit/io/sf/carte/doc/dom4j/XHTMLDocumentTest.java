@@ -979,6 +979,16 @@ public class XHTMLDocumentTest {
 		Node text = style.getFirstChild();
 		style.removeChild(text);
 		assertEquals(0, sheet.getCssRules().getLength());
+		assertFalse(xhtmlDoc.hasStyleIssues());
+
+		// Add text node with errors
+		style.addText("div>p {font-size: (); margin-left: 7%;} p> {font-size: 2.4em;}");
+		sheet = style.getSheet();
+		assertEquals(1, sheet.getCssRules().getLength());
+		assertTrue(sheet.hasRuleErrorsOrWarnings());
+		assertTrue(sheet.getErrorHandler().hasSacErrors());
+		xhtmlDoc.getStyleSheet();
+		assertTrue(xhtmlDoc.hasStyleIssues());
 	}
 
 	@Test

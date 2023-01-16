@@ -63,12 +63,16 @@ public class LinkElementTest {
 		xDoc.getStyleSheet();
 		assertNull(linkElement.getSheet());
 		assertFalse(xDoc.getErrorHandler().hasErrors());
+		assertFalse(xDoc.hasStyleIssues());
+
 		linkElement.addAttribute("rel", "stylesheet");
 		iniSerial++;
 		assertEquals(iniSerial, xDoc.getStyleCacheSerial());
 		xDoc.getStyleSheet();
 		assertNotNull(linkElement.getSheet());
 		assertTrue(xDoc.getErrorHandler().hasErrors());
+		assertTrue(xDoc.hasStyleIssues());
+
 		linkElement.remove(linkElement.attribute("href"));
 		iniSerial++;
 		assertEquals(iniSerial, xDoc.getStyleCacheSerial());
@@ -81,6 +85,8 @@ public class LinkElementTest {
 		linkElement.addAttribute("href", "http://www.example.com/css/example.css");
 		xDoc.getStyleSheet();
 		assertTrue(xDoc.getErrorHandler().hasErrors());
+		assertTrue(xDoc.hasStyleIssues());
+
 		int iniSerial = xDoc.getStyleCacheSerial();
 		linkElement.attribute("href").setValue("http://www.example.com/example2.css");
 		iniSerial++;
@@ -94,6 +100,8 @@ public class LinkElementTest {
 		linkElement.addAttribute("href", "http://www.example.com/css/common.css");
 		xDoc.getStyleSheet();
 		assertFalse(xDoc.getErrorHandler().hasErrors());
+		assertFalse(xDoc.hasStyleIssues());
+
 		AbstractCSSStyleSheet sheet = linkElement.getSheet();
 		assertNotNull(sheet);
 		assertEquals(3, sheet.getCssRules().getLength());
@@ -105,6 +113,8 @@ public class LinkElementTest {
 		assertEquals(0, sheet.getCssRules().getLength());
 		assertTrue(xDoc.getErrorHandler().hasErrors());
 		assertTrue(xDoc.getErrorHandler().hasPolicyErrors());
+		assertTrue(xDoc.hasStyleIssues());
+
 		iniSerial++;
 		assertEquals(iniSerial, xDoc.getStyleCacheSerial());
 		// Setting BASE does not change things
@@ -117,6 +127,7 @@ public class LinkElementTest {
 		assertEquals(0, sheet.getCssRules().getLength());
 		assertTrue(xDoc.getErrorHandler().hasErrors());
 		assertTrue(xDoc.getErrorHandler().hasPolicyErrors());
+		assertTrue(xDoc.hasStyleIssues());
 		// Set document URI to enable policy enforcement
 		xDoc.setDocumentURI("http://www.example.com/example.html");
 		//
@@ -127,6 +138,7 @@ public class LinkElementTest {
 		assertEquals(0, sheet.getCssRules().getLength());
 		assertTrue(xDoc.getErrorHandler().hasErrors());
 		assertTrue(xDoc.getErrorHandler().hasPolicyErrors());
+		assertTrue(xDoc.hasStyleIssues());
 		assertEquals(iniSerial, xDoc.getStyleCacheSerial());
 		//
 		xDoc.getErrorHandler().reset();
@@ -135,6 +147,7 @@ public class LinkElementTest {
 		assertNull(sheet);
 		assertTrue(xDoc.getErrorHandler().hasErrors());
 		assertTrue(xDoc.getErrorHandler().hasPolicyErrors());
+		assertTrue(xDoc.hasStyleIssues());
 		assertEquals(iniSerial, xDoc.getStyleCacheSerial());
 	}
 
