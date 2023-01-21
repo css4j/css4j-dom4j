@@ -907,7 +907,7 @@ public class XHTMLDocumentTest {
 		// Obtain the rule where a value is declared
 		CSSParser parser = new CSSParser();
 		SelectorList selist = parser.parseSelectors("p.boldmargin");
-		StyleRule rule = (StyleRule) sheet.getFirstStyleRule(selist);
+		StyleRule rule = sheet.getFirstStyleRule(selist);
 		assertNotNull(rule);
 
 		AbstractCSSStyleDeclaration declStyle = rule.getStyle();
