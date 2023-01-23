@@ -69,15 +69,15 @@ and optional library packages are the following:
 ### Compile-time dependencies
 
 - The [css4j](https://github.com/css4j/css4j/releases) library (and its transitive
-  dependencies); version 3.9.0 or higher is recommended (compatibility with 4.0 or
+  dependencies); version 3.9.1 or higher is recommended (compatibility with 4.0 or
   higher is not guaranteed).
 
 - The [css4j-agent](https://github.com/css4j/css4j-agent/releases) library;
-  version 3.7.0 or higher is recommended (compatibility with 4.0 or higher is
+  version 3.7.1 or higher is recommended (compatibility with 4.0 or higher is
   not guaranteed). **It is optional at runtime.**
 
-- The [dom4j](https://github.com/dom4j/dom4j) JAR package (tested with 2.1.1).
-  Requires at least version 2.0 to compile and 2.1.1 to run the tests, but you
+- The [dom4j](https://github.com/dom4j/dom4j) JAR package (tested with 2.1.4).
+  Requires at least version 2.1.4 to compile and run the tests, but you
   should be able to run the resulting jar file with dom4j 1.6 if you are stuck with it.
 
 - The [XPP3 Pull Parser](https://github.com/xmlpull-xpp3/xmlpull-xpp3) (which

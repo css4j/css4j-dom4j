@@ -1,22 +1,30 @@
-# css4j-dom4j version 3.9 Release Notes
+# css4j-dom4j version 3.9.1 Release Notes
 
-### October 19, 2022
+### January 23, 2023
 
 <br/>
 
 ## Release Highlights
 
-### Add `rebuildCascade()` to `XHTMLDocument`
+### Use `org.dom4j` as DOM4J's module name
 
-Gives a native, more efficient implementation to css4j's `CSSDocument.rebuildCascade()` default method.
+DOM4J version 2.1.4 was released which uses the `org.dom4j` module name, and this
+project was upgraded accordingly.
 
 ## Detail of changes
 
-- Check for read-only in `setAttributeNode()`.
-- Prevent NPE in `setTargetMedium(String)`.
-- Upgrade to css4j 3.9.0
-- Upgrade to `extra-java-module-info` 1.0
-- Gradle: prefer version 2.0.3 of `slf4j-api`.
+- Invalidate computed style after the removal of a default-style `http-equiv` attribute.
+- Speed up the computation of base URI, make it more reliable.
+- Tests: add a few styling error checks.
+- Tests: remove an unnecessary cast.
+- Gradle: use a different line conversion procedure to avoid Git glitches
+- Bump year to 2023 in copyright notices.
+- Upgrade to slf4j-api 2.0.6
+- Upgrade to css4j 3.9.1
+- Upgrade to css4j-agent 3.7.1
+- Upgrade to dom4j 2.1.4
+- Upgrade Gradle wrapper to 7.6
+- Upgrade to extra-java-module-info 1.2
 
 ## Project Sites
 
