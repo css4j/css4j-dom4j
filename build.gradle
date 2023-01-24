@@ -60,7 +60,7 @@ dependencies {
 	testImplementation('org.slf4j:slf4j-api') {
 		version {
 			require '[1.7.28,)'
-			prefer '2.0.0'
+			prefer '2.0.6'
 		}
 	}
 	testImplementation 'junit:junit:4.13.2'
