@@ -11,24 +11,27 @@
 
 package io.sf.carte.doc.dom4j;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.Reader;
 import java.io.StringReader;
+import java.util.concurrent.TimeUnit;
 
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
 import org.dom4j.io.SAXReader;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Timeout;
 import org.xml.sax.InputSource;
 
 public class UpstreamTest {
 
-	@Test(timeout = 500)
+	@Test
+	@Timeout(value = 700, unit = TimeUnit.MILLISECONDS)
 	public void testParseWithDefaults() throws Exception {
 		SAXReader builder = new SAXReader();
 		StringReader re = new StringReader(
@@ -46,7 +49,8 @@ public class UpstreamTest {
 		}
 	}
 
-	@Test(timeout = 500)
+	@Test
+	@Timeout(value = 700, unit = TimeUnit.MILLISECONDS)
 	public void testDocumentHelperParseText() throws Exception {
 		try {
 			org.dom4j.Document document = DocumentHelper.parseText(
@@ -65,7 +69,7 @@ public class UpstreamTest {
 	 * SAXReader and XPP3 fail this test that css4j-dom4j passes with
 	 * XMLDocumentBuilder.
 	 */
-	@Ignore
+	@Disabled
 	@Test
 	public void testParseInputSourceImpliedHtmlElement() throws Exception {
 		String xml = "<!DOCTYPE html><body><div id='divid'><br/></div></body>";

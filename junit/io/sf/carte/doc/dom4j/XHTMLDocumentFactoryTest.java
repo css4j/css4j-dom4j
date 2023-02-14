@@ -11,8 +11,8 @@
 
 package io.sf.carte.doc.dom4j;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -26,8 +26,8 @@ import java.nio.charset.StandardCharsets;
 import org.dom4j.DocumentException;
 import org.dom4j.io.SAXReader;
 import org.dom4j.io.XPP3Reader;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.w3c.dom.DocumentType;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -42,7 +42,7 @@ public class XHTMLDocumentFactoryTest {
 
 	static XHTMLDocument xhtmlDoc;
 
-	@BeforeClass
+	@BeforeAll
 	public static void setUpBeforeClass() throws Exception {
 		Reader re = DOMCSSStyleSheetFactoryTest.sampleHTMLReader();
 		InputSource isrc = new InputSource(re);

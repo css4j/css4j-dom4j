@@ -11,13 +11,13 @@
 
 package io.sf.carte.doc.dom4j;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import java.io.IOException;
 import java.io.Reader;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import io.sf.carte.doc.style.css.nsac.CSSException;
 import io.sf.carte.doc.style.css.om.AbstractCSSStyleSheet;

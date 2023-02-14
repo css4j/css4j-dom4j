@@ -11,18 +11,18 @@
 
 package io.sf.carte.doc.dom4j;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.net.MalformedURLException;
 
 import org.dom4j.Namespace;
 import org.dom4j.QName;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import io.sf.carte.doc.style.css.om.AbstractCSSStyleSheet;
 
@@ -34,7 +34,7 @@ public class LinkElementTest {
 
 	QName link_qname = null;
 
-	@Before
+	@BeforeEach
 	public void setUp() {
 		XHTMLDocumentFactory factory = new TestDocumentFactory();
 		headElement = (HeadElement) factory.createElement("head", XHTMLDocument.XHTML_NAMESPACE_URI);

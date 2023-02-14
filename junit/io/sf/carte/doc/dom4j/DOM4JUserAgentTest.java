@@ -11,16 +11,16 @@
 
 package io.sf.carte.doc.dom4j;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.EnumSet;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.w3c.dom.DOMStringList;
 
 import io.sf.carte.doc.DocumentException;
@@ -31,7 +31,7 @@ import io.sf.carte.doc.style.css.nsac.Parser;
 public class DOM4JUserAgentTest {
 	TestUserAgent agent;
 
-	@Before
+	@BeforeEach
 	public void setUp() {
 		agent = new TestUserAgent();
 	}

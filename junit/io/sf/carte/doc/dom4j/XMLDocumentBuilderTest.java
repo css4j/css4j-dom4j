@@ -11,11 +11,11 @@
 
 package io.sf.carte.doc.dom4j;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -24,8 +24,8 @@ import java.io.StringReader;
 import org.dom4j.dom.DOMElement;
 import org.dom4j.io.SAXReader;
 import org.dom4j.io.XPP3Reader;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.w3c.dom.Comment;
 import org.w3c.dom.Document;
 import org.w3c.dom.DocumentType;
@@ -43,7 +43,7 @@ public class XMLDocumentBuilderTest {
 	private static XHTMLDocumentFactory factory;
 	private static EntityResolver2 resolver;
 
-	@BeforeClass
+	@BeforeAll
 	public static void setUpBeforeClass() {
 		factory = new TestDocumentFactory();
 		resolver = new DefaultEntityResolver();

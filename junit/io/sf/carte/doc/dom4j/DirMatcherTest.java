@@ -11,14 +11,14 @@
 
 package io.sf.carte.doc.dom4j;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
 
 import org.dom4j.DocumentException;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import io.sf.carte.doc.style.css.nsac.SelectorList;
 import io.sf.carte.doc.style.css.om.DOMCSSStyleSheetFactoryTest;
@@ -28,7 +28,7 @@ public class DirMatcherTest {
 
 	XHTMLDocument document;
 
-	@Before
+	@BeforeEach
 	public void setUp() throws IOException, DocumentException {
 		document = TestDocumentFactory.loadDocument(DOMCSSStyleSheetFactoryTest.directionalityHTMLReader());
 	}

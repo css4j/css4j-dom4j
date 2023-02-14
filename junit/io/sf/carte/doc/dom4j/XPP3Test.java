@@ -11,14 +11,14 @@
 
 package io.sf.carte.doc.dom4j;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.IOException;
 import java.io.Reader;
 
 import org.dom4j.DocumentException;
 import org.dom4j.io.XPP3Reader;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.xmlpull.v1.XmlPullParserException;
 
 import io.sf.carte.doc.style.css.om.DOMCSSStyleSheetFactoryTest;

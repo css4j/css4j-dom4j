@@ -11,16 +11,16 @@
 
 package io.sf.carte.doc.dom4j;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.io.Reader;
 
 import org.dom4j.Namespace;
 import org.dom4j.QName;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.xml.sax.InputSource;
 
 import io.sf.carte.doc.style.css.CSSDocument;
@@ -36,7 +36,7 @@ public class BaseURLElementTest {
 
 	BaseURLElement baseElement = null;
 
-	@Before
+	@BeforeEach
 	public void setUp() {
 		XHTMLDocumentFactory factory = XHTMLDocumentFactory.getInstance();
 		headElement = (HeadElement) factory.createElement("head");
