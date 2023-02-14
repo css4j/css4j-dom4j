@@ -87,7 +87,7 @@ and optional library packages are the following:
 
 ### Test dependencies
 
-- A recent version of [JUnit 4](https://junit.org/junit4/).
+- A recent version of [JUnit 5](https://junit.org/junit5/).
 
 - [Jaxen](https://github.com/jaxen-xpath/jaxen), this software was tested with
   version 1.2.0.
