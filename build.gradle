@@ -57,6 +57,8 @@ dependencies {
 		}
 	}
 	testImplementation 'org.junit.jupiter:junit-jupiter:5.9.2'
+	// css4j 3.9.1 tests still use JUnit 4
+	testImplementation 'org.junit.vintage:junit-vintage-engine:5.9.2'
 }
 
 extraJavaModuleInfo {
@@ -103,6 +105,10 @@ sourceSets {
 			excludes += ["**/*.java"]
 		}
 	}
+}
+
+test {
+	useJUnitPlatform()
 }
 
 tasks.register('testsJar', Jar) {
