@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'io.sf.carte'
-version = '3.9.2-SNAPSHOT'
+version = '4.0-SNAPSHOT'
 
 description = 'css4j-dom4j'
 
@@ -25,14 +25,14 @@ java {
 dependencies {
 	api('io.sf.carte:css4j') {
 		version {
-			strictly '[3.7.1,)'
-			prefer '3.9.1'
+			strictly '[3.9.0,)'
+			prefer '4.0'
 		}
 	}
 	useragentImplementation('io.sf.carte:css4j-agent') {
 		version {
 			strictly '[3.4.0,)'
-			prefer '3.7.1'
+			prefer '4.0'
 		}
 	}
 	/*
@@ -48,7 +48,7 @@ dependencies {
 	xmlpullImplementation 'xmlpull:xmlpull:1.2.0'
 	xmlpullImplementation 'xpp3:xpp3_min:1.2.0'
 	testImplementation group: 'io.sf.carte', name: 'css4j', classifier: 'tests',
-		version: '3.9.1'
+		version: '4.0'
 	testImplementation 'jaxen:jaxen:1.2.0'
 	testImplementation('org.slf4j:slf4j-api') {
 		version {
@@ -57,7 +57,7 @@ dependencies {
 		}
 	}
 	testImplementation 'org.junit.jupiter:junit-jupiter:5.9.2'
-	// css4j 3.9.1 tests still use JUnit 4
+	// css4j 4.0 tests still use JUnit 4
 	testImplementation 'org.junit.vintage:junit-vintage-engine:5.9.2'
 }
 
