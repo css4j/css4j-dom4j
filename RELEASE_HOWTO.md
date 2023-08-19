@@ -17,14 +17,7 @@ Maven repository currently used by css4j-dom4j.
 
 ## Steps
 
-1) In the `master` branch of your local copy of the css4j-dom4j Git repository,
-bump the `version` in the [`build.gradle`](build.gradle) file or remove the
-`-SNAPSHOT` suffix as necessary. Commit the change to the Git repository.
-
-2) If there is an issue tracking the release, close it (could be done adding a
-'closes...' to the message in the previously described commit).
-
-3) If your local copy of the css4j-dom4j Git repository exactly matches the current
+1) If your local copy of the css4j-dom4j Git repository exactly matches the current
 `master` HEAD, use that copy to execute the `gradlew` commands shown later,
 otherwise create a new clone of the `git@github.com:css4j/css4j-dom4j.git`
 repository with `git clone` and use it.
@@ -32,22 +25,32 @@ repository with `git clone` and use it.
 For reference, let your copy of the css4j-dom4j release code be at
 `/path/to/css4j-dom4j`.
 
-4) To check that everything is fine, build the code:
-
-```shell
-cd /path/to/css4j-dom4j
-./gradlew build
-```
-
-5) Use `changes.sh <new-version>` to create a `CHANGES.txt` file with the
+2) Execute `./changes.sh <new-version>` to create a `CHANGES.txt` file with the
 changes from the latest tag. For example if you are releasing `4.1`:
 
 ```shell
 ./changes.sh 4.1
 ```
 
-Edit the resulting `CHANGES.txt` as convenient, to use it as the basis for the
-detailed list of changes when you create the new release in Github.
+Edit the resulting `CHANGES.txt` as convenient and use it as the basis to update
+the `RELEASE_NOTES.md` document. Paste the list of changes in under the
+`## Detail of changes` section.
+
+3) In the `master` branch of your local copy of the css4j-dom4j Git repository,
+bump the `version` in the [`build.gradle`](build.gradle) file or remove the
+`-SNAPSHOT` suffix as necessary.
+
+Commit the changes (`build.gradle` + `RELEASE_NOTES.md`) to the Git repository.
+
+4) If there is an issue tracking the release, close it (could be done adding a
+'closes...' to the message in the previously described commit).
+
+5) To check that everything is fine, build the code:
+
+```shell
+cd /path/to/css4j-dom4j
+./gradlew build
+```
 
 6) Clone the `git@github.com:css4j/css4j.github.io.git` repository (which
 contains a bare-bones Maven repository) and let `/path/to/css4j.github.io` be
