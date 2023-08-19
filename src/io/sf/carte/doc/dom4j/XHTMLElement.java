@@ -107,6 +107,7 @@ public class XHTMLElement extends CSSStylableElement {
 		return null;
 	}
 
+	@Deprecated
 	@Override
 	public void setIdAttributeNS(String namespaceURI, String localName, boolean isId) throws DOMException {
 	}

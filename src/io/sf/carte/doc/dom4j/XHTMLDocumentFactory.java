@@ -276,6 +276,12 @@ public class XHTMLDocumentFactory extends DOMDocumentFactory {
 		}
 	}
 
+	@Deprecated
+	@Override
+	public Object getFeature(String feature, String version) {
+		return null;
+	}
+
 	/**
 	 * CSS style sheet factory for DOM4J.
 	 * 

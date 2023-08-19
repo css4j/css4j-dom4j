@@ -105,6 +105,7 @@ public class CSSStylableElementTest {
 		pList.clear();
 	}
 
+	@SuppressWarnings("deprecation")
 	@Test
 	public void testSetIdAttributeNodeAttrBoolean() {
 		XHTMLElement body = xhtmlDoc.createElement("body");

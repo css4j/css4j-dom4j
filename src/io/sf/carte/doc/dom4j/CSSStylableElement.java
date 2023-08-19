@@ -144,6 +144,30 @@ abstract public class CSSStylableElement extends DOMElement implements CSSElemen
 		}
 	}
 
+	@Deprecated
+	@Override
+	public Object getFeature(String feature, String version) {
+		return null;
+	}
+
+	@Deprecated
+	@Override
+	public void setIdAttribute(String name, boolean isId) throws DOMException {
+		if (isId && !"id".equalsIgnoreCase(name)) {
+			super.setIdAttribute(name, isId);
+		}
+	}
+
+	@Deprecated
+	@Override
+	public void setIdAttributeNS(String namespaceURI, String localName, boolean isId)
+			throws DOMException {
+		if (isId && !"id".equalsIgnoreCase(localName)) {
+			super.setIdAttributeNS(namespaceURI, localName, isId);
+		}
+	}
+
+	@Deprecated
 	@Override
 	public void setIdAttributeNode(Attr idAttr, boolean isId) {
 		if (isId && !"id".equalsIgnoreCase(idAttr.getLocalName())) {

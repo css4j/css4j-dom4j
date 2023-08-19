@@ -192,6 +192,28 @@ public class XHTMLDocument extends DOMDocument implements CSSDocument {
 		return null;
 	}
 
+	@Deprecated
+	@Override
+	public Object getFeature(String feature, String version) {
+		return null;
+	}
+
+	@Deprecated
+	@Override
+	public boolean getStrictErrorChecking() {
+		return false;
+	}
+
+	@Deprecated
+	@Override
+	public void setStrictErrorChecking(boolean strictErrorChecking) {
+	}
+
+	@Deprecated
+	@Override
+	public void normalizeDocument() {
+	}
+
 	/**
 	 * Now deprecated, this method gave the encoding specified at the XML declaration.
 	 * 

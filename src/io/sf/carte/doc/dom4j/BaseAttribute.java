@@ -59,4 +59,10 @@ class BaseAttribute extends DOMAttribute {
 		}
 	}
 
+	@Deprecated
+	@Override
+	public Object getFeature(String feature, String version) {
+		return null;
+	}
+
 }
