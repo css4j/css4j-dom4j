@@ -26,7 +26,7 @@ dependencies {
 	api('io.sf.carte:css4j') {
 		version {
 			strictly '[3.9.0,)'
-			prefer '4.0.1'
+			prefer '4.1'
 		}
 	}
 	useragentImplementation('io.sf.carte:css4j-agent') {
@@ -48,7 +48,7 @@ dependencies {
 	xmlpullImplementation 'xmlpull:xmlpull:1.2.0'
 	xmlpullImplementation 'xpp3:xpp3_min:1.2.0'
 	testImplementation group: 'io.sf.carte', name: 'css4j', classifier: 'tests',
-		version: '4.0.1'
+		version: '4.1'
 	testImplementation 'jaxen:jaxen:1.2.0'
 	testImplementation('org.slf4j:slf4j-api') {
 		version {
