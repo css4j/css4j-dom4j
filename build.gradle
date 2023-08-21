@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'io.sf.carte'
-version = '4.0'
+version = '4.0.1-SNAPSHOT'
 
 description = 'css4j-dom4j'
 
