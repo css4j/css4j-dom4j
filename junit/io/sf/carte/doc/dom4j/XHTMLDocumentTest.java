@@ -27,6 +27,7 @@ import java.util.Iterator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.w3c.dom.DOMStringList;
+import org.w3c.dom.DocumentType;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.css.CSSRule;
@@ -74,6 +75,15 @@ public class XHTMLDocumentTest {
 		org.xml.sax.InputSource isrc = new org.xml.sax.InputSource(re);
 		xhtmlDoc = XHTMLDocumentFactoryTest.parseXML(isrc);
 		re.close();
+	}
+
+	@Test
+	public void getDoctype() {
+		DocumentType docType = xhtmlDoc.getDoctype();
+		assertNotNull(docType);
+		assertEquals("html", docType.getName());
+		assertNull(docType.getPublicId());
+		assertNull(docType.getSystemId());
 	}
 
 	@Test
