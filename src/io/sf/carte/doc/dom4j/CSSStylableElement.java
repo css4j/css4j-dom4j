@@ -230,7 +230,7 @@ abstract public class CSSStylableElement extends DOMElement implements CSSElemen
 	public CSSStyleDeclaration getOverrideStyle(Condition pseudoElt) {
 		CSSStyleDeclaration overrideStyle = null;
 		if (overrideStyleSet == null) {
-			overrideStyleSet = new HashMap<Condition, CSSStyleDeclaration>(1);
+			overrideStyleSet = new HashMap<>(1);
 		} else {
 			overrideStyle = overrideStyleSet.get(pseudoElt);
 		}
@@ -638,10 +638,9 @@ abstract public class CSSStylableElement extends DOMElement implements CSSElemen
 						int sz = list.getLength();
 						for (int i = 0; i < sz; i++) {
 							Node node = list.item(i);
-							if (node.getNodeType() == Node.ELEMENT_NODE) {
-								if (!defaultButtonCheck((CSSStylableElement) node, formid)) {
-									return false;
-								}
+							if (node.getNodeType() == Node.ELEMENT_NODE
+									&& !defaultButtonCheck((CSSStylableElement) node, formid)) {
+								return false;
 							}
 						}
 					}
@@ -661,10 +660,9 @@ abstract public class CSSStylableElement extends DOMElement implements CSSElemen
 						if ("submit".equalsIgnoreCase(type) || "image".equalsIgnoreCase(type)) {
 							return false;
 						}
-					} else if (tagname.equals("button")) {
-						if ("submit".equalsIgnoreCase(element.getAttribute("type"))) {
-							return false;
-						}
+					} else if (tagname.equals("button")
+							&& "submit".equalsIgnoreCase(element.getAttribute("type"))) {
+						return false;
 					}
 				}
 			}

@@ -66,20 +66,18 @@ public class XHTMLElement extends CSSStylableElement {
 
 	@Override
 	public void setAttribute(String name, String value) throws DOMException {
-		if ("id".equals(name)) {
-			if (!hasAttribute("id") && hasAttribute("ID")) {
-				name = "ID";
-			}
+		if ("id".equals(name) && !hasAttribute("id") && hasAttribute("ID")) {
+			name = "ID";
 		}
 		super.setAttribute(name, value);
 	}
 
 	@Override
-	public void setAttributeNS(String namespaceURI, String qualifiedName, String value) throws DOMException {
-		if ("id".equals(qualifiedName)) {
-			if (!hasAttributeNS(namespaceURI, "id") && hasAttributeNS(namespaceURI, "ID")) {
-				qualifiedName = "ID";
-			}
+	public void setAttributeNS(String namespaceURI, String qualifiedName, String value)
+			throws DOMException {
+		if ("id".equals(qualifiedName) && !hasAttributeNS(namespaceURI, "id")
+				&& hasAttributeNS(namespaceURI, "ID")) {
+			qualifiedName = "ID";
 		}
 		super.setAttributeNS(namespaceURI, qualifiedName, value);
 	}

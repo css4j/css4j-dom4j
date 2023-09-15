@@ -40,15 +40,13 @@ class BaseURLElement extends XHTMLElement {
 	@Override
 	protected void childAdded(Node node) {
 		super.childAdded(node);
-		if (node instanceof Attribute) {
-			if (node.getName().equalsIgnoreCase("href")) {
-				String href = ((Attribute) node).getValue();
-				if (href != null) {
-					XHTMLDocument doc = getOwnerDocument();
-					if (doc != null) {
-						doc.setBaseURL(this, href);
-						HrefAttribute.onBaseModify(doc);
-					}
+		if (node instanceof Attribute && node.getName().equalsIgnoreCase("href")) {
+			String href = ((Attribute) node).getValue();
+			if (href != null) {
+				XHTMLDocument doc = getOwnerDocument();
+				if (doc != null) {
+					doc.setBaseURL(this, href);
+					HrefAttribute.onBaseModify(doc);
 				}
 			}
 		}

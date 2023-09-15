@@ -95,7 +95,7 @@ public class XHTMLDocument extends DOMDocument implements CSSDocument {
 
 	private String targetMedium = null;
 
-	private final Map<String, CSSCanvas> canvases = new HashMap<String, CSSCanvas>(3);
+	private final Map<String, CSSCanvas> canvases = new HashMap<>(3);
 
 	private final ErrorHandler errorHandler = createErrorHandler();
 
@@ -732,10 +732,8 @@ public class XHTMLDocument extends DOMDocument implements CSSDocument {
 			XHTMLElement elm = getDocumentElement();
 			if (elm != null) {
 				String attr = elm.getAttribute("xml:base");
-				if (attr.length() != 0) {
-					if (setBaseURL(elm, attr)) {
-						return baseURL;
-					}
+				if (attr.length() != 0 && setBaseURL(elm, attr)) {
+					return baseURL;
 				}
 				// Look for BASE element
 				org.dom4j.Element head = elm.element("head");
