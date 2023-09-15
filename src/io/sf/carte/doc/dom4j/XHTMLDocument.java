@@ -75,9 +75,9 @@ public class XHTMLDocument extends DOMDocument implements CSSDocument {
 
 	private Set<CSSPropertyDefinition> registeredPropertySet = null;
 
-	Set<LinkElement> linkedStyle = new LinkedHashSet<LinkElement>(4);
+	Set<StyleDefinerElement> linkedStyle = new LinkedHashSet<>(4);
 
-	Set<StyleElement> embeddedStyle = new LinkedHashSet<StyleElement>(3);
+	Set<StyleDefinerElement> embeddedStyle = new LinkedHashSet<>(3);
 
 	private final MyOMStyleSheetList sheets = new MyOMStyleSheetList(7);
 
@@ -278,12 +278,12 @@ public class XHTMLDocument extends DOMDocument implements CSSDocument {
 		 */
 		sheets.clear();
 		// Add styles referenced by links
-		Iterator<LinkElement> links = linkedStyle.iterator();
+		Iterator<StyleDefinerElement> links = linkedStyle.iterator();
 		while (links.hasNext()) {
 			addLinkedSheet(links.next().getSheet());
 		}
 		// Add embedded styles
-		Iterator<StyleElement> embd = embeddedStyle.iterator();
+		Iterator<StyleDefinerElement> embd = embeddedStyle.iterator();
 		while (embd.hasNext()) {
 			addLinkedSheet(embd.next().getSheet());
 		}
@@ -408,33 +408,51 @@ public class XHTMLDocument extends DOMDocument implements CSSDocument {
 	/**
 	 * Gets the title of the currently selected style sheet set.
 	 * 
-	 * @return the title of the currently selected style sheet, the empty string
-	 *         if none is selected, or <code>null</code> if there are style
-	 *         sheets from different style sheet sets that have their style
-	 *         sheet disabled flag unset.
+	 * @return the title of the currently selected style sheet, the empty string if
+	 *         none is selected, or <code>null</code> if there are style sheets from
+	 *         different style sheet sets that have their style sheet disabled flag
+	 *         unset.
 	 */
 	@Override
 	public String getSelectedStyleSheetSet() {
 		if (sheets.needsUpdate()) {
 			sheets.update();
 		}
+
 		String selectedSetName = "";
-		Iterator<LinkElement> links = linkedStyle.iterator();
+
+		Iterator<StyleDefinerElement> links = linkedStyle.iterator();
 		while (links.hasNext()) {
 			AbstractCSSStyleSheet sheet = links.next().getSheet();
 			String title;
-			if (sheet != null && (title = sheet.getTitle()) != null && title.length() != 0) {
-				if (!sheet.getDisabled()) {
-					if (selectedSetName.length() > 0) {
-						if (!selectedSetName.equalsIgnoreCase(title)) {
-							return null;
-						}
-					} else {
-						selectedSetName = title;
+			if (sheet != null && (title = sheet.getTitle()) != null && title.length() != 0
+					&& !sheet.getDisabled()) {
+				if (selectedSetName.length() > 0) {
+					if (!selectedSetName.equalsIgnoreCase(title)) {
+						return null;
 					}
+				} else {
+					selectedSetName = title;
 				}
 			}
 		}
+
+		Iterator<StyleDefinerElement> style = embeddedStyle.iterator();
+		while (links.hasNext()) {
+			CSSStyleSheet sheet = style.next().getSheet();
+			String title;
+			if (sheet != null && (title = sheet.getTitle()) != null && title.length() > 0
+					&& !sheet.getDisabled()) {
+				if (selectedSetName.length() > 0) {
+					if (!selectedSetName.equalsIgnoreCase(title)) {
+						return null;
+					}
+				} else {
+					selectedSetName = title;
+				}
+			}
+		}
+
 		return selectedSetName;
 	}
 
@@ -452,7 +470,13 @@ public class XHTMLDocument extends DOMDocument implements CSSDocument {
 		if (name == null || (name.length() > 0 && !getStyleSheetSets().contains(name))) {
 			return;
 		}
-		Iterator<LinkElement> links = linkedStyle.iterator();
+
+		selectSheetSet(name, linkedStyle);
+		selectSheetSet(name, embeddedStyle);
+	}
+
+	private void selectSheetSet(String name, Set<StyleDefinerElement> styleDefinerSet) {
+		Iterator<StyleDefinerElement> links = linkedStyle.iterator();
 		while (links.hasNext()) {
 			String title;
 			AbstractCSSStyleSheet sheet = links.next().getSheet();
@@ -489,14 +513,18 @@ public class XHTMLDocument extends DOMDocument implements CSSDocument {
 		if (name == null || name.length() == 0) {
 			return;
 		}
-		Iterator<LinkElement> links = linkedStyle.iterator();
+		enableStyleSheetSet(name, linkedStyle);
+		enableStyleSheetSet(name, embeddedStyle);
+	}
+
+	private static void enableStyleSheetSet(String name, Set<StyleDefinerElement> styleDefinerSet) {
+		Iterator<StyleDefinerElement> links = styleDefinerSet.iterator();
 		while (links.hasNext()) {
 			AbstractCSSStyleSheet sheet = links.next().getSheet();
 			String title;
-			if (sheet != null && (title = sheet.getTitle()) != null && title.length() > 0) {
-				if (title.equals(name)) {
-					sheet.setDisabled(false);
-				}
+			if (sheet != null && (title = sheet.getTitle()) != null && title.length() > 0
+					&& title.equals(name)) {
+				sheet.setDisabled(false);
 			}
 		}
 	}

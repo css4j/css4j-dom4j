@@ -64,7 +64,7 @@ class HrefAttribute extends DOMAttribute {
 	}
 
 	static void onBaseModify(XHTMLDocument doc) {
-		Iterator<LinkElement> links = doc.linkedStyle.iterator();
+		Iterator<StyleDefinerElement> links = doc.linkedStyle.iterator();
 		while (links.hasNext()) {
 			links.next().resetLinkedSheet();
 		}

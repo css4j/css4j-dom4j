@@ -60,6 +60,7 @@ import io.sf.carte.doc.style.css.om.MediaRule;
 import io.sf.carte.doc.style.css.om.PropertyCountVisitor;
 import io.sf.carte.doc.style.css.om.StyleCountVisitor;
 import io.sf.carte.doc.style.css.om.StyleRule;
+import io.sf.carte.doc.style.css.om.StyleSheetList;
 import io.sf.carte.doc.style.css.parser.CSSParser;
 import io.sf.carte.doc.style.css.parser.SyntaxParser;
 import io.sf.carte.doc.style.css.property.LexicalValue;
@@ -116,7 +117,7 @@ public class XHTMLDocumentTest {
 			xhtmlDoc.getStyleSheets().item(0).getHref());
 		assertEquals(3, xhtmlDoc.getStyleSheetSets().getLength());
 
-		Iterator<LinkElement> it = xhtmlDoc.linkedStyle.iterator();
+		Iterator<StyleDefinerElement> it = xhtmlDoc.linkedStyle.iterator();
 		assertTrue(it.hasNext());
 		AbstractCSSStyleSheet sheet = it.next().getSheet();
 		assertNotNull(sheet);
@@ -183,21 +184,43 @@ public class XHTMLDocumentTest {
 		assertTrue(list.contains("Alter 2"));
 		assertNull(xhtmlDoc.getLastStyleSheetSet());
 		assertEquals("Default", xhtmlDoc.getSelectedStyleSheetSet());
+
 		xhtmlDoc.setSelectedStyleSheetSet("foo");
 		assertEquals("Default", xhtmlDoc.getSelectedStyleSheetSet());
+
 		xhtmlDoc.setSelectedStyleSheetSet("Alter 1");
 		assertEquals("Alter 1", xhtmlDoc.getSelectedStyleSheetSet());
+
 		xhtmlDoc.enableStyleSheetsForSet("Alter 1");
 		assertEquals("Alter 1", xhtmlDoc.getSelectedStyleSheetSet());
+
 		xhtmlDoc.setSelectedStyleSheetSet("foo");
 		assertEquals("Alter 1", xhtmlDoc.getSelectedStyleSheetSet());
+
 		xhtmlDoc.setSelectedStyleSheetSet("Alter 2");
 		assertEquals("Alter 2", xhtmlDoc.getSelectedStyleSheetSet());
+
 		xhtmlDoc.enableStyleSheetsForSet("Alter 1");
 		assertNull(xhtmlDoc.getSelectedStyleSheetSet());
+
 		xhtmlDoc.setSelectedStyleSheetSet("Default");
 		assertEquals("Default", xhtmlDoc.getSelectedStyleSheetSet());
 		assertEquals("Default", xhtmlDoc.getLastStyleSheetSet());
+
+		StyleSheetList sheets = xhtmlDoc.getStyleSheets();
+		assertEquals(7, sheets.getLength());
+		sheets.remove("Alter 2");
+		assertEquals(6, sheets.getLength());
+		assertEquals("Default", xhtmlDoc.getSelectedStyleSheetSet());
+	}
+
+	@Test
+	public void testAlternateStyle() {
+		xhtmlDoc.setSelectedStyleSheetSet("Alter 1");
+		CSSElement body = (CSSElement) xhtmlDoc.getElementsByTagName("body").item(0);
+		CSSComputedProperties style = body.getComputedStyle(null);
+		assertEquals("#000080", style.getPropertyValue("color"));
+		assertEquals("#ff0", style.getPropertyValue("background-color"));
 	}
 
 	@Test
