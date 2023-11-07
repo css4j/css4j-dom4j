@@ -56,10 +56,10 @@ dependencies {
 			prefer '2.0.9'
 		}
 	}
-	testImplementation 'org.junit.jupiter:junit-jupiter:5.10.0'
+	testImplementation 'org.junit.jupiter:junit-jupiter:5.10.1'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 	// css4j 4.0 tests still use JUnit 4
-	testImplementation 'org.junit.vintage:junit-vintage-engine:5.10.0'
+	testImplementation 'org.junit.vintage:junit-vintage-engine:5.10.1'
 }
 
 extraJavaModuleInfo {
