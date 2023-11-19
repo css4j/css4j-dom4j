@@ -40,6 +40,7 @@ import io.sf.carte.doc.style.css.DocumentCSSStyleSheet;
 import io.sf.carte.doc.style.css.SelectorMatcher;
 import io.sf.carte.doc.style.css.nsac.CombinatorSelector;
 import io.sf.carte.doc.style.css.nsac.Condition;
+import io.sf.carte.doc.style.css.nsac.Selector;
 import io.sf.carte.doc.style.css.nsac.SelectorList;
 import io.sf.carte.doc.style.css.nsac.SimpleSelector;
 import io.sf.carte.doc.style.css.om.AbstractSelectorMatcher;
@@ -777,7 +778,13 @@ abstract public class CSSStylableElement extends DOMElement implements CSSElemen
 			return scopeMatchRecursive(list, desc);
 		}
 
-		private boolean scopeMatchRecursive(NodeList list, SimpleSelector desc) {
+		@Override
+		public boolean matchesRelational(Selector selector) {
+			NodeList list = getChildNodes();
+			return scopeMatchRecursive(list, selector);
+		}
+
+		private boolean scopeMatchRecursive(NodeList list, Selector desc) {
 			int sz = list.getLength();
 			for (int i = 0; i < sz; i++) {
 				Node node = list.item(i);
