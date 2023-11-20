@@ -137,6 +137,11 @@ public class XHTMLDocumentFactory extends DOMDocumentFactory {
 	}
 
 	@Override
+	public CSSStylableElement createElement(String qualifiedName, String namespaceURI) {
+		return (CSSStylableElement) super.createElement(qualifiedName, namespaceURI);
+	}
+
+	@Override
 	public CSSStylableElement createElement(QName qname) {
 		String name = qname.getName().toLowerCase(Locale.ROOT);
 		if ("base".equals(name)) {
