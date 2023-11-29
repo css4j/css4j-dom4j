@@ -1,13 +1,14 @@
-* text=auto
-*.java text
-*.properties text
-*.css text
-*.html text
-*.xhtml text
-*.dtd text
-*.ent text
+* text=auto eol=lf
+*.java text eol=lf
+*.properties text eol=lf
+*.css text eol=lf
+*.html text eol=lf
+*.xhtml text eol=lf
+*.dtd text eol=lf
+*.ent text eol=lf
 *.txt text
-*.sh text
-*.xml text
+*.bat text eol=crlf
+*.sh text eol=lf
+*.xml text eol=lf
 *.png binary
 
