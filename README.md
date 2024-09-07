@@ -40,8 +40,13 @@ repositories {
             releasesOnly()
         }
         content {
-            includeGroup 'io.sf.carte'
-            includeGroup 'io.sf.jclf'
+            includeGroupByRegex 'io\\.sf\\..*'
+
+            // Alternative to the regex:
+            //includeGroup 'io.sf.carte'
+            //includeGroup 'io.sf.jclf'
+            //includeGroup 'io.sf.w3'
+
             includeGroup 'xmlpull'
             includeGroup 'xpp3'
         }
