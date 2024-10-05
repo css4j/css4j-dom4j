@@ -74,11 +74,11 @@ and optional library packages are the following:
 ### Compile-time dependencies
 
 - The [css4j](https://github.com/css4j/css4j/releases) library (and its transitive
-  dependencies); version 4.0 or higher is recommended (compatibility with 5.0 or
+  dependencies); version 5.0 or higher is recommended (compatibility with 6.0 or
   higher is not guaranteed).
 
 - The [css4j-agent](https://github.com/css4j/css4j-agent/releases) library;
-  version 4.0 or higher is recommended (compatibility with 5.0 or higher is
+  version 5.0 or higher is recommended (compatibility with 6.0 or higher is
   not guaranteed). **It is optional at runtime.**
 
 - The [dom4j](https://github.com/dom4j/dom4j) JAR package (tested with 2.1.4).

@@ -1,33 +1,28 @@
-# css4j-dom4j version 4.2 Release Notes
+# css4j-dom4j version 5.0 Release Notes
 
-(note: release 4.1 was skipped, for alignment with css4j 4.2)
-
-### November 19, 2023
+### October 5, 2024
 
 <br/>
 
 ## Release Highlights
 
-### Align with css4j 4.2.2
+### Major version bumped to 5
 
-Implements a method required by css4j 4.2.2.
+To emphasize that it is compatible with css4j 5.0, major version was bumped to 5.
 
 <br/>
 
 ## Detail of changes
 
-- Handle also embedded sheets when setting and enabling sets by title.
-- Several code simplifications.
-- Tests: add a test for `getDoctype()`.
-- Tests: add another (disabled) upstream test.
-- Add scm section to Maven POM data.
-- Upgrade to css4j 4.2.2.
-- Upgrade to SLF4J 2.0.9.
-- Upgrade to JUnit 5.10.1.
-- Upgrade Gradle wrapper to 8.4.
-- Upgrade to extra-java-module-info 1.6.
-- Upgrade to actions/checkout@v4.
-- Enable dependabot for Github actions.
+- Override `createElement(String, String)` in `XHTMLDocumentFactory`.
+- Tests: add selector matcher tests.
+- Upgrade to actions/setup-java v4.
+- Default to Linux line endings for source files.
+- Set up CodeQL analysis.
+- Upgrade JUnit to version 5.11.1.
+- Upgrade Gradle wrapper to 8.10.2.
+- Upgrade to extra-java-module-info version 1.9.
+- Bump copyright year to 2024.
 
 <br/>
 
