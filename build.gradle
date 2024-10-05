@@ -26,13 +26,13 @@ dependencies {
 	api('io.sf.carte:css4j') {
 		version {
 			strictly '[4.2.2,)'
-			prefer '4.4'
+			prefer '5.0'
 		}
 	}
 	useragentImplementation('io.sf.carte:css4j-agent') {
 		version {
 			strictly '[3.4.0,)'
-			prefer '4.0'
+			prefer '5.0'
 		}
 	}
 	/*
@@ -48,13 +48,13 @@ dependencies {
 	xmlpullImplementation 'xmlpull:xmlpull:1.2.0'
 	xmlpullImplementation 'xpp3:xpp3_min:1.2.0'
 	testImplementation group: 'io.sf.carte', name: 'css4j', classifier: 'tests',
-		version: '4.4'
+		version: '5.0'
 	testImplementation 'jaxen:jaxen:1.2.0'
 	testImplementation 'org.slf4j:slf4j-api:2.0.13'
 	testImplementation 'org.junit.jupiter:junit-jupiter:5.11.1'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 	// css4j 4.x tests still use JUnit 4
-	testImplementation 'org.junit.vintage:junit-vintage-engine:5.11.0'
+	testImplementation 'org.junit.vintage:junit-vintage-engine:5.11.1'
 }
 
 extraJavaModuleInfo {
