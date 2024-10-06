@@ -51,10 +51,10 @@ dependencies {
 		version: '5.0'
 	testImplementation 'jaxen:jaxen:1.2.0'
 	testImplementation 'org.slf4j:slf4j-api:2.0.13'
-	testImplementation 'org.junit.jupiter:junit-jupiter:5.11.1'
+	testImplementation 'org.junit.jupiter:junit-jupiter:5.11.2'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 	// css4j 4.x tests still use JUnit 4
-	testImplementation 'org.junit.vintage:junit-vintage-engine:5.11.1'
+	testImplementation 'org.junit.vintage:junit-vintage-engine:5.11.2'
 }
 
 extraJavaModuleInfo {
