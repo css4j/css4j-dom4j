@@ -23,16 +23,13 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
 
-import org.dom4j.DocumentException;
 import org.dom4j.io.SAXReader;
-import org.dom4j.io.XPP3Reader;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.w3c.dom.DocumentType;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
 
 import io.sf.carte.doc.style.css.CSSDocument;
 import io.sf.carte.doc.style.css.om.DOMCSSStyleSheetFactoryTest;
@@ -46,7 +43,7 @@ public class XHTMLDocumentFactoryTest {
 	public static void setUpBeforeClass() throws Exception {
 		Reader re = DOMCSSStyleSheetFactoryTest.sampleHTMLReader();
 		InputSource isrc = new InputSource(re);
-		xhtmlDoc = parseXML(isrc);
+		xhtmlDoc = TestUtil.parseXML(isrc);
 		re.close();
 	}
 
@@ -152,31 +149,6 @@ public class XHTMLDocumentFactoryTest {
 		Node ent0 = nl.item(0);
 		assertEquals(Node.TEXT_NODE, ent0.getNodeType());
 		assertEquals("ítem", ent0.getNodeValue());
-	}
-
-	public static XHTMLDocument parseXML(InputSource is) throws DocumentException, SAXException {
-		TestDocumentFactory factory = new TestDocumentFactory();
-		factory.getStyleSheetFactory().setDefaultHTMLUserAgentSheet();
-		SAXReader reader = new SAXReader(factory);
-		reader.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", true);
-		reader.setEntityResolver(new DefaultEntityResolver());
-		XHTMLDocument document = (XHTMLDocument) reader.read(is);
-		return document;
-	}
-
-	public static XHTMLDocument parseXPP3(Reader re) throws Exception {
-		TestDocumentFactory factory = new TestDocumentFactory();
-		XPP3Reader reader = new XPP3Reader(factory);
-		XHTMLDocument document = (XHTMLDocument) reader.read(re);
-		return document;
-	}
-
-	public static XHTMLDocument sampleXHTML() throws DocumentException, SAXException, IOException {
-		Reader re = DOMCSSStyleSheetFactoryTest.sampleHTMLReader();
-		InputSource isrc = new InputSource(re);
-		XHTMLDocument xhtmlDoc = parseXML(isrc);
-		re.close();
-		return xhtmlDoc;
 	}
 
 }

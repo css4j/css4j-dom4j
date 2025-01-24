@@ -25,7 +25,7 @@ public class XHTMLElementTest {
 
 	@BeforeAll
 	public static void setUpBeforeClass() throws Exception {
-		xhtmlDoc = XHTMLDocumentFactoryTest.sampleXHTML();
+		xhtmlDoc = TestUtil.sampleXHTML();
 	}
 
 	@Test

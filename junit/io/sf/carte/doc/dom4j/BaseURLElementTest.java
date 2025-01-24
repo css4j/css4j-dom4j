@@ -73,7 +73,7 @@ public class BaseURLElementTest {
 	public void childAddedNode() throws Exception {
 		Reader re = DOMCSSStyleSheetFactoryTest.sampleHTMLReader();
 		InputSource isrc = new InputSource(re);
-		CSSDocument xhtmlDoc = XHTMLDocumentFactoryTest.parseXML(isrc);
+		CSSDocument xhtmlDoc = TestUtil.parseXML(isrc);
 		re.close();
 		assertNotNull(xhtmlDoc.getBaseURL());
 		assertEquals("http://www.example.com/", xhtmlDoc.getBaseURL().toExternalForm());
@@ -82,7 +82,7 @@ public class BaseURLElementTest {
 	@Test
 	public void childAddedNodeXPP3() throws Exception {
 		Reader re = DOMCSSStyleSheetFactoryTest.sampleHTMLReader();
-		CSSDocument xhtmlDoc = XHTMLDocumentFactoryTest.parseXPP3(re);
+		CSSDocument xhtmlDoc = TestUtil.parseXPP3(re);
 		assertNotNull(xhtmlDoc.getBaseURL());
 		assertEquals("http://www.example.com/", xhtmlDoc.getBaseURL().toExternalForm());
 		re.close();

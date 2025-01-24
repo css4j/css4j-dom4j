@@ -42,7 +42,7 @@ public class CSSStylableElementTest {
 	public void setUp() throws Exception {
 		Reader re = DOMCSSStyleSheetFactoryTest.sampleHTMLReader();
 		InputSource isrc = new InputSource(re);
-		xhtmlDoc = XHTMLDocumentFactoryTest.parseXML(isrc);
+		xhtmlDoc = TestUtil.parseXML(isrc);
 		xhtmlDoc.setTargetMedium("screen");
 		re.close();
 	}

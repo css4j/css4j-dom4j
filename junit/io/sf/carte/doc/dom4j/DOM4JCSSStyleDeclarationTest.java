@@ -58,7 +58,7 @@ public class DOM4JCSSStyleDeclarationTest {
 
 	@BeforeEach
 	public void setUp() throws Exception {
-		xhtmlDoc = XHTMLDocumentFactoryTest.sampleXHTML();
+		xhtmlDoc = TestUtil.sampleXHTML();
 	}
 
 	@Test
