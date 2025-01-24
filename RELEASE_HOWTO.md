@@ -26,10 +26,10 @@ For reference, let your copy of the css4j-dom4j release code be at
 `/path/to/css4j-dom4j`.
 
 2) Execute `./changes.sh <new-version>` to create a `CHANGES.txt` file with the
-changes from the latest tag. For example if you are releasing `4.1`:
+changes from the latest tag. For example if you are releasing `5.1.1`:
 
 ```shell
-./changes.sh 4.1
+./changes.sh 5.1.1
 ```
 
 Edit the resulting `CHANGES.txt` as convenient and use it as the basis to update
@@ -86,7 +86,7 @@ mv /path/to/css4j-dist/build/docs/javadoc/* /path/to/css4j.github.io/api/latest
 ```
 
 If the changes to the `css4j.github.io` repo look correct, commit them with a
-description like "Latest modular Javadocs after css4j-dom4j 4.1" and push.
+description like "Latest modular Javadocs after css4j-dom4j 5.1.1" and push.
 
 Check whether the ["Examples" CI](https://github.com/css4j/css4j.github.io/actions/workflows/examples.yml)
 triggered by that commit to the `css4j.github.io` repository completed
@@ -97,8 +97,8 @@ for example.
 
 ```shell
 cd /path/to/css4j-dom4j
-git tag -s v4.1 -m "Release 4.1"
-git push origin v4.1
+git tag -s v5.1.1 -m "Release 5.1.1"
+git push origin v5.1.1
 ```
 
 or `git tag -a` instead of `-s` if you do not plan to sign the tag. But it is

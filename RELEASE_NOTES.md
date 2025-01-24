@@ -1,28 +1,28 @@
-# css4j-dom4j version 5.0 Release Notes
+# css4j-dom4j version 5.1 Release Notes
 
-### October 5, 2024
+### January 24, 2025
 
 <br/>
 
 ## Release Highlights
 
-### Major version bumped to 5
+### Test suite updated for css4j 5.1
 
-To emphasize that it is compatible with css4j 5.0, major version was bumped to 5.
+This library is the same as 5.0 except for the test suite, which was modified
+for compatibility with the new `attr()` syntax supported by css4j 5.1.
+
+There is no need for upgrading unless you want to run the supplied tests.
 
 <br/>
 
 ## Detail of changes
 
-- Override `createElement(String, String)` in `XHTMLDocumentFactory`.
-- Tests: add selector matcher tests.
-- Upgrade to actions/setup-java v4.
-- Default to Linux line endings for source files.
-- Set up CodeQL analysis.
-- Upgrade JUnit to version 5.11.1.
-- Upgrade Gradle wrapper to 8.10.2.
-- Upgrade to extra-java-module-info version 1.9.
-- Bump copyright year to 2024.
+- Upgrade to css4j 5.1, adapt tests accordingly.
+- Upgrade to slf4j 2.0.16.
+- Upgrade to JUnit 5.11.4.
+- Gradle: use the assignment operator in the maven repo section.
+- Upgrade Gradle wrapper to 8.12.1.
+- Bump year to 2025 in copyright notices.
 
 <br/>
 
