@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'io.sf.carte'
-version = '5.1'
+version = '5.2-SNAPSHOT'
 
 description = 'css4j-dom4j'
 
@@ -53,7 +53,7 @@ dependencies {
 	testImplementation 'org.slf4j:slf4j-api:2.0.16'
 	testImplementation 'org.junit.jupiter:junit-jupiter:5.11.4'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-	// css4j 4.x tests still use JUnit 4
+	// css4j tests still use JUnit 4
 	testImplementation 'org.junit.vintage:junit-vintage-engine:5.11.4'
 }
 
