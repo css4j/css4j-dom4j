@@ -26,13 +26,13 @@ dependencies {
 	api('io.sf.carte:css4j') {
 		version {
 			strictly '[5.1,)'
-			prefer '5.1'
+			prefer '5.2'
 		}
 	}
 	useragentImplementation('io.sf.carte:css4j-agent') {
 		version {
 			strictly '[3.4.0,)'
-			prefer '5.0'
+			prefer '5.1'
 		}
 	}
 	/*
@@ -48,7 +48,7 @@ dependencies {
 	xmlpullImplementation 'xmlpull:xmlpull:1.2.0'
 	xmlpullImplementation 'xpp3:xpp3_min:1.2.0'
 	testImplementation group: 'io.sf.carte', name: 'css4j', classifier: 'tests',
-		version: '5.1'
+		version: '5.2'
 	testImplementation 'jaxen:jaxen:2.0.0'
 	testImplementation 'org.slf4j:slf4j-api:2.0.16'
 	testImplementation 'org.junit.jupiter:junit-jupiter:5.12.0'
@@ -174,12 +174,12 @@ tasks.register('copyJars', Copy) {
 }
 
 tasks.register('lineEndingConversion', CRLFConvert) {
-	description 'Convert top-level files to Windows line endings'
+	description = 'Convert top-level files to Windows line endings'
 	file "$rootDir/RELEASE_NOTES.md"
 }
 
 tasks.register('lineEndingConvCopy', CRLFConvertCopy) {
-	description 'Convert LICENSE.txt to Windows line endings'
+	description = 'Convert LICENSE.txt to Windows line endings'
 	from "$rootDir/LICENSE.txt"
 }
 
