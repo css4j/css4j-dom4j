@@ -50,7 +50,7 @@ dependencies {
 	testImplementation group: 'io.sf.carte', name: 'css4j', classifier: 'tests',
 		version: '5.2'
 	testImplementation 'jaxen:jaxen:2.0.0'
-	testImplementation 'org.slf4j:slf4j-api:2.0.16'
+	testImplementation 'org.slf4j:slf4j-api:2.0.17'
 	testImplementation 'org.junit.jupiter:junit-jupiter:5.12.0'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 	// css4j tests still use JUnit 4
