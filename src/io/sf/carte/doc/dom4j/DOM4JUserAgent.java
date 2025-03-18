@@ -144,10 +144,9 @@ public class DOM4JUserAgent extends AbstractUserAgent {
 		if (referrerPolicy != null) {
 			xdoc.setReferrerPolicyHeader(referrerPolicy);
 		}
-		// Read cookies and close connection, if appropriate
+		// Close connection if appropriate
 		if (con instanceof HttpURLConnection) {
 			HttpURLConnection hcon = (HttpURLConnection) con;
-			readCookies(hcon, time);
 			hcon.disconnect();
 		}
 		return xdoc;
