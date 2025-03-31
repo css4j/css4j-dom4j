@@ -1,28 +1,38 @@
-# css4j-dom4j version 5.1 Release Notes
+# css4j-dom4j version 5.3 Release Notes
 
-### January 24, 2025
+### March 31, 2025
+
+NOTE: This new version is not required to run with css4j 5.3, but if you use this
+version of css4j-dom4j, then you need css4j 5.3 or later.
 
 <br/>
 
 ## Release Highlights
 
-### Test suite updated for css4j 5.1
+### Update to latest changes in css4j 5.3
 
-This library is the same as 5.0 except for the test suite, which was modified
-for compatibility with the new `attr()` syntax supported by css4j 5.1.
+This version no longer calls an agent method which was deprecated by css4j 5.3.
 
-There is no need for upgrading unless you want to run the supplied tests.
+### java.net.URL constructor deprecations
+
+The library no longer uses the deprecated java.net.URL constructors. To achieve
+this, it is calling a method from css4j 5.3, which makes the build dependent on
+5.3 and later.
 
 <br/>
 
 ## Detail of changes
 
-- Upgrade to css4j 5.1, adapt tests accordingly.
-- Upgrade to slf4j 2.0.16.
-- Upgrade to JUnit 5.11.4.
-- Gradle: use the assignment operator in the maven repo section.
-- Upgrade Gradle wrapper to 8.12.1.
-- Bump year to 2025 in copyright notices.
+- Deprecation cleanup: do not use java.net.URL constructors (requires css4j 5.3 or later).
+- Update to latest changes in css4j.
+- Upgrade to css4j 5.3.
+- Upgrade to css4j-agent 5.3.
+- Test with Jaxen 2.0.0.
+- Upgrade Gradle wrapper to 8.13.
+- Use SLF4J 2.0.17 in tests.
+- Upgrade to JUnit 5.12.1.
+- Upgrade to extra-java-module-info 1.11.
+- Run CI with Java 11 and 21.
 
 <br/>
 
