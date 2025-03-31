@@ -14,12 +14,11 @@ package io.sf.carte.doc.dom4j;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringWriter;
-import java.net.URL;
+import java.net.URI;
 import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
 
@@ -66,13 +65,14 @@ public class XHTMLDocumentFactoryTest {
 	}
 
 	@Test
-	public void testMockDocumentFactory() throws IOException {
+	public void testMockDocumentFactory() throws Exception {
 		TestDocumentFactory factory = new TestDocumentFactory();
 		XHTMLDocument doc = factory.createDocument();
 		InputStream is = doc.openStream("http://www.example.com/css/common.css");
 		assertNotNull(is);
 		is.close();
-		URLConnection ucon = doc.openConnection(new URL("http://www.example.com/css/common.css"));
+		URLConnection ucon = doc
+				.openConnection(new URI("http://www.example.com/css/common.css").toURL());
 		assertNotNull(ucon);
 		is = ucon.getInputStream();
 		assertNotNull(is);

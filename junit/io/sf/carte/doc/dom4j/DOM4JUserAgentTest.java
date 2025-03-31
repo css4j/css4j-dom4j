@@ -15,6 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
+import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.EnumSet;
@@ -23,7 +24,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.w3c.dom.DOMStringList;
 
-import io.sf.carte.doc.DocumentException;
 import io.sf.carte.doc.agent.MockURLConnectionFactory;
 import io.sf.carte.doc.agent.net.DefaultOriginPolicy;
 import io.sf.carte.doc.style.css.nsac.Parser;
@@ -37,8 +37,8 @@ public class DOM4JUserAgentTest {
 	}
 
 	@Test
-	public void getSelectedStyleSheetSet() throws IOException, DocumentException {
-		URL url = new URL("http://www.example.com/xhtml/htmlsample.html");
+	public void getSelectedStyleSheetSet() throws Exception {
+		URL url = new URI("http://www.example.com/xhtml/htmlsample.html").toURL();
 		agent.getTestDocumentFactory().getConnectionFactory().setHeader("html", "Default-Style", "Alter 2");
 		XHTMLDocument xhtmlDoc = agent.readURL(url);
 		DOMStringList list = xhtmlDoc.getStyleSheetSets();
@@ -54,8 +54,8 @@ public class DOM4JUserAgentTest {
 	}
 
 	@Test
-	public void getSelectedStyleSheetSetMeta() throws IOException, DocumentException {
-		URL url = new URL("http://www.example.com/xhtml/meta-default-style.html");
+	public void getSelectedStyleSheetSetMeta() throws Exception {
+		URL url = new URI("http://www.example.com/xhtml/meta-default-style.html").toURL();
 		agent.getTestDocumentFactory().getConnectionFactory().registerURL(url.toExternalForm(),
 				"meta-default-style.html");
 		XHTMLDocument xhtmlDoc = agent.readURL(url);
@@ -78,8 +78,8 @@ public class DOM4JUserAgentTest {
 	 * earlier than the document HEAD for this purpose."
 	 */
 	@Test
-	public void getSelectedStyleSheetSetMetaOverride() throws IOException, DocumentException {
-		URL url = new URL("http://www.example.com/xhtml/meta-default-style.html");
+	public void getSelectedStyleSheetSetMetaOverride() throws Exception {
+		URL url = new URI("http://www.example.com/xhtml/meta-default-style.html").toURL();
 		MockURLConnectionFactory connFactory = agent.getTestDocumentFactory().getConnectionFactory();
 		connFactory.registerURL(url.toExternalForm(), "meta-default-style.html");
 		connFactory.setHeader("html", "Default-Style", "Alter 2");

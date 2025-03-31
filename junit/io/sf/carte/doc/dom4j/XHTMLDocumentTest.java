@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
 import java.util.Iterator;
 
@@ -130,7 +131,7 @@ public class XHTMLDocumentTest {
 			fontface.getPropertyValue("src"));
 		CSSValue ffval = fontface.getPropertyCSSValue("src");
 		assertEquals(CSSValue.CssType.TYPED, ffval.getCssValueType());
-		assertEquals(CSSValue.Type.URI, ((CSSTypedValue) ffval).getPrimitiveType());
+		assertEquals(CSSValue.Type.URI, ffval.getPrimitiveType());
 		assertTrue(sheet.getCssRules().item(2).getMinifiedCssText()
 			.startsWith("@font-feature-values Foo Sans,Bar"));
 
@@ -1091,14 +1092,18 @@ public class XHTMLDocumentTest {
 		base.setAttribute("href", "http//");
 		assertNull(xhtmlDoc.getBaseURI());
 		assertEquals("http//", base.getAttribute("href"));
-		assertTrue(xhtmlDoc.getErrorHandler().hasIOErrors());
+		assertTrue(xhtmlDoc.getErrorHandler().hasNodeErrors());
+		xhtmlDoc.getErrorHandler().reset();
+
 		// Relative URL
 		base.setAttribute("href", "foo");
 		assertEquals("foo", base.getAttribute("href"));
 		assertNull(xhtmlDoc.getBaseURI());
+
 		// Remove attribute
 		base.removeAttribute("href");
 		assertNull(xhtmlDoc.getBaseURI());
+
 		// Unsafe base assignment
 		xhtmlDoc.setDocumentURI("http://www.example.com/document.html");
 		assertEquals("http://www.example.com/document.html", xhtmlDoc.getDocumentURI());
@@ -1118,14 +1123,18 @@ public class XHTMLDocumentTest {
 		base.setAttribute("href", "foo");
 		assertEquals("foo", base.getAttribute("href"));
 		assertEquals("http://www.example.com/foo", xhtmlDoc.getBaseURI());
+
 		// Wrong URL
 		base.setAttribute("href", "foo://");
 		assertEquals("foo://", base.getAttribute("href"));
 		assertEquals("http://www.example.com/doc-uri", xhtmlDoc.getBaseURI());
-		assertTrue(xhtmlDoc.getErrorHandler().hasIOErrors());
+		assertTrue(xhtmlDoc.getErrorHandler().hasNodeErrors());
+		xhtmlDoc.getErrorHandler().reset();
+
 		// Remove attribute
 		base.removeAttribute("href");
 		assertEquals("http://www.example.com/doc-uri", xhtmlDoc.getBaseURI());
+
 		// Unsafe base assignment
 		base.setAttribute("href", "jar:http://www.example.com/evil.jar!/file");
 		assertEquals("http://www.example.com/doc-uri", xhtmlDoc.getBaseURI());
@@ -1145,18 +1154,26 @@ public class XHTMLDocumentTest {
 		// Play with xml:base
 		root.setAttribute("xml:base", "http://www.example.com/newbase/");
 		assertEquals("http://www.example.com/newbase/", xhtmlDoc.getBaseURI());
+
 		// Wrong URL
 		root.setAttribute("xml:base", "http//");
 		assertNull(xhtmlDoc.getBaseURI());
 		assertEquals("http//", root.getAttribute("xml:base"));
-		assertTrue(xhtmlDoc.getErrorHandler().hasIOErrors());
+		assertTrue(xhtmlDoc.getErrorHandler().hasNodeErrors());
+		xhtmlDoc.getErrorHandler().reset();
+
 		// Relative URL
 		root.setAttribute("xml:base", "foo");
 		assertEquals("foo", root.getAttribute("xml:base"));
 		assertNull(xhtmlDoc.getBaseURI());
+		assertTrue(xhtmlDoc.getErrorHandler().hasErrors());
+		xhtmlDoc.getErrorHandler().reset();
+
 		// Remove attribute
 		root.removeAttribute("xml:base");
 		assertNull(xhtmlDoc.getBaseURI());
+		assertFalse(xhtmlDoc.getErrorHandler().hasErrors());
+
 		// Unsafe base assignment
 		xhtmlDoc.setDocumentURI("http://www.example.com/document.html");
 		root.setAttribute("xml:base", "jar:http://www.example.com/evil.jar!/file");
@@ -1166,9 +1183,9 @@ public class XHTMLDocumentTest {
 	}
 
 	@Test
-	public void testSetBaseURL() throws MalformedURLException {
+	public void testSetBaseURL() throws Exception {
 		assertEquals("http://www.example.com/", xhtmlDoc.getBaseURI());
-		xhtmlDoc.setBaseURL(new URL("http://www.example.com/newbase/"));
+		xhtmlDoc.setBaseURL(new URI("http://www.example.com/newbase/").toURL());
 		assertEquals("http://www.example.com/newbase/", xhtmlDoc.getBaseURI());
 	}
 
@@ -1220,8 +1237,8 @@ public class XHTMLDocumentTest {
 	}
 
 	@Test
-	public void testIsSafeOrigin() throws MalformedURLException {
-		URL url = new URL(xhtmlDoc.getBaseURI());
+	public void testIsSafeOrigin() throws Exception {
+		URL url = new URI(xhtmlDoc.getBaseURI()).toURL();
 		assertTrue(xhtmlDoc.isSafeOrigin(url));
 	}
 

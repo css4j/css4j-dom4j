@@ -14,6 +14,8 @@ package io.sf.carte.doc.dom4j;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.HashMap;
@@ -52,6 +54,7 @@ import io.sf.carte.doc.style.css.om.AbstractCSSStyleSheetFactory;
 import io.sf.carte.doc.style.css.om.BaseDocumentCSSStyleSheet;
 import io.sf.carte.doc.style.css.om.DefaultErrorHandler;
 import io.sf.carte.doc.style.css.om.StyleSheetList;
+import io.sf.carte.doc.style.css.parser.ParseHelper;
 
 /**
  * XHTML-specific implementation of a DOM4J <code>Document</code>.
@@ -747,9 +750,12 @@ public class XHTMLDocument extends DOMDocument implements CSSDocument {
 					}
 				}
 			}
-			try {
-				baseURL = new URL(documentURI);
-			} catch (MalformedURLException e) {
+			if (documentURI != null) {
+				try {
+					URI uri = new URI(documentURI);
+					baseURL = uri.toURL();
+				} catch (MalformedURLException | URISyntaxException e) {
+				}
 			}
 		}
 		return baseURL;
@@ -792,31 +798,37 @@ public class XHTMLDocument extends DOMDocument implements CSSDocument {
 	boolean setBaseURL(Element element, String base) {
 		String docUri = getDocumentURI();
 		if (docUri != null) {
-			URL docUrl;
+			URI dUri;
 			try {
-				docUrl = new URL(docUri);
-			} catch (MalformedURLException e) {
+				dUri = new URI(docUri);
+			} catch (URISyntaxException e) {
 				return setBaseForNullDocumentURI(base, element);
 			}
-			URL urlBase;
+			URI uriBase;
+			URL url;
 			try {
-				urlBase = new URL(docUrl, base);
+				uriBase = new URI(base);
+				uriBase = dUri.resolve(uriBase);
+				url = uriBase.toURL();
 			} catch (MalformedURLException e) {
 				getErrorHandler().ioError(base, e);
 				return false;
+			} catch (Exception e) {
+				// Either URISyntaxException or IllegalArgumentException
+				getErrorHandler().nodeError(element, "Cannot convert URI to absolute: " + base, e);
+				return false;
 			}
-			String docscheme = docUrl.getProtocol();
-			String bscheme = urlBase.getProtocol();
-			if (!docscheme.equals(bscheme)) {
-				if (!bscheme.equals("https") && !bscheme.equals("http") && !docscheme.equals("file")
-						&& !docscheme.equals("jar")) {
-					// Remote document wants to set a non-http base URI
-					getErrorHandler().policyError(element,
-							"Remote document wants to set a non-http base URL: " + urlBase.toExternalForm());
-					return false;
-				}
+			String docscheme = dUri.getScheme();
+			String bscheme = uriBase.getScheme();
+			if (!docscheme.equals(bscheme) && !bscheme.equals("https") && !bscheme.equals("http")
+					&& !docscheme.equals("file") && !docscheme.equals("jar")) {
+				// Remote document wants to set a non-http base URI
+				getErrorHandler().policyError(element,
+						"Remote document wants to set a non-http base URL: "
+								+ uriBase.toASCIIString());
+				return false;
 			}
-			baseURL = urlBase;
+			baseURL = url;
 			return true;
 		} else {
 			return setBaseForNullDocumentURI(base, element);
@@ -825,43 +837,19 @@ public class XHTMLDocument extends DOMDocument implements CSSDocument {
 
 	private boolean setBaseForNullDocumentURI(String base, Element baseElement) {
 		try {
-			URL urlBase = new URL(base);
-			String scheme = urlBase.getProtocol();
+			URI uriBase = new URI(base);
+			String scheme = uriBase.getScheme();
 			if (scheme.equals("https") || scheme.equals("http")) {
-				baseURL = urlBase;
+				baseURL = uriBase.toURL();
 				return true;
 			}
 			// Remote document wants to set a non-http base URL
 			getErrorHandler().policyError(baseElement,
 					"Untrusted document wants to set a non-http base URL: " + base);
-		} catch (MalformedURLException e) {
-			getErrorHandler().ioError(base, e);
+		} catch (Exception e) {
+			getErrorHandler().nodeError(baseElement, "Cannot convert URI to absolute: " + base, e);
 		}
 		return false;
-	}
-
-	/**
-	 * Gets an URL for the given URI, taking into account the Base URL if
-	 * appropriate.
-	 * 
-	 * @param uri
-	 *            the uri.
-	 * @return the absolute URL.
-	 * @throws MalformedURLException
-	 *             if the uri was wrong.
-	 */
-	@Override
-	public URL getURL(String uri) throws MalformedURLException {
-		if (uri.length() == 0) {
-			throw new MalformedURLException("Empty URI");
-		}
-		URL url;
-		if (uri.indexOf("://") < 0) {
-			url = new URL(getBaseURL(), uri);
-		} else {
-			url = new URL(uri);
-		}
-		return url;
 	}
 
 	/**
@@ -885,7 +873,9 @@ public class XHTMLDocument extends DOMDocument implements CSSDocument {
 		if (linkedPort == -1) {
 			linkedPort = linkedURL.getDefaultPort();
 		}
-		return (docHost.equalsIgnoreCase(linkedHost) || linkedHost.endsWith(docHost)) && docPort == linkedPort;
+		return (docHost.equalsIgnoreCase(linkedHost)
+				|| ParseHelper.endsWithIgnoreCase(linkedHost, '.' + docHost))
+				&& docPort == linkedPort;
 	}
 
 	/**
@@ -971,14 +961,12 @@ public class XHTMLDocument extends DOMDocument implements CSSDocument {
 	}
 
 	/**
-	 * Opens an InputStream for the given URI, taking into account the Base URL
-	 * if needed.
+	 * Opens an InputStream for the given URI, taking into account the Base URL if
+	 * needed.
 	 * 
-	 * @param uri
-	 *            the uri to open a connection.
+	 * @param uri the uri to open a connection.
 	 * @return the InputStream.
-	 * @throws IOException
-	 *             if the uri was wrong, or the stream could not be opened.
+	 * @throws IOException if the stream could not be opened.
 	 */
 	public InputStream openStream(String uri) throws IOException {
 		return openConnection(getURL(uri)).getInputStream();
