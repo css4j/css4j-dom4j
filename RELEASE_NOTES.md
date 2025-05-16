@@ -1,38 +1,21 @@
-# css4j-dom4j version 5.3 Release Notes
+# css4j-dom4j version 6.0 Release Notes
 
-### March 31, 2025
-
-NOTE: This new version is not required to run with css4j 5.3, but if you use this
-version of css4j-dom4j, then you need css4j 5.3 or later.
-
-<br/>
+### May 16, 2025
 
 ## Release Highlights
 
-### Update to latest changes in css4j 5.3
+### Update to changes in css4j 6.0
 
-This version no longer calls an agent method which was deprecated by css4j 5.3.
-
-### java.net.URL constructor deprecations
-
-The library no longer uses the deprecated java.net.URL constructors. To achieve
-this, it is calling a method from css4j 5.3, which makes the build dependent on
-5.3 and later.
+One of the changes in version 6.0 of css4j, necessary to support style layers in the future, requires modifications in css4j-dom4j.
 
 <br/>
 
 ## Detail of changes
 
-- Deprecation cleanup: do not use java.net.URL constructors (requires css4j 5.3 or later).
-- Update to latest changes in css4j.
-- Upgrade to css4j 5.3.
-- Upgrade to css4j-agent 5.3.
-- Test with Jaxen 2.0.0.
-- Upgrade Gradle wrapper to 8.13.
-- Use SLF4J 2.0.17 in tests.
-- Upgrade to JUnit 5.12.1.
-- Upgrade to extra-java-module-info 1.11.
-- Run CI with Java 11 and 21.
+- Upgrade to css4j and css4j-agent 6.0.
+- Upgrade to JUnit 5.12.2.
+- Upgrade to extra-java-module-info version 1.12.
+- Upgrade Gradle wrapper to 8.14.
 
 <br/>
 
