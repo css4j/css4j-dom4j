@@ -25,14 +25,14 @@ java {
 dependencies {
 	api('io.sf.carte:css4j') {
 		version {
-			strictly '[5.3,)'
-			prefer '5.3.1'
+			strictly '[6.0,)'
+			prefer '6.0'
 		}
 	}
 	useragentImplementation('io.sf.carte:css4j-agent') {
 		version {
 			strictly '[3.4.0,)'
-			prefer '5.3'
+			prefer '6.0'
 		}
 	}
 	/*
@@ -48,7 +48,7 @@ dependencies {
 	xmlpullImplementation 'xmlpull:xmlpull:1.2.0'
 	xmlpullImplementation 'xpp3:xpp3_min:1.2.0'
 	testImplementation group: 'io.sf.carte', name: 'css4j', classifier: 'tests',
-		version: '5.3.1'
+		version: '6.0'
 	testImplementation 'jaxen:jaxen:2.0.0'
 	testImplementation 'org.slf4j:slf4j-api:2.0.17'
 	testImplementation 'org.junit.jupiter:junit-jupiter:5.12.2'

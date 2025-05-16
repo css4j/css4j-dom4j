@@ -15,6 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
@@ -56,9 +57,9 @@ import io.sf.carte.doc.style.css.om.BaseCSSStyleSheet;
 import io.sf.carte.doc.style.css.om.CSSOMParser;
 import io.sf.carte.doc.style.css.om.CSSRuleArrayList;
 import io.sf.carte.doc.style.css.om.ComputedCSSStyle;
-import io.sf.carte.doc.style.css.om.DOMCSSStyleSheetFactoryTest;
 import io.sf.carte.doc.style.css.om.MediaRule;
 import io.sf.carte.doc.style.css.om.PropertyCountVisitor;
+import io.sf.carte.doc.style.css.om.SampleCSS;
 import io.sf.carte.doc.style.css.om.StyleCountVisitor;
 import io.sf.carte.doc.style.css.om.StyleRule;
 import io.sf.carte.doc.style.css.om.StyleSheetList;
@@ -72,7 +73,7 @@ public class XHTMLDocumentTest {
 
 	@BeforeEach
 	public void setUp() throws Exception {
-		Reader re = DOMCSSStyleSheetFactoryTest.sampleHTMLReader();
+		Reader re = SampleCSS.sampleHTMLReader();
 		org.xml.sax.InputSource isrc = new org.xml.sax.InputSource(re);
 		xhtmlDoc = TestUtil.parseXML(isrc);
 		re.close();
@@ -489,7 +490,7 @@ public class XHTMLDocumentTest {
 		/*
 		 * attr() value, string expected type, do not reparse.
 		 */
-		elm.getOverrideStyle(null).setCssText("margin-left:attr(leftmargin string)");
+		elm.getOverrideStyle(null).setCssText("margin-left:attr(leftmargin raw-string)");
 		style = elm.getComputedStyle(null);
 		marginLeft = (CSSTypedValue) style.getPropertyCSSValue("margin-left");
 		assertEquals(CSSValue.Type.STRING, marginLeft.getPrimitiveType());
@@ -954,7 +955,7 @@ public class XHTMLDocumentTest {
 
 	@Test
 	public void testCascade() throws IOException {
-		Reader re = DOMCSSStyleSheetFactoryTest.loadSampleUserCSSReader();
+		Reader re = SampleCSS.loadSampleUserCSSReader();
 		xhtmlDoc.getDocumentFactory().getStyleSheetFactory().setUserStyleSheet(re);
 		re.close();
 		CSSElement elm = xhtmlDoc.getElementById("para1");
@@ -1088,6 +1089,32 @@ public class XHTMLDocumentTest {
 		CSSElement base = (CSSElement) xhtmlDoc.getElementsByTagName("base").item(0);
 		base.setAttribute("href", "http://www.example.com/newbase/");
 		assertEquals("http://www.example.com/newbase/", xhtmlDoc.getBaseURI());
+
+		// Check that getURL works
+		assertEquals("http://www.example.com/newbase/b?e=f&g=h",
+				xhtmlDoc.getURL("b?e=f&g=h").toExternalForm());
+
+		assertEquals(
+				"https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Raleway:wght@200&display=swap",
+				xhtmlDoc.getURL(
+						"https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Raleway:wght@200&display=swap")
+						.toExternalForm());
+
+		// Web browsers admit the following
+		assertEquals(
+				"https://fonts.googleapis.com/css?family=Roboto+Slab:400,700,300%7CRoboto:400,500,700,300,900&subset=latin,greek,greek-ext,vietnamese,cyrillic-ext,latin-ext,cyrillic",
+				xhtmlDoc.getURL(
+						"https://fonts.googleapis.com/css?family=Roboto+Slab:400,700,300|Roboto:400,500,700,300,900&subset=latin,greek,greek-ext,vietnamese,cyrillic-ext,latin-ext,cyrillic")
+						.toExternalForm());
+
+		assertThrows(MalformedURLException.class, () -> xhtmlDoc.getURL("https:||www.example.com/"));
+
+		assertThrows(MalformedURLException.class,
+				() -> xhtmlDoc.getURL("https://www.example.com/a?b=c\\d"));
+
+		assertThrows(MalformedURLException.class,
+				() -> xhtmlDoc.getURL("https://www.example.com/a?b=\"c\""));
+
 		// Wrong URL
 		base.setAttribute("href", "http//");
 		assertNull(xhtmlDoc.getBaseURI());
@@ -1119,6 +1146,7 @@ public class XHTMLDocumentTest {
 		// Set documentURI and then unsafe attribute
 		xhtmlDoc.setDocumentURI("http://www.example.com/doc-uri");
 		CSSElement base = (CSSElement) xhtmlDoc.getElementsByTagName("base").item(0);
+
 		// Relative URL
 		base.setAttribute("href", "foo");
 		assertEquals("foo", base.getAttribute("href"));

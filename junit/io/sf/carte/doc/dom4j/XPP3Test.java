@@ -21,7 +21,7 @@ import org.dom4j.io.XPP3Reader;
 import org.junit.jupiter.api.Test;
 import org.xmlpull.v1.XmlPullParserException;
 
-import io.sf.carte.doc.style.css.om.DOMCSSStyleSheetFactoryTest;
+import io.sf.carte.doc.style.css.om.SampleCSS;
 
 public class XPP3Test {
 
@@ -29,7 +29,7 @@ public class XPP3Test {
 	public void parseXPP3() throws DocumentException, IOException, XmlPullParserException {
 		XHTMLDocumentFactory factory = XHTMLDocumentFactory.getInstance();
 		XPP3Reader reader = new XPP3Reader(factory);
-		Reader re = DOMCSSStyleSheetFactoryTest.sampleHTMLReader();
+		Reader re = SampleCSS.sampleHTMLReader();
 		XHTMLDocument document = (XHTMLDocument) reader.read(re);
 		re.close();
 		assertEquals("html", document.getRootElement().getName());

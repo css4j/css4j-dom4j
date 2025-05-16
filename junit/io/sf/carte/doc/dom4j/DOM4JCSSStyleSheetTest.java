@@ -22,7 +22,7 @@ import org.junit.jupiter.api.Test;
 import io.sf.carte.doc.style.css.nsac.CSSException;
 import io.sf.carte.doc.style.css.om.AbstractCSSStyleSheet;
 import io.sf.carte.doc.style.css.om.CSSRuleArrayList;
-import io.sf.carte.doc.style.css.om.DOMCSSStyleSheetFactoryTest;
+import io.sf.carte.doc.style.css.om.SampleCSS;
 
 public class DOM4JCSSStyleSheetTest {
 
@@ -30,11 +30,11 @@ public class DOM4JCSSStyleSheetTest {
 	public void testParseCSSStyleSheet() throws CSSException, IOException {
 		AbstractCSSStyleSheet css = XHTMLDocumentFactory.getInstance().getStyleSheetFactory()
 				.createStyleSheet(null, null);
-		Reader re = DOMCSSStyleSheetFactoryTest.loadSampleCSSReader();
+		Reader re = SampleCSS.loadSampleCSSReader();
 		css.parseStyleSheet(re);
 		re.close();
 		CSSRuleArrayList rules = css.getCssRules();
-		assertEquals(DOMCSSStyleSheetFactoryTest.RULES_IN_SAMPLE_CSS, rules.getLength());
+		assertEquals(SampleCSS.RULES_IN_SAMPLE_CSS, rules.getLength());
 		assertFalse(css.getErrorHandler().hasSacErrors());
 	}
 

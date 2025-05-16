@@ -31,7 +31,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
 import io.sf.carte.doc.style.css.CSSDocument;
-import io.sf.carte.doc.style.css.om.DOMCSSStyleSheetFactoryTest;
+import io.sf.carte.doc.style.css.om.SampleCSS;
 import io.sf.carte.doc.xml.dtd.DefaultEntityResolver;
 
 public class XHTMLDocumentFactoryTest {
@@ -40,7 +40,7 @@ public class XHTMLDocumentFactoryTest {
 
 	@BeforeAll
 	public static void setUpBeforeClass() throws Exception {
-		Reader re = DOMCSSStyleSheetFactoryTest.sampleHTMLReader();
+		Reader re = SampleCSS.sampleHTMLReader();
 		InputSource isrc = new InputSource(re);
 		xhtmlDoc = TestUtil.parseXML(isrc);
 		re.close();
@@ -92,7 +92,7 @@ public class XHTMLDocumentFactoryTest {
 		// First, check plain dom4j behaviour
 		SAXReader reader = new SAXReader();
 		reader.setEntityResolver(new DefaultEntityResolver());
-		Reader re = DOMCSSStyleSheetFactoryTest.sampleHTMLReader();
+		Reader re = SampleCSS.sampleHTMLReader();
 		org.dom4j.Document dom4jdocument = reader.read(re);
 		re.close();
 		org.dom4j.Element dom4jelm = dom4jdocument.elementByID("entity");
@@ -123,7 +123,7 @@ public class XHTMLDocumentFactoryTest {
 		SAXReader reader = new SAXReader();
 		reader.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", true);
 		reader.setEntityResolver(new DefaultEntityResolver());
-		Reader re = DOMCSSStyleSheetFactoryTest.sampleHTMLReader();
+		Reader re = SampleCSS.sampleHTMLReader();
 		org.dom4j.Document document = reader.read(re);
 		re.close();
 		org.dom4j.Element dom4jelm = document.elementByID("entiacute");

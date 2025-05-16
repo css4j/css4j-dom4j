@@ -24,7 +24,7 @@ import org.junit.jupiter.api.Test;
 import org.xml.sax.InputSource;
 
 import io.sf.carte.doc.style.css.CSSDocument;
-import io.sf.carte.doc.style.css.om.DOMCSSStyleSheetFactoryTest;
+import io.sf.carte.doc.style.css.om.SampleCSS;
 
 public class BaseURLElementTest {
 
@@ -71,7 +71,7 @@ public class BaseURLElementTest {
 
 	@Test
 	public void childAddedNode() throws Exception {
-		Reader re = DOMCSSStyleSheetFactoryTest.sampleHTMLReader();
+		Reader re = SampleCSS.sampleHTMLReader();
 		InputSource isrc = new InputSource(re);
 		CSSDocument xhtmlDoc = TestUtil.parseXML(isrc);
 		re.close();
@@ -81,7 +81,7 @@ public class BaseURLElementTest {
 
 	@Test
 	public void childAddedNodeXPP3() throws Exception {
-		Reader re = DOMCSSStyleSheetFactoryTest.sampleHTMLReader();
+		Reader re = SampleCSS.sampleHTMLReader();
 		CSSDocument xhtmlDoc = TestUtil.parseXPP3(re);
 		assertNotNull(xhtmlDoc.getBaseURL());
 		assertEquals("http://www.example.com/", xhtmlDoc.getBaseURL().toExternalForm());

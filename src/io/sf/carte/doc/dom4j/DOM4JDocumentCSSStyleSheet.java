@@ -31,11 +31,11 @@ abstract class DOM4JDocumentCSSStyleSheet extends BaseDocumentCSSStyleSheet {
 
 	private XHTMLDocument ownerElement = null;
 
-	DOM4JDocumentCSSStyleSheet(byte origin) {
+	DOM4JDocumentCSSStyleSheet(int origin) {
 		super(null, origin);
 	}
 
-	protected DOM4JDocumentCSSStyleSheet(String medium, byte origin) {
+	protected DOM4JDocumentCSSStyleSheet(String medium, int origin) {
 		super(medium, origin);
 	}
 

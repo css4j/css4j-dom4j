@@ -24,18 +24,15 @@ import io.sf.carte.doc.style.css.om.BaseCSSStyleSheet;
 
 /**
  * CSS Style Sheet for DOM4J.
- * 
- * @author Carlos Amengual
- * 
  */
 abstract class DOM4JCSSStyleSheet extends BaseCSSStyleSheet implements Cloneable {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 2L;
 
 	Node ownerNode;
 
 	public DOM4JCSSStyleSheet(String title, Node ownerNode, MediaQueryList media, AbstractCSSRule ownerRule,
-			byte origin) {
+			int origin) {
 		super(title, media, ownerRule, origin);
 		this.ownerNode = ownerNode;
 	}

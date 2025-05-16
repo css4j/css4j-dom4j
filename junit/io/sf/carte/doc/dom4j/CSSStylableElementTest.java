@@ -32,7 +32,7 @@ import org.xml.sax.InputSource;
 
 import io.sf.carte.doc.style.css.CSSMediaException;
 import io.sf.carte.doc.style.css.CSSStyleDeclaration;
-import io.sf.carte.doc.style.css.om.DOMCSSStyleSheetFactoryTest;
+import io.sf.carte.doc.style.css.om.SampleCSS;
 
 public class CSSStylableElementTest {
 
@@ -40,7 +40,7 @@ public class CSSStylableElementTest {
 
 	@BeforeEach
 	public void setUp() throws Exception {
-		Reader re = DOMCSSStyleSheetFactoryTest.sampleHTMLReader();
+		Reader re = SampleCSS.sampleHTMLReader();
 		InputSource isrc = new InputSource(re);
 		xhtmlDoc = TestUtil.parseXML(isrc);
 		xhtmlDoc.setTargetMedium("screen");

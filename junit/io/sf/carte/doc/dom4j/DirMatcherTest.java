@@ -21,7 +21,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import io.sf.carte.doc.style.css.nsac.SelectorList;
-import io.sf.carte.doc.style.css.om.DOMCSSStyleSheetFactoryTest;
+import io.sf.carte.doc.style.css.om.SampleCSS;
 import io.sf.carte.doc.style.css.parser.CSSParser;
 
 public class DirMatcherTest {
@@ -30,7 +30,7 @@ public class DirMatcherTest {
 
 	@BeforeEach
 	public void setUp() throws IOException, DocumentException {
-		document = TestDocumentFactory.loadDocument(DOMCSSStyleSheetFactoryTest.directionalityHTMLReader());
+		document = TestDocumentFactory.loadDocument(SampleCSS.directionalityHTMLReader());
 	}
 
 	@Test

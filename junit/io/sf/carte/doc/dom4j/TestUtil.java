@@ -20,7 +20,7 @@ import org.dom4j.io.XPP3Reader;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
-import io.sf.carte.doc.style.css.om.DOMCSSStyleSheetFactoryTest;
+import io.sf.carte.doc.style.css.om.SampleCSS;
 import io.sf.carte.doc.xml.dtd.DefaultEntityResolver;
 
 public class TestUtil {
@@ -51,7 +51,7 @@ public class TestUtil {
 	}
 
 	public static XHTMLDocument sampleXHTML() throws DocumentException, SAXException, IOException {
-		Reader re = DOMCSSStyleSheetFactoryTest.sampleHTMLReader();
+		Reader re = SampleCSS.sampleHTMLReader();
 		InputSource isrc = new InputSource(re);
 		XHTMLDocument xhtmlDoc = parseXML(isrc);
 		re.close();

@@ -330,7 +330,7 @@ public class XHTMLDocumentFactory extends DOMDocumentFactory {
 		}
 
 		@Override
-		protected BaseDocumentCSSStyleSheet createDocumentStyleSheet(byte origin) {
+		protected BaseDocumentCSSStyleSheet createDocumentStyleSheet(int origin) {
 			return new MyDOM4JDocumentCSSStyleSheet(null, origin);
 		}
 
@@ -346,11 +346,11 @@ public class XHTMLDocumentFactory extends DOMDocumentFactory {
 		}
 
 		DOM4JCSSStyleSheet createCSSStyleSheet(String title, Node ownerNode, MediaQueryList media,
-				AbstractCSSRule ownerRule, byte origin) {
+				AbstractCSSRule ownerRule, int origin) {
 			return new MyDOM4JCSSStyleSheet(title, ownerNode, media, ownerRule, origin);
 		}
 
-		DOM4JDocumentCSSStyleSheet createDocumentStyleSheet(String targetMedium, byte origin) {
+		DOM4JDocumentCSSStyleSheet createDocumentStyleSheet(String targetMedium, int origin) {
 			return new MyDOM4JDocumentCSSStyleSheet(targetMedium, origin);
 		}
 
@@ -358,7 +358,7 @@ public class XHTMLDocumentFactory extends DOMDocumentFactory {
 
 			private static final long serialVersionUID = 1L;
 
-			public MyDOM4JDocumentCSSStyleSheet(String targetMedium, byte origin) {
+			public MyDOM4JDocumentCSSStyleSheet(String targetMedium, int origin) {
 				super(targetMedium, origin);
 			}
 
@@ -375,10 +375,10 @@ public class XHTMLDocumentFactory extends DOMDocumentFactory {
 
 		private class MyDOM4JCSSStyleSheet extends DOM4JCSSStyleSheet {
 
-			private static final long serialVersionUID = 1L;
+			private static final long serialVersionUID = 2L;
 
 			public MyDOM4JCSSStyleSheet(String title, Node ownerNode, MediaQueryList media, AbstractCSSRule ownerRule,
-					byte origin) {
+					int origin) {
 				super(title, ownerNode, media, ownerRule, origin);
 			}
 
