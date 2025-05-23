@@ -461,7 +461,8 @@ abstract public class CSSStylableElement extends DOMElement implements CSSElemen
 		protected boolean isFirstOfType() {
 			Node sibling = getPreviousSibling();
 			while (sibling != null) {
-				if (sibling.getNodeType() == Node.ELEMENT_NODE && getLocalName().equals(sibling.getNodeName())) {
+				if (sibling.getNodeType() == Node.ELEMENT_NODE
+						&& getLocalName().equalsIgnoreCase(sibling.getLocalName())) {
 					return false;
 				}
 				sibling = sibling.getPreviousSibling();
@@ -473,7 +474,8 @@ abstract public class CSSStylableElement extends DOMElement implements CSSElemen
 		protected boolean isLastOfType() {
 			Node sibling = getNextSibling();
 			while (sibling != null) {
-				if (sibling.getNodeType() == Node.ELEMENT_NODE && getLocalName().equals(sibling.getNodeName())) {
+				if (sibling.getNodeType() == Node.ELEMENT_NODE
+						&& getLocalName().equalsIgnoreCase(sibling.getLocalName())) {
 					return false;
 				}
 				sibling = sibling.getNextSibling();
@@ -490,7 +492,8 @@ abstract public class CSSStylableElement extends DOMElement implements CSSElemen
 				int sz = list.getLength();
 				for (int i = 0; i < sz; i++) {
 					Node node = list.item(i);
-					if (node.getNodeType() == Node.ELEMENT_NODE && getLocalName().equals(node.getNodeName())) {
+					if (node.getNodeType() == Node.ELEMENT_NODE
+							&& getLocalName().equalsIgnoreCase(node.getLocalName())) {
 						idx++;
 						if (node == CSSStylableElement.this) {
 							break;
@@ -513,7 +516,8 @@ abstract public class CSSStylableElement extends DOMElement implements CSSElemen
 				int sz = list.getLength();
 				for (int i = sz - 1; i >= 0; i--) {
 					Node node = list.item(i);
-					if (node.getNodeType() == Node.ELEMENT_NODE && getLocalName().equals(node.getNodeName())) {
+					if (node.getNodeType() == Node.ELEMENT_NODE
+							&& getLocalName().equalsIgnoreCase(node.getLocalName())) {
 						idx++;
 						if (node == CSSStylableElement.this) {
 							break;

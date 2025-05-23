@@ -22,6 +22,7 @@ import java.io.Reader;
 import java.util.Iterator;
 import java.util.List;
 
+import org.dom4j.Node;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -43,17 +44,16 @@ public class CSSStylableElementTest {
 		Reader re = SampleCSS.sampleHTMLReader();
 		InputSource isrc = new InputSource(re);
 		xhtmlDoc = TestUtil.parseXML(isrc);
-		xhtmlDoc.setTargetMedium("screen");
 		re.close();
+		xhtmlDoc.setTargetMedium("screen");
 	}
 
-	@SuppressWarnings("rawtypes")
 	@Test
 	public void getStyle() {
-		List pList = xhtmlDoc.selectNodes("/*[name()='html']//*[name()='h3']");
-		Iterator it = pList.iterator();
+		List<Node> pList = xhtmlDoc.selectNodes("/*[name()='html']//*[name()='h3']");
+		Iterator<Node> it = pList.iterator();
 		assertTrue(it.hasNext());
-		Object elm = it.next();
+		Node elm = it.next();
 		assertTrue(elm instanceof CSSStylableElement);
 		CSSStyleDeclaration style = ((CSSStylableElement) elm).getStyle();
 		assertNotNull(style);
@@ -84,20 +84,22 @@ public class CSSStylableElementTest {
 	@Test
 	public void getStyleUppercase() {
 		Element elm = xhtmlDoc.getElementById("ul1li1");
+		assertEquals("li", elm.getLocalName());
+		assertEquals("li", elm.getNodeName());
+
 		assertTrue(elm instanceof CSSStylableElement);
 		CSSStyleDeclaration style = ((CSSStylableElement) elm).getStyle();
 		assertNotNull(style);
 		assertEquals("color: blue; ", style.getCssText());
 	}
 
-	@SuppressWarnings("rawtypes")
 	@Test
 	public void getComputedStyle() throws CSSMediaException {
 		xhtmlDoc.setTargetMedium("screen");
-		List pList = xhtmlDoc.selectNodes("/*[name()='html']//*[name()='p']");
-		Iterator it = pList.iterator();
+		List<Node> pList = xhtmlDoc.selectNodes("/*[name()='html']//*[name()='p']");
+		Iterator<Node> it = pList.iterator();
 		assertTrue(it.hasNext());
-		Object elm = it.next();
+		Node elm = it.next();
 		assertTrue(elm instanceof CSSStylableElement);
 		CSSStyleDeclaration style = ((CSSStylableElement) elm).getComputedStyle();
 		assertNotNull(style);

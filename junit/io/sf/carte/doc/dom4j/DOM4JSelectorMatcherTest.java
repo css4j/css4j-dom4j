@@ -79,7 +79,32 @@ public class DOM4JSelectorMatcherTest {
 		SelectorList selist = rule.getSelectorList();
 		CSSStylableElement elm = createElement("p");
 		SelectorMatcher matcher = elm.getSelectorMatcher();
-		assertTrue(matcher.matches(selist) >= 0);
+		assertEquals(0, matcher.matches(selist));
+
+		CSSStylableElement div = createElement("div");
+		SelectorMatcher divmatcher = div.getSelectorMatcher();
+		assertEquals(-1, divmatcher.matches(selist));
+	}
+
+	@Test
+	public void testMatchSelector1ElementUppercase() throws Exception {
+		AbstractCSSStyleSheet css = parseStyle("p {color: blue;}");
+		StyleRule rule = (StyleRule) css.getCssRules().item(0);
+		SelectorList selist = rule.getSelectorList();
+		CSSStylableElement elm = createElement("P");
+		SelectorMatcher matcher = elm.getSelectorMatcher();
+		assertEquals(0, matcher.matches(selist));
+	}
+
+	@Test
+	public void testMatchSelector1ElementPrefix() throws Exception {
+		AbstractCSSStyleSheet css = parseStyle("p {color: blue;}");
+		StyleRule rule = (StyleRule) css.getCssRules().item(0);
+		SelectorList selist = rule.getSelectorList();
+		String nsURI = "http://www.example.com/ns";
+		CSSStylableElement elm = factory.createElement("pre:P", nsURI);
+		SelectorMatcher matcher = elm.getSelectorMatcher();
+		assertEquals(0, matcher.matches(selist));
 	}
 
 	@Test
@@ -96,7 +121,7 @@ public class DOM4JSelectorMatcherTest {
 		assertTrue(selidx >= 0);
 		// Specificity
 		CSSOMBridge.assertSpecificity(0, 0, 1, selist.item(selidx), matcher);
-		//
+
 		assertTrue(svgmatcher.matches(selist) == -1);
 		assertTrue(matcher.matches(svgselist) == -1);
 		selidx = svgmatcher.matches(svgselist);
@@ -177,7 +202,7 @@ public class DOM4JSelectorMatcherTest {
 		assertTrue(selidx >= 0);
 		// Specificity
 		CSSOMBridge.assertSpecificity(0, 1, 1, selist.item(selidx), matcher);
-		//
+
 		elm = createElement("div");
 		elm.setAttribute("title", "hi");
 		matcher = selectorMatcher(elm);
@@ -194,7 +219,7 @@ public class DOM4JSelectorMatcherTest {
 		assertTrue(matcher.matches(selist) < 0);
 		elm.addAttribute("TITLE", "hi");
 		assertTrue(matcher.matches(selist) >= 0);
-		//
+
 		elm.removeAttribute("TITLE");
 		assertFalse(elm.hasAttributes());
 		elm.setAttributeNS("http://www.example.com/examplens", "Title", "hi");
@@ -215,7 +240,7 @@ public class DOM4JSelectorMatcherTest {
 		assertTrue(selidx >= 0);
 		// Specificity
 		CSSOMBridge.assertSpecificity(0, 1, 1, selist.item(selidx), matcher);
-		//
+
 		elm = createElement("div");
 		elm.setAttribute("title", "hi");
 		matcher = elm.getSelectorMatcher();
@@ -235,7 +260,7 @@ public class DOM4JSelectorMatcherTest {
 		assertTrue(selidx >= 0);
 		// Specificity
 		CSSOMBridge.assertSpecificity(0, 1, 1, selist.item(selidx), matcher);
-		//
+
 		elm.removeAttribute("Title");
 		assertFalse(elm.hasAttributes());
 		elm.setAttributeNS("http://www.example.com/examplens", "Title", "hi");
@@ -292,13 +317,13 @@ public class DOM4JSelectorMatcherTest {
 		assertTrue(selidx >= 0);
 		// Specificity
 		CSSOMBridge.assertSpecificity(0, 1, 1, selist.item(selidx), matcher);
-		//
+
 		elm.setAttribute("lang", "EN");
 		assertTrue(matcher.matches(selist) >= 0);
-		//
+
 		elm.setAttribute("lang", "en_US");
 		assertTrue(matcher.matches(selist) < 0);
-		//
+
 		elm = createElement("div");
 		elm.setAttribute("lang", "en");
 		matcher = selectorMatcher(elm);
@@ -318,11 +343,11 @@ public class DOM4JSelectorMatcherTest {
 		assertTrue(selidx >= 0);
 		// Specificity
 		CSSOMBridge.assertSpecificity(0, 1, 1, selist.item(selidx), matcher);
-		//
+
 		elm.setAttribute("title", "hi");
 		selidx = matcher.matches(selist);
 		assertTrue(selidx >= 0);
-		//
+
 		elm = createElement("div");
 		elm.setAttribute("title", "hi");
 		matcher = selectorMatcher(elm);
@@ -342,15 +367,15 @@ public class DOM4JSelectorMatcherTest {
 		assertTrue(selidx >= 0);
 		// Specificity
 		CSSOMBridge.assertSpecificity(0, 1, 1, selist.item(selidx), matcher);
-		//
+
 		elm.setAttribute("title", "HI");
 		selidx = matcher.matches(selist);
 		assertTrue(selidx >= 0);
-		//
+
 		elm.setAttribute("title", "h");
 		matcher = selectorMatcher(elm);
 		assertEquals(-1, matcher.matches(selist));
-		//
+
 		elm = createElement("div");
 		elm.setAttribute("title", "hi");
 		matcher = selectorMatcher(elm);
@@ -370,7 +395,7 @@ public class DOM4JSelectorMatcherTest {
 		assertTrue(selidx >= 0);
 		// Specificity
 		CSSOMBridge.assertSpecificity(0, 1, 1, selist.item(selidx), matcher);
-		//
+
 		elm = createElement("div");
 		elm.setAttribute("title", "hi");
 		matcher = selectorMatcher(elm);
@@ -390,15 +415,15 @@ public class DOM4JSelectorMatcherTest {
 		assertTrue(selidx >= 0);
 		// Specificity
 		CSSOMBridge.assertSpecificity(0, 1, 1, selist.item(selidx), matcher);
-		//
+
 		elm.setAttribute("title", "HI");
 		selidx = matcher.matches(selist);
 		assertTrue(selidx >= 0);
-		//
+
 		elm.setAttribute("title", "i");
 		matcher = selectorMatcher(elm);
 		assertEquals(-1, matcher.matches(selist));
-		//
+
 		elm = createElement("div");
 		elm.setAttribute("title", "hi");
 		matcher = selectorMatcher(elm);
@@ -418,7 +443,7 @@ public class DOM4JSelectorMatcherTest {
 		assertTrue(selidx >= 0);
 		// Specificity
 		CSSOMBridge.assertSpecificity(0, 1, 1, selist.item(selidx), matcher);
-		//
+
 		elm = createElement("div");
 		elm.setAttribute("title", "hi");
 		matcher = selectorMatcher(elm);
@@ -438,22 +463,22 @@ public class DOM4JSelectorMatcherTest {
 		assertTrue(selidx >= 0);
 		// Specificity
 		CSSOMBridge.assertSpecificity(0, 1, 1, selist.item(selidx), matcher);
-		//
+
 		elm.setAttribute("title", "HI");
 		selidx = matcher.matches(selist);
 		assertTrue(selidx >= 0);
-		//
+
 		elm.setAttribute("title", "HI HO");
 		selidx = matcher.matches(selist);
 		assertTrue(selidx >= 0);
-		//
+
 		elm.setAttribute("title", "HOHI");
 		selidx = matcher.matches(selist);
 		assertTrue(selidx >= 0);
-		//
+
 		elm.setAttribute("title", "H");
 		assertEquals(-1, matcher.matches(selist));
-		//
+
 		elm = createElement("div");
 		elm.setAttribute("title", "hi");
 		matcher = selectorMatcher(elm);
@@ -482,7 +507,7 @@ public class DOM4JSelectorMatcherTest {
 		CSSStylableElement elm = createElement("p");
 		SelectorMatcher matcher = selectorMatcher(elm);
 		assertEquals(-1, matcher.matches(selist));
-		//
+
 		elm.setAttribute("lang", "en-US");
 		matcher = selectorMatcher(elm);
 		assertEquals(0, matcher.matches(selist));
@@ -497,7 +522,7 @@ public class DOM4JSelectorMatcherTest {
 		CSSStylableElement elm = createElement("p");
 		SelectorMatcher matcher = selectorMatcher(elm);
 		assertEquals(-1, matcher.matches(selist));
-		//
+
 		elm.setAttribute("lang", "en-US");
 		matcher = selectorMatcher(elm);
 		assertEquals(0, matcher.matches(selist));
@@ -529,7 +554,7 @@ public class DOM4JSelectorMatcherTest {
 		assertTrue(selidx >= 0);
 		// Specificity
 		CSSOMBridge.assertSpecificity(0, 1, 1, selist.item(selidx), matcher);
-		//
+
 		elm = createElement("div");
 		elm.setAttribute("lang", "en-US");
 		matcher = selectorMatcher(elm);
@@ -546,12 +571,12 @@ public class DOM4JSelectorMatcherTest {
 		elm.setAttribute("lang", "de-Latn");
 		SelectorMatcher matcher = selectorMatcher(elm);
 		assertEquals(0, matcher.matches(selist));
-		//
+
 		elm = createElement("p");
 		elm.setAttribute("lang", "en-GB");
 		matcher = selectorMatcher(elm);
 		assertEquals(0, matcher.matches(selist));
-		//
+
 		elm = createElement("p");
 		elm.setAttribute("lang", "de-Latn-DE-1996");
 		matcher = selectorMatcher(elm);
@@ -568,12 +593,12 @@ public class DOM4JSelectorMatcherTest {
 		elm.setAttribute("lang", "de-Latn");
 		SelectorMatcher matcher = selectorMatcher(elm);
 		assertEquals(0, matcher.matches(selist));
-		//
+
 		elm = createElement("p");
 		elm.setAttribute("lang", "en-GB");
 		matcher = selectorMatcher(elm);
 		assertEquals(0, matcher.matches(selist));
-		//
+
 		elm = createElement("p");
 		elm.setAttribute("lang", "de-Latn-DE-1996");
 		matcher = selectorMatcher(elm);
@@ -590,12 +615,12 @@ public class DOM4JSelectorMatcherTest {
 		elm.setAttribute("lang", "de-Latn");
 		SelectorMatcher matcher = selectorMatcher(elm);
 		assertEquals(0, matcher.matches(selist));
-		//
+
 		elm = createElement("p");
 		elm.setAttribute("lang", "en-GB");
 		matcher = selectorMatcher(elm);
 		assertEquals(0, matcher.matches(selist));
-		//
+
 		elm = createElement("p");
 		elm.setAttribute("lang", "de-Latn-DE-1996");
 		matcher = selectorMatcher(elm);
@@ -612,12 +637,12 @@ public class DOM4JSelectorMatcherTest {
 		elm.setAttribute("lang", "de-Latn");
 		SelectorMatcher matcher = selectorMatcher(elm);
 		assertEquals(0, matcher.matches(selist));
-		//
+
 		elm = createElement("p");
 		elm.setAttribute("lang", "de-DE");
 		matcher = selectorMatcher(elm);
 		assertEquals(-1, matcher.matches(selist));
-		//
+
 		elm = createElement("p");
 		elm.setAttribute("lang", "de-Latn-DE-1996");
 		matcher = selectorMatcher(elm);
@@ -634,12 +659,12 @@ public class DOM4JSelectorMatcherTest {
 		elm.setAttribute("lang", "de-Latn-DE");
 		SelectorMatcher matcher = selectorMatcher(elm);
 		assertEquals(0, matcher.matches(selist));
-		//
+
 		elm = createElement("p");
 		elm.setAttribute("lang", "de-DE");
 		matcher = selectorMatcher(elm);
 		assertEquals(-1, matcher.matches(selist));
-		//
+
 		elm = createElement("p");
 		elm.setAttribute("lang", "de-Latn-DE-1996");
 		matcher = selectorMatcher(elm);
@@ -1012,7 +1037,7 @@ public class DOM4JSelectorMatcherTest {
 		assertTrue(selidx >= 0);
 		// Specificity
 		CSSOMBridge.assertSpecificity(1, 0, 1, selist.item(selidx), matcher);
-		//
+
 		elm = createElement("div");
 		elm.setAttribute("id", "exampleid");
 		document.getDocumentElement().add(elm);
@@ -1061,7 +1086,7 @@ public class DOM4JSelectorMatcherTest {
 		parent.appendChild(elm);
 		assertTrue(elm.matches(selist, null));
 		assertFalse(pre.matches(selist, null));
-		//
+
 		SelectorMatcher matcher = elm.getSelectorMatcher();
 		int selidx = matcher.matches(selist);
 		assertTrue(selidx >= 0);
@@ -1102,13 +1127,13 @@ public class DOM4JSelectorMatcherTest {
 		a3.setAttribute("id", "a3");
 		li.appendChild(a3);
 		assertTrue(a3.matches(selist, null));
-		//
+
 		SelectorMatcher matcher = a3.getSelectorMatcher();
 		int selidx = matcher.matches(selist);
 		assertTrue(selidx >= 0);
 		// Specificity
 		CSSOMBridge.assertSpecificity(0, 0, 3, selist.item(selidx), matcher);
-		//
+
 		CSSStylableElement span = document.createElement("span");
 		a3.appendChild(span);
 		assertFalse(span.matches(selist, null));
@@ -1144,13 +1169,13 @@ public class DOM4JSelectorMatcherTest {
 		a3.setAttribute("id", "a3");
 		li.appendChild(a3);
 		assertTrue(a3.matches(selist, null));
-		//
+
 		SelectorMatcher matcher = a3.getSelectorMatcher();
 		int selidx = matcher.matches(selist);
 		assertTrue(selidx >= 0);
 		// Specificity
 		CSSOMBridge.assertSpecificity(0, 0, 3, selist.item(selidx), matcher);
-		//
+
 		CSSStylableElement span = document.createElement("span");
 		a3.appendChild(span);
 		assertFalse(span.matches(selist, null));
@@ -1168,10 +1193,12 @@ public class DOM4JSelectorMatcherTest {
 		parent.add(factory.createElement("p"));
 		SelectorMatcher matcher = elm.getSelectorMatcher();
 		assertTrue(matcher.matches(selist) >= 0);
+
 		css = parseStyle("p:last-child {color: blue;}");
 		rule = (StyleRule) css.getCssRules().item(0);
 		selist = rule.getSelectorList();
 		assertTrue(matcher.matches(selist) < 0);
+
 		css = parseStyle("p:only-child {color: blue;}");
 		rule = (StyleRule) css.getCssRules().item(0);
 		selist = rule.getSelectorList();
@@ -1182,93 +1209,38 @@ public class DOM4JSelectorMatcherTest {
 	public void testMatchSelectorPseudoClassNth() throws Exception {
 		AbstractCSSStyleSheet css = parseStyle("p:nth-child(1) {color: blue;}");
 		StyleRule rule = (StyleRule) css.getCssRules().item(0);
-		if (rule != null) {
-			SelectorList selist = rule.getSelectorList();
-			CSSStylableElement parent = createElement("div");
-			parent.add(factory.createText("foo"));
-			CSSStylableElement elm = createElement("p");
-			parent.add(elm);
-			parent.add(factory.createElement("p"));
-			SelectorMatcher matcher = elm.getSelectorMatcher();
-			assertTrue(matcher.matches(selist) >= 0);
-			css = parseStyle("p:nth-last-child(1) {color: blue;}");
-			rule = (StyleRule) css.getCssRules().item(0);
-			selist = rule.getSelectorList();
-			assertTrue(matcher.matches(selist) < 0);
-			css = parseStyle("p:nth-last-child(2) {color: blue;}");
-			rule = (StyleRule) css.getCssRules().item(0);
-			selist = rule.getSelectorList();
-			assertTrue(matcher.matches(selist) >= 0);
-			parent.add(createElement("div"));
-			css = parseStyle("p:nth-last-child(3) {color: blue;}");
-			rule = (StyleRule) css.getCssRules().item(0);
-			selist = rule.getSelectorList();
-			assertTrue(matcher.matches(selist) >= 0);
-		}
+		assertNotNull(rule);
+		SelectorList selist = rule.getSelectorList();
+		CSSStylableElement parent = createElement("div");
+		parent.add(factory.createText("foo"));
+		CSSStylableElement elm = createElement("p");
+		parent.add(elm);
+		parent.add(factory.createElement("p"));
+		SelectorMatcher matcher = elm.getSelectorMatcher();
+		assertTrue(matcher.matches(selist) >= 0);
+
+		css = parseStyle("p:nth-last-child(1) {color: blue;}");
+		rule = (StyleRule) css.getCssRules().item(0);
+		selist = rule.getSelectorList();
+		assertTrue(matcher.matches(selist) < 0);
+
+		css = parseStyle("p:nth-last-child(2) {color: blue;}");
+		rule = (StyleRule) css.getCssRules().item(0);
+		selist = rule.getSelectorList();
+		assertTrue(matcher.matches(selist) >= 0);
+		parent.add(createElement("div"));
+
+		css = parseStyle("p:nth-last-child(3) {color: blue;}");
+		rule = (StyleRule) css.getCssRules().item(0);
+		selist = rule.getSelectorList();
+		assertTrue(matcher.matches(selist) >= 0);
 	}
 
 	@Test
 	public void testMatchSelectorPseudoClassNthSelector() throws Exception {
 		AbstractCSSStyleSheet css = parseStyle("p:nth-child(1 of p) {color: blue;}");
 		StyleRule rule = (StyleRule) css.getCssRules().item(0);
-		if (rule != null) {
-			SelectorList selist = rule.getSelectorList();
-			CSSStylableElement parent = createElement("div");
-			parent.add(createElement("div"));
-			parent.add(factory.createText("foo"));
-			CSSStylableElement elm = createElement("p");
-			parent.add(elm);
-			parent.add(createElement("p"));
-			SelectorMatcher matcher = elm.getSelectorMatcher();
-			assertTrue(matcher.matches(selist) >= 0);
-			css = parseStyle("p:nth-last-child(2 of p) {color: blue;}");
-			rule = (StyleRule) css.getCssRules().item(0);
-			selist = rule.getSelectorList();
-			assertTrue(matcher.matches(selist) >= 0);
-			css = parseStyle("p:nth-child(even of p) {color: blue;}");
-			rule = (StyleRule) css.getCssRules().item(0);
-			selist = rule.getSelectorList();
-			assertTrue(matcher.matches(selist) < 0);
-			css = parseStyle("p:nth-child(odd of p) {color: blue;}");
-			rule = (StyleRule) css.getCssRules().item(0);
-			selist = rule.getSelectorList();
-			assertTrue(matcher.matches(selist) >= 0);
-		}
-	}
-
-	@Test
-	public void testMatchSelectorPseudoClassNthOfType() throws Exception {
-		AbstractCSSStyleSheet css = parseStyle("p:nth-of-type(1) {color: blue;}");
-		StyleRule rule = (StyleRule) css.getCssRules().item(0);
-		if (rule != null) {
-			SelectorList selist = rule.getSelectorList();
-			CSSStylableElement parent = createElement("div");
-			parent.add(createElement("div"));
-			parent.add(factory.createText("foo"));
-			CSSStylableElement elm = createElement("p");
-			parent.add(elm);
-			parent.add(createElement("p"));
-			SelectorMatcher matcher = elm.getSelectorMatcher();
-			assertTrue(matcher.matches(selist) >= 0);
-			css = parseStyle("p:nth-last-of-type(2) {color: blue;}");
-			rule = (StyleRule) css.getCssRules().item(0);
-			selist = rule.getSelectorList();
-			assertTrue(matcher.matches(selist) >= 0);
-			css = parseStyle("p:nth-of-type(even) {color: blue;}");
-			rule = (StyleRule) css.getCssRules().item(0);
-			selist = rule.getSelectorList();
-			assertTrue(matcher.matches(selist) < 0);
-			css = parseStyle("p:nth-of-type(odd) {color: blue;}");
-			rule = (StyleRule) css.getCssRules().item(0);
-			selist = rule.getSelectorList();
-			assertTrue(matcher.matches(selist) >= 0);
-		}
-	}
-
-	@Test
-	public void testMatchSelectorPseudoOfType() throws Exception {
-		AbstractCSSStyleSheet css = parseStyle("p:first-of-type {color: blue;}");
-		StyleRule rule = (StyleRule) css.getCssRules().item(0);
+		assertNotNull(rule);
 		SelectorList selist = rule.getSelectorList();
 		CSSStylableElement parent = createElement("div");
 		parent.add(createElement("div"));
@@ -1278,14 +1250,89 @@ public class DOM4JSelectorMatcherTest {
 		parent.add(createElement("p"));
 		SelectorMatcher matcher = elm.getSelectorMatcher();
 		assertTrue(matcher.matches(selist) >= 0);
+
+		css = parseStyle("p:nth-last-child(2 of p) {color: blue;}");
+		rule = (StyleRule) css.getCssRules().item(0);
+		selist = rule.getSelectorList();
+		assertTrue(matcher.matches(selist) >= 0);
+
+		css = parseStyle("p:nth-child(even of p) {color: blue;}");
+		rule = (StyleRule) css.getCssRules().item(0);
+		selist = rule.getSelectorList();
+		assertTrue(matcher.matches(selist) < 0);
+
+		css = parseStyle("p:nth-child(odd of p) {color: blue;}");
+		rule = (StyleRule) css.getCssRules().item(0);
+		selist = rule.getSelectorList();
+		assertTrue(matcher.matches(selist) >= 0);
+	}
+
+	@Test
+	public void testMatchSelectorPseudoClassNthOfType() throws Exception {
+		AbstractCSSStyleSheet css = parseStyle("p:nth-of-type(1) {color: blue;}");
+		StyleRule rule = (StyleRule) css.getCssRules().item(0);
+		assertNotNull(rule);
+		SelectorList selist = rule.getSelectorList();
+		CSSStylableElement parent = createElement("div");
+		parent.add(createElement("div"));
+		parent.add(factory.createText("foo"));
+		CSSStylableElement elm = createElement("p");
+		parent.add(elm);
+		SelectorMatcher matcher = elm.getSelectorMatcher();
+		assertEquals(0, matcher.matches(selist));
+
+		parent.add(createElement("P"));
+		assertEquals(0, matcher.matches(selist));
+
+		css = parseStyle("p:nth-last-of-type(2) {color: blue;}");
+		rule = (StyleRule) css.getCssRules().item(0);
+		selist = rule.getSelectorList();
+		assertEquals(0, matcher.matches(selist));
+
+		css = parseStyle("p:nth-of-type(even) {color: blue;}");
+		rule = (StyleRule) css.getCssRules().item(0);
+		selist = rule.getSelectorList();
+		assertEquals(-1, matcher.matches(selist));
+
+		css = parseStyle("p:nth-of-type(odd) {color: blue;}");
+		rule = (StyleRule) css.getCssRules().item(0);
+		selist = rule.getSelectorList();
+		assertEquals(0, matcher.matches(selist));
+	}
+
+	@Test
+	public void testMatchSelectorPseudoOfType() throws Exception {
+		CSSStylableElement parent = createElement("div");
+		parent.add(createElement("div"));
+		parent.add(factory.createText("foo"));
+		CSSStylableElement elm = createElement("p");
+		parent.add(elm);
+		SelectorMatcher matcher = elm.getSelectorMatcher();
+
+		AbstractCSSStyleSheet css = parseStyle("p:only-of-type {color: blue;}");
+		StyleRule rule = (StyleRule) css.getCssRules().item(0);
+		SelectorList onlyOfTypeSel = rule.getSelectorList();
+		assertEquals(0, matcher.matches(onlyOfTypeSel));
+
+		parent.add(createElement("P"));
+		assertEquals(-1, matcher.matches(onlyOfTypeSel));
+
+		css = parseStyle("p:first-of-type {color: blue;}");
+		rule = (StyleRule) css.getCssRules().item(0);
+		SelectorList selist = rule.getSelectorList();
+		assertEquals(0, matcher.matches(selist));
+		parent.insertBefore(createElement("p"), elm);
+		assertEquals(-1, matcher.matches(selist));
+
 		css = parseStyle("p:last-of-type {color: blue;}");
 		rule = (StyleRule) css.getCssRules().item(0);
 		selist = rule.getSelectorList();
-		assertTrue(matcher.matches(selist) < 0);
-		css = parseStyle("p:only-of-type {color: blue;}");
-		rule = (StyleRule) css.getCssRules().item(0);
-		selist = rule.getSelectorList();
-		assertTrue(matcher.matches(selist) < 0);
+		assertEquals(-1, matcher.matches(selist));
+		CSSStylableElement lastp = createElement("p");
+		parent.appendChild(lastp);
+		CSSStylableElement lastdiv = createElement("div");
+		parent.appendChild(lastdiv);
+		assertEquals(0, lastp.getSelectorMatcher().matches(selist));
 	}
 
 	@Test
@@ -1299,12 +1346,12 @@ public class DOM4JSelectorMatcherTest {
 		StyleRule rule = (StyleRule) css.getCssRules().item(0);
 		SelectorList selist = rule.getSelectorList();
 		assertEquals(0, matcher.matches(selist));
-		//
+
 		matcher = elm.getSelectorMatcher();
 		assertEquals(-1, matcher.matches(selist));
 		elm.setAttributeNS("http://www.w3.org/1999/xlink", "xlink:href", "bar");
 		assertEquals(0, matcher.matches(selist));
-		//
+
 		a.removeAttribute("href");
 		matcher = a.getSelectorMatcher();
 		assertEquals(-1, matcher.matches(selist));
@@ -1321,12 +1368,12 @@ public class DOM4JSelectorMatcherTest {
 		StyleRule rule = (StyleRule) css.getCssRules().item(0);
 		SelectorList selist = rule.getSelectorList();
 		assertEquals(0, matcher.matches(selist));
-		//
+
 		matcher = elm.getSelectorMatcher();
 		assertEquals(-1, matcher.matches(selist));
 		elm.setAttributeNS("http://www.w3.org/1999/xlink", "xlink:href", "bar");
 		assertEquals(0, matcher.matches(selist));
-		//
+
 		a.removeAttribute("href");
 		matcher = a.getSelectorMatcher();
 		assertEquals(-1, matcher.matches(selist));
@@ -1386,7 +1433,7 @@ public class DOM4JSelectorMatcherTest {
 		AbstractCSSStyleSheet css = parseStyle("p.exampleclass:has(> img) {color: blue;}");
 		StyleRule rule = (StyleRule) css.getCssRules().item(0);
 		SelectorList selist = rule.getSelectorList();
-		//
+
 		CSSStylableElement parent = createElement("p");
 		parent.setAttribute("id", "p1");
 		document.getDocumentElement().add(parent);
@@ -1400,7 +1447,7 @@ public class DOM4JSelectorMatcherTest {
 		assertEquals(-1, matcher.matches(selist));
 		parent.setAttribute("class", "exampleclass");
 		assertTrue(matcher.matches(selist) >= 0);
-		//
+
 		parent.removeChild(elm2);
 		assertEquals(-1, matcher.matches(selist));
 	}
@@ -1429,7 +1476,7 @@ public class DOM4JSelectorMatcherTest {
 		AbstractCSSStyleSheet css = parseStyle("div.exampleclass:has(p>span) {color: blue;}");
 		StyleRule rule = (StyleRule) css.getCssRules().item(0);
 		SelectorList selist = rule.getSelectorList();
-		//
+
 		CSSStylableElement parent = createElement("div");
 		document.getDocumentElement().add(parent);
 		CSSStylableElement elm = createElement("p");
@@ -1440,7 +1487,7 @@ public class DOM4JSelectorMatcherTest {
 		assertEquals(-1, matcher.matches(selist));
 		parent.setAttribute("class", "exampleclass");
 		assertTrue(matcher.matches(selist) >= 0);
-		//
+
 		elm.removeChild(span);
 		assertEquals(-1, matcher.matches(selist));
 	}
@@ -1450,7 +1497,7 @@ public class DOM4JSelectorMatcherTest {
 		AbstractCSSStyleSheet css = parseStyle("div.exampleclass:has(span + p) {color: blue;}");
 		StyleRule rule = (StyleRule) css.getCssRules().item(0);
 		SelectorList selist = rule.getSelectorList();
-		//
+
 		CSSStylableElement parent = createElement("div");
 		document.getDocumentElement().add(parent);
 		CSSStylableElement elm = createElement("span");
@@ -1461,7 +1508,7 @@ public class DOM4JSelectorMatcherTest {
 		assertEquals(-1, matcher.matches(selist));
 		parent.setAttribute("class", "exampleclass");
 		assertTrue(matcher.matches(selist) >= 0);
-		//
+
 		parent.removeChild(elm);
 		parent.removeChild(elm2);
 		assertEquals(-1, matcher.matches(selist));
@@ -1473,7 +1520,7 @@ public class DOM4JSelectorMatcherTest {
 				"body>div.exampleclass:has(span + p) {color: blue;}");
 		StyleRule rule = (StyleRule) css.getCssRules().item(0);
 		SelectorList selist = rule.getSelectorList();
-		//
+
 		CSSStylableElement body = createElement("body");
 		CSSStylableElement parent = createElement("div");
 		document.getDocumentElement().add(body);
@@ -1489,7 +1536,7 @@ public class DOM4JSelectorMatcherTest {
 		assertTrue(selidx >= 0);
 		// Specificity
 		CSSOMBridge.assertSpecificity(0, 1, 4, selist.item(selidx), matcher);
-		//
+
 		parent.removeChild(elm);
 		parent.removeChild(elm2);
 		assertEquals(-1, matcher.matches(selist));
@@ -1713,7 +1760,7 @@ public class DOM4JSelectorMatcherTest {
 		assertTrue(selidx >= 0);
 		// Specificity
 		CSSOMBridge.assertSpecificity(0, 1, 1, selist.item(selidx), matcher);
-		//
+
 		elm.setAttribute("disabled", "disabled");
 		assertTrue(matcher.matches(selist) < 0);
 	}
@@ -1789,7 +1836,7 @@ public class DOM4JSelectorMatcherTest {
 		assertTrue(selidx >= 0);
 		// Specificity
 		CSSOMBridge.assertSpecificity(0, 1, 1, selist.item(selidx), matcher);
-		//
+
 		button.removeAttribute("disabled");
 		assertTrue(matcher.matches(selist) < 0);
 	}
@@ -1814,7 +1861,7 @@ public class DOM4JSelectorMatcherTest {
 		assertTrue(selidx >= 0);
 		// Specificity
 		CSSOMBridge.assertSpecificity(0, 1, 1, selist.item(selidx), matcher);
-		//
+
 		button.removeAttribute("disabled");
 		assertTrue(matcher.matches(selist) < 0);
 	}
@@ -1846,7 +1893,7 @@ public class DOM4JSelectorMatcherTest {
 		assertEquals(0, selidx);
 		// Specificity
 		CSSOMBridge.assertSpecificity(0, 1, 1, selist.item(selidx), matcher);
-		//
+
 		button2.removeAttribute("disabled");
 		assertEquals(-1, matcher.matches(selist));
 	}
@@ -1866,7 +1913,7 @@ public class DOM4JSelectorMatcherTest {
 		assertTrue(selidx >= 0);
 		// Specificity
 		CSSOMBridge.assertSpecificity(0, 1, 1, selist.item(selidx), matcher);
-		//
+
 		elm.removeAttribute("checked");
 		assertTrue(matcher.matches(selist) < 0);
 	}
@@ -1886,7 +1933,7 @@ public class DOM4JSelectorMatcherTest {
 		assertTrue(selidx >= 0);
 		// Specificity
 		CSSOMBridge.assertSpecificity(0, 1, 1, selist.item(selidx), matcher);
-		//
+
 		elm.setAttribute("indeterminate", "false");
 		assertTrue(matcher.matches(selist) < 0);
 	}
