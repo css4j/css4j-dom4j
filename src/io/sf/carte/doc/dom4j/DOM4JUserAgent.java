@@ -130,7 +130,7 @@ public class DOM4JUserAgent extends AbstractUserAgent {
 				String metaDefStyle = element.getAttributeValue("content");
 				if (metaDefStyle.length() != 0) {
 					// Per HTML4 spec § 14.3.2:
-					// "If two or more META declarations or HTTP headers specify 
+					// "If two or more META declarations or HTTP headers specify
 					//  the preferred style sheet, the last one takes precedence."
 					defStyle = metaDefStyle;
 				}

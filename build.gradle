@@ -1,6 +1,18 @@
+/*
+
+ Copyright (c) 2021-2025, C. Amengual.
+
+ Licensed under a BSD-style License. You can find the license here:
+ https://css4j.github.io/LICENSE.txt
+
+ */
+
+// SPDX-License-Identifier: BSD-3-Clause
+
 plugins {
 	id 'java-library'
 	id 'maven-publish'
+	id 'checkstyle'
 	id 'org.gradlex.extra-java-module-info' version '1.12'
 }
 
@@ -60,6 +72,10 @@ dependencies {
 extraJavaModuleInfo {
 	failOnMissingModuleInfo.set(false)
 	automaticModule('htmlparser-1.4.16.jar', 'htmlparser')
+}
+
+checkstyle {
+	toolVersion = '10.24.0'
 }
 
 repositories {

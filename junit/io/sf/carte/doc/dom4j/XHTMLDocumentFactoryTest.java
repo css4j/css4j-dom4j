@@ -78,7 +78,7 @@ public class XHTMLDocumentFactoryTest {
 		assertNotNull(is);
 		InputStreamReader re = new InputStreamReader(is, StandardCharsets.UTF_8);
 		StringWriter sw = new StringWriter(100);
-		char b[] = new char[3000];
+		char[] b = new char[3000];
 		int n;
 		while ((n = re.read(b)) != -1) {
 			sw.write(b, 0, n);

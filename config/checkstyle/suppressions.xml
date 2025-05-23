@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suppressions PUBLIC "-//Checkstyle//DTD SuppressionFilter Configuration 1.2//EN" "https://checkstyle.org/dtds/suppressions_1_2.dtd">
+<suppressions>
+  <!-- Line length -->
+  <suppress files="[\\/]PseudoClassTest\.java$" checks="LineLength"/>
+  <suppress files="[\\/]XHTMLDocumentTest\.java$" checks="LineLength"/>
+
+  <!-- Disable other checks in tests -->
+  <suppress files="Test[0-9]?\.java$" checks="LeftCurly"/>
+  <suppress files="Test[0-9]?\.java$" checks="MethodName"/>
+  <suppress files="[\\/]junit[\\/]" checks="SimplifyBooleanReturn"/>
+  <suppress files="Test[0-9]?\.java$" checks="WhitespaceAround"/>
+</suppressions>
