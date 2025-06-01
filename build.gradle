@@ -13,7 +13,7 @@ plugins {
 	id 'java-library'
 	id 'maven-publish'
 	id 'checkstyle'
-	id 'org.gradlex.extra-java-module-info' version '1.12'
+	id 'org.gradlex.extra-java-module-info' version "${extraJavaModuleInfoVersion}"
 }
 
 group = 'io.sf.carte'
@@ -38,13 +38,13 @@ dependencies {
 	api('io.sf.carte:css4j') {
 		version {
 			strictly '[6.0,)'
-			prefer '6.0'
+			prefer "{$css4jVersion}"
 		}
 	}
 	useragentImplementation('io.sf.carte:css4j-agent') {
 		version {
 			strictly '[3.4.0,)'
-			prefer '6.0'
+			prefer "{$css4jAgentVersion}"
 		}
 	}
 	/*
@@ -54,19 +54,19 @@ dependencies {
 	api('org.dom4j:dom4j') {
 		version {
 			require '[1.6.0,)'
-			prefer '2.1.4'
+			prefer "${dom4jVersion}"
 		}
 	}
-	xmlpullImplementation 'xmlpull:xmlpull:1.2.0'
-	xmlpullImplementation 'xpp3:xpp3_min:1.2.0'
+	xmlpullImplementation "xmlpull:xmlpull:${xmlpullVersion}"
+	xmlpullImplementation "xpp3:xpp3_min:${xpp3Version}"
 	testImplementation group: 'io.sf.carte', name: 'css4j', classifier: 'tests',
-		version: '6.0'
-	testImplementation 'jaxen:jaxen:2.0.0'
-	testImplementation 'org.slf4j:slf4j-api:2.0.17'
-	testImplementation 'org.junit.jupiter:junit-jupiter:5.12.2'
+		version: "{$css4jVersion}"
+	testImplementation "jaxen:jaxen:${jaxenVersion}"
+	testImplementation "org.slf4j:slf4j-api:${slf4jVersion}"
+	testImplementation "org.junit.jupiter:junit-jupiter:${junitVersion}"
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 	// css4j tests still use JUnit 4
-	testImplementation 'org.junit.vintage:junit-vintage-engine:5.12.2'
+	testImplementation "org.junit.vintage:junit-vintage-engine:${junitVersion}"
 }
 
 extraJavaModuleInfo {
@@ -75,7 +75,7 @@ extraJavaModuleInfo {
 }
 
 checkstyle {
-	toolVersion = '10.24.0'
+	toolVersion = "${checkstyleVersion}"
 }
 
 repositories {
