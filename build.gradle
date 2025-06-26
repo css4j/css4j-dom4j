@@ -37,7 +37,7 @@ java {
 dependencies {
 	api('io.sf.carte:css4j') {
 		version {
-			strictly '[6.0,)'
+			strictly '[6.1,)'
 			prefer "{$css4jVersion}"
 		}
 	}

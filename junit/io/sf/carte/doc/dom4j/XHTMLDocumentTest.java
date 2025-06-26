@@ -296,7 +296,7 @@ public class XHTMLDocumentTest {
 		parent.setAttribute("bgcolor", "#90fz77");
 		styledecl = sheet.getComputedStyle(parent, null);
 		assertEquals(11, styledecl.getLength());
-		assertEquals("rgb(0 0 0 / 0)", styledecl.getPropertyValue("background-color"));
+		assertEquals("#0000", styledecl.getPropertyValue("background-color"));
 		assertTrue(xhtmlDoc.getErrorHandler().hasErrors());
 		assertTrue(xhtmlDoc.getErrorHandler().hasComputedStyleErrors());
 		assertTrue(xhtmlDoc.getErrorHandler().hasComputedStyleErrors(parent));
@@ -339,7 +339,7 @@ public class XHTMLDocumentTest {
 				"display: table-row; vertical-align: middle; border-top-color: #808080; border-right-color: #808080; border-bottom-color: #808080; border-left-color: #808080; unicode-bidi: embed; margin-top: 16pt; margin-right: 16pt; margin-bottom: 16pt; margin-left: 16pt; color: #f00; ",
 				style.getCssText());
 		assertEquals(
-				"display:table-row;vertical-align:middle;border-color:#808080;unicode-bidi:embed;margin:16pt;color:#f00;",
+				"display:table-row;vertical-align:middle;border-color:grey;unicode-bidi:embed;margin:16pt;color:red;",
 				style.getMinifiedCssText());
 	}
 
