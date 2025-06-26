@@ -1,21 +1,15 @@
-# css4j-dom4j version 6.0 Release Notes
+# css4j-dom4j version 6.1 Release Notes
 
-### May 16, 2025
-
-## Release Highlights
-
-### Update to changes in css4j 6.0
-
-One of the changes in version 6.0 of css4j, necessary to support style layers in the future, requires modifications in css4j-dom4j.
-
-<br/>
+### June 26, 2025
 
 ## Detail of changes
 
-- Upgrade to css4j and css4j-agent 6.0.
-- Upgrade to JUnit 5.12.2.
-- Upgrade to extra-java-module-info version 1.12.
-- Upgrade Gradle wrapper to 8.14.
+- Matching of `of-type` pseudo-classes was case sensitive.
+- Move SPDX header to a separate comment.
+- Add a checkstyle check in the build.
+- Upgrade to css4j 6.1.
+- Upgrade to JUnit 5.13.2.
+- Upgrade Gradle wrapper to 8.14.2.
 
 <br/>
 
