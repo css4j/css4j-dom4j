@@ -46,3 +46,7 @@ jobs:
       # Build
       - name: Build with Gradle
         run: ./gradlew build
+
+      # Run tests with Java 8
+      - name: Test with Java 8
+        run: ./gradlew testOn8
