@@ -10,7 +10,7 @@ obtain the sources. Any recent version should suffice.
 - Java 11 or later. You can install it from your favourite package manager or by
 downloading from [Adoptium](https://adoptium.net/).
 
-- The [`generate_directory_index_caddystyle.py`](https://gist.github.com/carlosame/bd5b68c4eb8e0817d9beb1dcfb4de43d)
+- The [`genindex.py`](https://github.com/carlosame/index-html-generator/blob/main/genindex.py)
 script and a recent version of [Python](https://www.python.org/) (required to
 run it). The script is necessary to create the index files in the bare-bones
 Maven repository currently used by css4j-dom4j.
@@ -65,11 +65,11 @@ cd /path/to/css4j-dom4j
 ```
 
 8) Produce the necessary directory indexes in the local copy of the bare-bones
-Maven repository using [`generate_directory_index_caddystyle.py`](https://gist.github.com/carlosame/bd5b68c4eb8e0817d9beb1dcfb4de43d):
+Maven repository using [`genindex.py`](https://raw.githubusercontent.com/carlosame/index-html-generator/refs/heads/main/genindex.py):
 
 ```shell
 cd /path/to/css4j.github.io/maven/io/sf/carte
-generate_directory_index_caddystyle.py -r css4j-dom4j
+genindex.py -t -r css4j-dom4j
 ```
 
 If the changes to the `css4j.github.io` repository look correct, commit them but
